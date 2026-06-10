@@ -232,6 +232,19 @@ re-run for the next matchday. Model coefficients stay frozen at the
 backtest-validated 2022-11-19 fit; only the ratings move. Knockouts are out of
 scope (no ET/penalties layer yet).
 
+**Market as a comparison / edge layer (not a model input).** If
+`data/external/wc2026_odds.csv` holds bookmaker odds (`home_team, away_team,
+odds_home, odds_draw, odds_away` — fractional *or* decimal), `predict_fixtures.py`
+de-vigs them and shows market H/D/A beside ours, flags fixtures where they
+disagree by ≥ `--edge` (default 0.10), and accumulates a forward log
+(`data/external/wc2026_forward_log.csv`) of pre-match forecast + market +
+backfilled result. Once matches are played it scores **model vs market RPS** —
+the B2 baseline, finally measured forward. The model and the frozen backtest are
+never touched; the odds are deliberately *beside* the model, so disagreements
+stay visible (they turn out to track the model's known weak spots — host
+calibration and favourite-compression). The decision rationale is in
+[`reports/odds_integration_decision.md`](reports/odds_integration_decision.md).
+
 `predict_match.py` computes Elo over every played match (current), applies the
 fitted Dixon-Coles model, and prints the score matrix, 1X2 / O-U / BTTS, and
 top-5 scores. The `--freeze-date` flag routes non-default builds to
