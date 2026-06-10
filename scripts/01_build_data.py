@@ -8,7 +8,7 @@ Reads ``data/raw/results.csv`` and writes:
 * ``data/processed/team_match.parquet``   — long team-match rows + as-of Elo,
                                              frozen at the training cutoff
 
-Run from the repo root: ``python scripts/01_build_data.py``
+Usage: ``python scripts/01_build_data.py [tournament_key]``  (default qatar2022)
 """
 
 from __future__ import annotations
@@ -21,46 +21,48 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from wcmodel import data, elo  # noqa: E402
 
 
-def main() -> None:
-    data.PROCESSED.mkdir(parents=True, exist_ok=True)
-    data.TEST_FIXTURES.parent.mkdir(parents=True, exist_ok=True)
+def main(t: data.Tournament = data.QATAR2022) -> None:
+    t.proc_dir.mkdir(parents=True, exist_ok=True)
+    t.test_path.parent.mkdir(parents=True, exist_ok=True)
+    print(f"=== Building data frozen for {t.name} (freeze {t.freeze:%Y-%m-%d}) ===")
 
     print("Loading raw results ...")
     raw = data.load_raw()
     print(f"  {len(raw):,} played matches, {raw.date.min():%Y-%m-%d} -> {raw.date.max():%Y-%m-%d}")
 
     # --- Test-set quarantine ------------------------------------------------ #
-    test = data.extract_test_set(raw)
-    test.to_csv(data.TEST_FIXTURES, index=False)
-    print(f"Wrote test set: {len(test)} matches -> {data.TEST_FIXTURES.relative_to(data.ROOT)}")
+    test = data.extract_test_set(raw, t)
+    test.to_csv(t.test_path, index=False)
+    print(f"Wrote test set: {len(test)} matches -> {t.test_path.relative_to(data.ROOT)}")
     assert len(test) == 48, f"expected 48 group-stage matches, got {len(test)}"
 
     # --- Elo over the full history (training portion only) ------------------ #
-    train = data.training_frame(raw)
-    data.assert_no_leakage(train)
-    print(f"Training matches (<= freeze {data.FREEZE_DATE:%Y-%m-%d}): {len(train):,}")
+    train = data.training_frame(raw, t)
+    data.assert_no_leakage(train, t)
+    print(f"Training matches (<= freeze {t.freeze:%Y-%m-%d}): {len(train):,}")
 
     print("Computing Elo ...")
     elo_long = elo.compute_elo(train)
 
     hist = elo.elo_history(elo_long)
-    hist.to_parquet(data.PROCESSED / "elo_history.parquet", index=False)
-    print(f"Wrote elo_history: {len(hist):,} rows -> data/processed/elo_history.parquet")
+    hist.to_parquet(t.proc_dir / "elo_history.parquet", index=False)
+    print(f"Wrote elo_history: {len(hist):,} rows -> {(t.proc_dir / 'elo_history.parquet').relative_to(data.ROOT)}")
 
     # --- Model training table (feature era only) ---------------------------- #
     team_match = elo_long.loc[elo_long["date"] >= data.FEATURE_START].reset_index(drop=True)
-    team_match.to_parquet(data.PROCESSED / "team_match.parquet", index=False)
+    team_match.to_parquet(t.proc_dir / "team_match.parquet", index=False)
     print(
         f"Wrote team_match: {len(team_match):,} rows "
-        f"(>= {data.FEATURE_START:%Y-%m-%d}) -> data/processed/team_match.parquet"
+        f"(>= {data.FEATURE_START:%Y-%m-%d}) -> {(t.proc_dir / 'team_match.parquet').relative_to(data.ROOT)}"
     )
 
     # --- Spot-check: a few teams' ratings as of the freeze ------------------ #
-    snap = elo.latest_ratings(elo_long, data.FREEZE_DATE).sort_values(ascending=False)
-    print("\nTop 10 by Elo at freeze (2022-11-19):")
+    snap = elo.latest_ratings(elo_long, t.freeze).sort_values(ascending=False)
+    print(f"\nTop 10 by Elo at freeze ({t.freeze:%Y-%m-%d}):")
     for team, r in snap.head(10).items():
         print(f"  {team:<18} {r:7.1f}")
 
 
 if __name__ == "__main__":
-    main()
+    key = sys.argv[1] if len(sys.argv) > 1 else "qatar2022"
+    main(data.TOURNAMENTS[key])

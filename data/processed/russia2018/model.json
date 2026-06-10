@@ -1,0 +1,19 @@
+{
+  "features": [
+    "elo_diff",
+    "is_home",
+    "elo_sum"
+  ],
+  "params": {
+    "intercept": 0.1399431742592828,
+    "elo_diff": 0.7453382477524172,
+    "is_home": 0.28693564956978745,
+    "elo_sum": -0.07812497218443504
+  },
+  "xi": 0.0,
+  "rho": -0.05571762826625422,
+  "cutoff": "2018-06-13",
+  "val_cutoff": "2017-06-13",
+  "use_elo_sum": true,
+  "half_life_days": Infinity
+}

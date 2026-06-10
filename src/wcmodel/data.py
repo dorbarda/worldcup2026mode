@@ -15,6 +15,7 @@ Zero data leakage is enforced here in code, not by convention: see
 
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import pandas as pd
@@ -42,6 +43,76 @@ FEATURE_START = pd.Timestamp("2000-01-01")
 # Qatar 2022 group stage window (the test set).
 TEST_START = pd.Timestamp("2022-11-20")
 TEST_END = pd.Timestamp("2022-12-02")
+
+
+# --------------------------------------------------------------------------- #
+# Tournament configuration
+# --------------------------------------------------------------------------- #
+@dataclass(frozen=True)
+class Tournament:
+    """A World Cup group stage to predict, with its hard freeze and test window.
+
+    ``eyeball`` is a list of (home, away) fixtures printed by the fit script as a
+    slope sanity check; entries whose teams are missing from the snapshot are
+    skipped, so a wrong guess is harmless.
+    """
+
+    key: str
+    name: str
+    host: str
+    freeze: pd.Timestamp
+    test_start: pd.Timestamp
+    test_end: pd.Timestamp
+    round12_end: pd.Timestamp  # rounds 1-2 vs round 3 split boundary
+    eyeball: tuple[tuple[str, str], ...] = field(default_factory=tuple)
+
+    @property
+    def proc_dir(self) -> Path:
+        """Processed-artifact directory. Qatar 2022 stays at the flat default."""
+        return PROCESSED if self.key == "qatar2022" else PROCESSED / self.key
+
+    @property
+    def test_path(self) -> Path:
+        return DATA / "test" / f"{self.key}_group_stage.csv"
+
+    @property
+    def report_path(self) -> Path:
+        return ROOT / "reports" / f"{self.key}_backtest.md"
+
+
+QATAR2022 = Tournament(
+    key="qatar2022",
+    name="Qatar 2022",
+    host="Qatar",
+    freeze=pd.Timestamp("2022-11-19"),
+    test_start=pd.Timestamp("2022-11-20"),
+    test_end=pd.Timestamp("2022-12-02"),
+    round12_end=pd.Timestamp("2022-11-28"),
+    eyeball=(
+        ("Argentina", "Saudi Arabia"),
+        ("Spain", "Costa Rica"),
+        ("Brazil", "Serbia"),
+        ("England", "Iran"),
+    ),
+)
+
+RUSSIA2018 = Tournament(
+    key="russia2018",
+    name="Russia 2018",
+    host="Russia",
+    freeze=pd.Timestamp("2018-06-13"),
+    test_start=pd.Timestamp("2018-06-14"),
+    test_end=pd.Timestamp("2018-06-28"),
+    round12_end=pd.Timestamp("2018-06-23"),  # round 3 starts 24 Jun
+    eyeball=(
+        ("Russia", "Saudi Arabia"),
+        ("Portugal", "Spain"),
+        ("Germany", "Mexico"),
+        ("Brazil", "Switzerland"),
+    ),
+)
+
+TOURNAMENTS = {t.key: t for t in (QATAR2022, RUSSIA2018)}
 
 # --------------------------------------------------------------------------- #
 # Country-name normalization
@@ -127,29 +198,29 @@ def load_raw(path: Path | str = RAW_RESULTS) -> pd.DataFrame:
 # --------------------------------------------------------------------------- #
 # Test-set quarantine
 # --------------------------------------------------------------------------- #
-def extract_test_set(df: pd.DataFrame) -> pd.DataFrame:
-    """Pull the 48 Qatar 2022 group-stage matches (fixtures + actual results)."""
+def extract_test_set(df: pd.DataFrame, tournament: Tournament = QATAR2022) -> pd.DataFrame:
+    """Pull a tournament's 48 group-stage matches (fixtures + actual results)."""
     mask = (
-        (df["date"] >= TEST_START)
-        & (df["date"] <= TEST_END)
+        (df["date"] >= tournament.test_start)
+        & (df["date"] <= tournament.test_end)
         & (df["tournament"] == "FIFA World Cup")
     )
     test = df.loc[mask].sort_values("date", kind="mergesort").reset_index(drop=True)
     return test
 
 
-def training_frame(df: pd.DataFrame) -> pd.DataFrame:
+def training_frame(df: pd.DataFrame, tournament: Tournament = QATAR2022) -> pd.DataFrame:
     """Matches available for training: everything on or before the freeze date."""
-    return df.loc[df["date"] <= FREEZE_DATE].reset_index(drop=True)
+    return df.loc[df["date"] <= tournament.freeze].reset_index(drop=True)
 
 
-def assert_no_leakage(df: pd.DataFrame) -> None:
+def assert_no_leakage(df: pd.DataFrame, tournament: Tournament = QATAR2022) -> None:
     """Guard: training data must contain nothing after the freeze date."""
     latest = df["date"].max()
-    if latest > FREEZE_DATE:
+    if latest > tournament.freeze:
         raise AssertionError(
             f"Leakage detected: training data contains {latest:%Y-%m-%d}, "
-            f"after freeze {FREEZE_DATE:%Y-%m-%d}."
+            f"after freeze {tournament.freeze:%Y-%m-%d}."
         )
 
 

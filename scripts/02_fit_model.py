@@ -38,13 +38,15 @@ REPORTS = data.ROOT / "reports"
 FIGURES = REPORTS / "figures"
 
 
-def main() -> None:
+def main(t: data.Tournament = data.QATAR2022) -> None:
     REPORTS.mkdir(exist_ok=True)
     FIGURES.mkdir(parents=True, exist_ok=True)
+    pfx = "" if t.key == "qatar2022" else f"{t.key}_"
+    print(f"=== Fitting model for {t.name} (freeze {t.freeze:%Y-%m-%d}) ===\n")
 
-    df = pd.read_parquet(data.PROCESSED / "team_match.parquet")
-    data.assert_no_leakage(df)
-    cutoff = data.FREEZE_DATE
+    df = pd.read_parquet(t.proc_dir / "team_match.parquet")
+    data.assert_no_leakage(df, t)
+    cutoff = t.freeze
     val_cutoff = cutoff - pd.DateOffset(years=1)
 
     xi_grid = np.round(np.arange(0.0, 0.0105, 0.0005), 5)
@@ -73,7 +75,7 @@ def main() -> None:
             "val_loglik_elo_sum": tune_sum.curve.val_loglik_per_row,
         }
     )
-    curve_out.to_csv(REPORTS / "xi_tuning.csv", index=False)
+    curve_out.to_csv(REPORTS / f"{pfx}xi_tuning.csv", index=False)
 
     # --- 2. keep elo_sum only if it helps out-of-sample --------------------- #
     use_sum = tune_sum.best_loglik > tune_base.best_loglik
@@ -95,10 +97,10 @@ def main() -> None:
     ax.axvline(best_xi, color="grey", ls=":", lw=1)
     ax.set_xlabel("xi (time-decay rate, per day)")
     ax.set_ylabel("held-out Poisson log-likelihood / row")
-    ax.set_title("xi tuning curve (1-year out-of-sample slice)")
+    ax.set_title(f"{t.name}: xi tuning curve (1-year out-of-sample slice)")
     ax.legend()
     fig.tight_layout()
-    fig.savefig(FIGURES / "xi_tuning.png", dpi=120)
+    fig.savefig(FIGURES / f"{pfx}xi_tuning.png", dpi=120)
     half_life = np.log(2) / best_xi if best_xi > 0 else float("inf")
     print(f"Implied half-life at xi={best_xi}: {half_life:.0f} days (~{half_life/365:.1f} yr)")
 
@@ -115,20 +117,16 @@ def main() -> None:
     fitted.assert_sane()
     print("\nSign gate PASSED: elo_diff > 0, is_home > 0, rho < 0.")
 
-    # --- eyeball gate: predicted lambdas for four known fixtures ------------- #
-    el = pd.read_parquet(data.PROCESSED / "elo_history.parquet")
+    # --- eyeball gate: predicted lambdas for known fixtures ----------------- #
+    el = pd.read_parquet(t.proc_dir / "elo_history.parquet")
     snap = (
         el[el.date < cutoff].sort_values("date").groupby("team")["rating_post_match"].last()
     )
-    eyeball = [
-        ("Argentina", "Saudi Arabia"),
-        ("Spain", "Costa Rica"),
-        ("Brazil", "Serbia"),
-        ("England", "Iran"),
-    ]
     print("\nEyeball gate (predicted λ, neutral venue):")
     print(f"  {'fixture':<26}{'λ_home':>8}{'λ_away':>8}{'total':>8}{'ratio':>8}")
-    for h, a in eyeball:
+    for h, a in t.eyeball:
+        if h not in snap.index or a not in snap.index:
+            continue  # a wrong guess is harmless; just skip
         lam_h, lam_a = fitted.fixture_lambdas(snap, h, a, neutral=True)
         print(f"  {h+' - '+a:<26}{lam_h:>8.2f}{lam_a:>8.2f}{lam_h+lam_a:>8.2f}{lam_h/lam_a:>8.1f}")
 
@@ -142,9 +140,11 @@ def main() -> None:
         "use_elo_sum": bool(use_sum),
         "half_life_days": float(half_life),
     }
-    (data.PROCESSED / "model.json").write_text(json.dumps(out, indent=2))
-    print(f"\nWrote data/processed/model.json, reports/xi_tuning.csv, figures/xi_tuning.png")
+    (t.proc_dir / "model.json").write_text(json.dumps(out, indent=2))
+    print(f"\nWrote {(t.proc_dir / 'model.json').relative_to(data.ROOT)}, "
+          f"reports/{pfx}xi_tuning.csv, figures/{pfx}xi_tuning.png")
 
 
 if __name__ == "__main__":
-    main()
+    key = sys.argv[1] if len(sys.argv) > 1 else "qatar2022"
+    main(data.TOURNAMENTS[key])

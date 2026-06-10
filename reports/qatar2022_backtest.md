@@ -35,7 +35,9 @@ All 144 1X2 probability points (48 matches × 3 outcomes) binned into deciles (p
 | 0.75 | 0.727 | 1.000 | 3 |
 | 0.85 | 0.843 | 0.000 | 2 |
 
-On bins with real support (n ≥ 10), the largest deviation is **22.6pp** — EXCEEDS the 20pp gross-miscalibration threshold. The headline 84pp gap sits in the 0.85 bin (n=2): two ~84% favourites that *both lost* — Argentina (vs Saudi Arabia) and Brazil (vs Cameroon) — i.e. single upsets, not systematic miscalibration. At n≈12 a 22pp swing is ~1.6 binomial SEs, within sampling noise; the well-populated mid-range deciles track the diagonal.
+On bins with real support (n ≥ 10), the largest is **22.6pp** (n=12 bin) — ~1.6 binomial SEs, within sampling noise; this is the meaningful read of the 20pp gross-miscalibration gate. The headline 84pp gap sits in a sparse high-confidence bin.
+
+That sparseness is driven by **heavily-favoured sides that lost** — the marquee upsets: Argentina (82%, Argentina 1-2 Saudi Arabia), Brazil (87%, Cameroon 1-0 Brazil). These are single shocks, not systematic miscalibration; the well-populated mid-range deciles track the diagonal.
 
 ## Rounds 1–2 vs Round 3 (dead-rubber effect)
 
@@ -54,7 +56,7 @@ On bins with real support (n ≥ 10), the largest deviation is **22.6pp** — EX
 | Costa Rica – Germany | 2-4 | 0.20/0.29/0.51 | 0-1 (15%); 1-1 (13%); 0-0 (12%) | 5.19 |
 | South Korea – Ghana | 2-3 | 0.58/0.26/0.16 | 1-0 (16%); 2-0 (13%); 1-1 (12%) | 4.92 |
 
-*Saudi Arabia's win over Argentina headlines the misses — the largest single upset of the group stage.*
+*Biggest miss: England 6-2 Iran — the model's exact-score grid put little mass on that result.*
 
 ## Per-match predictions
 

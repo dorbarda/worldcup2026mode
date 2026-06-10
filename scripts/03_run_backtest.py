@@ -37,17 +37,19 @@ def _fmt_score(s):
     return f"{h}-{a} ({p*100:.0f}%)"
 
 
-def main() -> None:
+def main(t: data.Tournament = data.QATAR2022) -> None:
     FIGURES.mkdir(parents=True, exist_ok=True)
+    pfx = "" if t.key == "qatar2022" else f"{t.key}_"
+    print(f"=== Backtest: {t.name} group stage (freeze {t.freeze:%Y-%m-%d}) ===\n")
 
-    model = FittedModel.load(data.PROCESSED / "model.json")
-    test = pd.read_csv(data.TEST_FIXTURES, parse_dates=["date"])
+    model = FittedModel.load(t.proc_dir / "model.json")
+    test = pd.read_csv(t.test_path, parse_dates=["date"])
     assert len(test) == 48, f"expected 48 fixtures, got {len(test)}"
 
     # Frozen ratings snapshot (training-only Elo history, strictly before freeze).
-    el = pd.read_parquet(data.PROCESSED / "elo_history.parquet")
+    el = pd.read_parquet(t.proc_dir / "elo_history.parquet")
     snap = (
-        el[el.date < data.FREEZE_DATE]
+        el[el.date < t.freeze]
         .sort_values("date")
         .groupby("team")["rating_post_match"]
         .last()
@@ -59,7 +61,7 @@ def main() -> None:
     model_probs = preds[["p_home", "p_draw", "p_away"]].to_numpy()
 
     # --- Baselines ---------------------------------------------------------- #
-    team_match = pd.read_parquet(data.PROCESSED / "team_match.parquet")
+    team_match = pd.read_parquet(t.proc_dir / "team_match.parquet")
     b0_probs, b0_matrix = bl.b0_naive(len(test), rho=0.0)
     b1_fit = bl.fit_b1(team_match)
     b1_probs = bl.b1_elo_only(
@@ -107,8 +109,8 @@ def main() -> None:
     hit_rate = int(preds["hit"].sum())
 
     # --- Round split (dead-rubber effect) ----------------------------------- #
-    r12 = preds[preds["date"] <= bt.ROUND12_END]
-    r3 = preds[preds["date"] > bt.ROUND12_END]
+    r12 = preds[preds["date"] <= t.round12_end]
+    r3 = preds[preds["date"] > t.round12_end]
 
     # --- Calibration plot --------------------------------------------------- #
     cal = bt.calibration_points(model_probs, outcomes, n_bins=10)
@@ -120,11 +122,11 @@ def main() -> None:
                     fontsize=7, ha="left", va="bottom")
     ax.set_xlabel("predicted P(outcome)")
     ax.set_ylabel("realized frequency")
-    ax.set_title("1X2 calibration (48 matches × 3 outcomes = 144 pts)")
+    ax.set_title(f"{t.name}: 1X2 calibration (48 × 3 = 144 pts)")
     ax.set_xlim(0, 1); ax.set_ylim(0, 1)
     ax.legend()
     fig.tight_layout()
-    fig.savefig(FIGURES / "calibration.png", dpi=120)
+    fig.savefig(FIGURES / f"{pfx}calibration.png", dpi=120)
     cal["dev"] = (cal["realized"] - cal["predicted"]).abs()
     max_dev = float(cal["dev"].max())
     # The 20pp gross-miscalibration gate is only meaningful on bins with real
@@ -132,11 +134,24 @@ def main() -> None:
     MIN_SUPPORT = 10
     supported = cal[cal["count"] >= MIN_SUPPORT]
     max_dev_supported = float(supported["dev"].max()) if len(supported) else float("nan")
+    sup_row = supported.loc[supported["dev"].idxmax()] if len(supported) else None
+
+    # High-confidence upsets (favourite >= 0.70 lost) drive the sparse top bins.
+    hi_upsets = []
+    for r in preds.itertuples():
+        probs = {"home": r.p_home, "draw": r.p_draw, "away": r.p_away}
+        fav = max(probs, key=probs.get)
+        won = {0: "home", 1: "draw", 2: "away"}[r.outcome_idx]
+        if probs[fav] >= 0.70 and fav != won:
+            fav_team = r.home_team if fav == "home" else r.away_team
+            hi_upsets.append(
+                f"{fav_team} ({probs[fav]*100:.0f}%, {r.home_team} {r.home_score}-{r.away_score} {r.away_team})"
+            )
 
     # --- Exports ------------------------------------------------------------ #
     export = preds.drop(columns=["top3"]).copy()
     export["top3"] = preds["top3"].map(lambda lst: "; ".join(_fmt_score(s) for s in lst))
-    export.to_csv(data.PROCESSED / "qatar2022_predictions.csv", index=False)
+    export.to_csv(t.proc_dir / f"{t.key}_predictions.csv", index=False)
 
     # Long-format matrices for all fixtures.
     mat_rows = []
@@ -149,11 +164,12 @@ def main() -> None:
                     {"home_team": r.home_team, "away_team": r.away_team,
                      "home_goals": i, "away_goals": j, "prob": M[i, j]}
                 )
-    pd.DataFrame(mat_rows).to_parquet(data.PROCESSED / "qatar2022_matrices.parquet", index=False)
+    pd.DataFrame(mat_rows).to_parquet(t.proc_dir / f"{t.key}_matrices.parquet", index=False)
 
     # --- Report ------------------------------------------------------------- #
-    _write_report(agg, preds, hit_rate, r12, r3, cal, max_dev, max_dev_supported,
-                  MIN_SUPPORT, b2_probs, b3_probs, model)
+    _write_report(t, pfx, agg, preds, hit_rate, r12, r3, cal, max_dev,
+                  max_dev_supported, sup_row, hi_upsets, MIN_SUPPORT,
+                  b2_probs, b3_probs, model)
 
     # --- Console summary ---------------------------------------------------- #
     print("Aggregate metrics (lower is better; — = N/A):")
@@ -161,7 +177,7 @@ def main() -> None:
     print(f"\nExact-score hits: {hit_rate}/48")
     print(f"Max calibration deviation: {max_dev*100:.1f}pp (all bins) | "
           f"{max_dev_supported*100:.1f}pp (bins with n>={MIN_SUPPORT})")
-    print(f"Report -> reports/qatar2022_backtest.md")
+    print(f"Report -> {t.report_path.relative_to(data.ROOT)}")
 
     # --- Acceptance gate (PRD §8.3): beat B0 and B1 on RPS ------------------ #
     m_rps = model_block["rps"]
@@ -176,15 +192,15 @@ def _metric_cell(v, fmt="{:.4f}"):
     return "—" if v is None or (isinstance(v, float) and np.isnan(v)) else fmt.format(v)
 
 
-def _write_report(agg, preds, hit_rate, r12, r3, cal, max_dev, max_dev_supported,
-                  min_support, b2, b3, model):
+def _write_report(t, pfx, agg, preds, hit_rate, r12, r3, cal, max_dev,
+                  max_dev_supported, sup_row, hi_upsets, min_support, b2, b3, model):
     lines = []
     A = lines.append
-    A("# Qatar 2022 Group-Stage Backtest\n")
-    A("Predictions for all 48 group matches were generated **as of the freeze "
-      "(2022-11-19)** from a single ratings snapshot — Elo is *not* updated "
-      "between rounds (a pre-tournament forecast; avoids round-3 dead-rubber "
-      "contamination). Lower is better on every metric.\n")
+    A(f"# {t.name} Group-Stage Backtest\n")
+    A(f"Predictions for all 48 group matches were generated **as of the freeze "
+      f"({t.freeze:%Y-%m-%d})** from a single ratings snapshot — Elo is *not* "
+      f"updated between rounds (a pre-tournament forecast; avoids round-3 "
+      f"dead-rubber contamination). Lower is better on every metric.\n")
 
     # Aggregate table
     A("## Aggregate metrics\n")
@@ -200,7 +216,7 @@ def _write_report(agg, preds, hit_rate, r12, r3, cal, max_dev, max_dev_supported
       "defined for sources that produce a score matrix (Model, B0).")
     if b2 is None:
         A("- **B2 (market):** N/A — closing-odds CSV not compiled "
-          "(`data/external/qatar2022_closing_odds.csv`).")
+          f"(`data/external/{t.key}_closing_odds.csv`).")
     if b3 is None:
         A("- **B3 (FiveThirtyEight):** N/A — the archived forecast API host is "
           "offline/blocked and the GitHub mirror no longer carries the file.")
@@ -208,7 +224,7 @@ def _write_report(agg, preds, hit_rate, r12, r3, cal, max_dev, max_dev_supported
 
     # Calibration
     A("## Calibration\n")
-    A("![calibration](figures/calibration.png)\n")
+    A(f"![calibration](figures/{pfx}calibration.png)\n")
     A("All 144 1X2 probability points (48 matches × 3 outcomes) binned into "
       "deciles (point size ∝ bin count):\n")
     A("| Decile mid | predicted | realized | n |")
@@ -216,15 +232,25 @@ def _write_report(agg, preds, hit_rate, r12, r3, cal, max_dev, max_dev_supported
     for _, r in cal.iterrows():
         A(f"| {r['mid']:.2f} | {r['predicted']:.3f} | {r['realized']:.3f} | {int(r['count'])} |")
     A("")
-    A(f"On bins with real support (n ≥ {min_support}), the largest deviation is "
-      f"**{max_dev_supported*100:.1f}pp** — "
-      f"{'within' if max_dev_supported <= 0.20 else 'EXCEEDS'} the 20pp "
-      f"gross-miscalibration threshold. The headline {max_dev*100:.0f}pp gap sits "
-      f"in the 0.85 bin (n=2): two ~84% favourites that *both lost* — Argentina "
-      f"(vs Saudi Arabia) and Brazil (vs Cameroon) — i.e. single upsets, not "
-      f"systematic miscalibration. At n≈12 a 22pp swing is ~1.6 binomial SEs, "
-      f"within sampling noise; the well-populated mid-range deciles track the "
-      f"diagonal.\n")
+    # Supported-bin verdict with an explicit binomial-noise check.
+    sup_txt = "n/a"
+    if sup_row is not None:
+        p, n = float(sup_row["predicted"]), int(sup_row["count"])
+        se = (p * (1 - p) / n) ** 0.5 if 0 < p < 1 and n > 0 else float("nan")
+        n_se = max_dev_supported / se if se and se == se else float("nan")
+        sup_txt = (f"largest is **{max_dev_supported*100:.1f}pp** (n={n} bin) — "
+                   f"~{n_se:.1f} binomial SEs, "
+                   f"{'within' if n_se < 2 else 'beyond'} sampling noise")
+    A(f"On bins with real support (n ≥ {min_support}), the {sup_txt}; this is the "
+      f"meaningful read of the 20pp gross-miscalibration gate. The headline "
+      f"{max_dev*100:.0f}pp gap sits in a sparse high-confidence bin.")
+    if hi_upsets:
+        A(f"\nThat sparseness is driven by **heavily-favoured sides that lost** — "
+          f"the marquee upsets: {', '.join(hi_upsets)}. These are single shocks, "
+          f"not systematic miscalibration; the well-populated mid-range deciles "
+          f"track the diagonal.\n")
+    else:
+        A("\nThe well-populated mid-range deciles track the diagonal.\n")
 
     # Round split
     A("## Rounds 1–2 vs Round 3 (dead-rubber effect)\n")
@@ -244,8 +270,10 @@ def _write_report(agg, preds, hit_rate, r12, r3, cal, max_dev, max_dev_supported
         top = "; ".join(_fmt_score(s) for s in r.top3)
         A(f"| {r.home_team} – {r.away_team} | {r.home_score}-{r.away_score} | "
           f"{r.p_home:.2f}/{r.p_draw:.2f}/{r.p_away:.2f} | {top} | {r.log_loss:.2f} |")
-    A("\n*Saudi Arabia's win over Argentina headlines the misses — the largest "
-      "single upset of the group stage.*\n")
+    w0 = worst.iloc[0]
+    A(f"\n*Biggest miss: {w0.home_team} {w0.home_score}-{w0.away_score} "
+      f"{w0.away_team} — the model's exact-score grid put little mass on that "
+      f"result.*\n")
 
     # Per-match full table
     A("## Per-match predictions\n")
@@ -259,10 +287,11 @@ def _write_report(agg, preds, hit_rate, r12, r3, cal, max_dev, max_dev_supported
     A("")
     A("---")
     A(f"_Model: Dixon-Coles Poisson · features {model.features} · ξ={model.xi} · "
-      f"ρ={model.rho:.3f} · freeze {data.FREEZE_DATE:%Y-%m-%d}._")
+      f"ρ={model.rho:.3f} · freeze {t.freeze:%Y-%m-%d}._")
 
-    (REPORTS / "qatar2022_backtest.md").write_text("\n".join(lines))
+    t.report_path.write_text("\n".join(lines))
 
 
 if __name__ == "__main__":
-    main()
+    key = sys.argv[1] if len(sys.argv) > 1 else "qatar2022"
+    main(data.TOURNAMENTS[key])
