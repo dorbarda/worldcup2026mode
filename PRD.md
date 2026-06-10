@@ -220,6 +220,11 @@ Suggested order of Claude Code sessions: M1+M2 together, M3, M4, M5+M6.
 
 ## 10. v2 Hooks (do not build, just don't preclude)
 
+- Goal-level (intercept) recalibration — v1.1 tested `is_wc` and `is_neutral`
+  fixed effects; both overfit the in-sample tournament and failed out-of-sample
+  validation on a second World Cup (see `reports/goal_level_experiment.md`).
+  Needs a richer attack/defence model + competition-aware dispersion, validated
+  on more than two tournaments.
 - Per-round Elo updates ("live tournament mode") for 2026
 - xG-based λ refinement where FBref coverage exists
 - Polymarket odds ingestion for edge detection

@@ -49,10 +49,9 @@ log loss — passing v1 acceptance. Honest caveats:
   trails even the naive baseline here.
 - **Round 3 was far harder** (RPS 0.303) than rounds 1–2 (0.207) — the
   dead-rubber / late-upset effect.
-- The model **under-predicts goal totals** (every fixture's O2.5 prob < 0.56):
-  the worst misses are blowouts it didn't see (England 6-2 Iran, Spain 7-0 Costa
-  Rica). The training mix pools lower-scoring qualifiers/friendlies, pulling the
-  intercept below the WC-finals scoring rate — the clearest lever for v2.
+- The model **under-predicts goal totals** (predicted mean total ~0.2–0.4 below
+  actual on both tournaments): the worst misses are blowouts (England 6-2 Iran,
+  Spain 7-0 Costa Rica). We tried to fix this (see below) — it doesn't generalize.
 - Exact-score hit rate **6/48** (in the PRD's expected 5–7 band; a vanity metric).
 - Calibration: on well-supported deciles the largest gap is 22.6pp (n=12, ~1.6
   binomial SEs — within noise); the 84pp headline gap is a 2-point bin holding
@@ -179,6 +178,26 @@ auto-writes the markdown report with a per-match table, the 5 worst misses, and
 the round split. Baselines B0 (naive) and B1 (Elo-only multinomial logit) are
 implemented; B2 (de-vigged closing odds) and B3 (538) are wired with documented
 CSV schemas but N/A here — odds weren't compiled and 538's data is offline.
+
+### v1.1 experiment: the goal-level fix that *didn't* generalize
+
+The goal under-prediction looked like an easy win — give WC finals (or neutral
+matches) their own intercept. Tested on 2022 alone, a neutral-venue effect nails
+the total (predicted 2.28 → 2.54 vs actual 2.50). But validated against **2018
+out-of-sample first** (`scripts/experiment_goal_level.py`, writeup in
+[`reports/goal_level_experiment.md`](reports/goal_level_experiment.md)), both
+candidate fixes fail a pre-registered rule (improve RPS on *both* tournaments):
+
+| Fix | coef Qatar / 2018 | RPS Qatar | RPS 2018 | verdict |
+|---|---|---|---|---|
+| `is_wc` | +0.17 / +0.03 | worse | ~flat | reject |
+| `is_neutral` | +0.24 / +0.40 | worse | better | reject |
+
+Each fix is tuned to whichever tournament it sees, the coefficient is unstable
+across freezes, it overshoots the other tournament, and it tends to *worsen* the
+primary metric. This is the textbook overfit the **(b)-before-(a) ordering was
+designed to catch** — deferred to v2 honestly rather than baked in. The shipped
+model is unchanged.
 
 ## Forward prediction (current Elo)
 
