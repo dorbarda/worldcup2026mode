@@ -13,5 +13,8 @@ venv/
 # OS
 .DS_Store
 
+# Forward/current as-of Elo builds are date-specific and regenerable.
+data/processed/asof_*/
+
 # Keep committed data snapshots & processed artifacts tracked explicitly.
 # (Processed parquet files are small and committed for reproducibility.)

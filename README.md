@@ -180,11 +180,32 @@ the round split. Baselines B0 (naive) and B1 (Elo-only multinomial logit) are
 implemented; B2 (de-vigged closing odds) and B3 (538) are wired with documented
 CSV schemas but N/A here — odds weren't compiled and 538's data is offline.
 
+## Forward prediction (current Elo)
+
+The backtest stays frozen at 2022-11-19, but you can predict any fixture from
+**current** ratings:
+
+```bash
+# Quick single-fixture prediction from current Elo (no build step needed):
+python scripts/predict_match.py 'Mexico' 'South Africa' --home Mexico
+python scripts/predict_match.py 'Brazil' 'Argentina'           # neutral venue
+
+# Optionally rebuild persisted Elo/team_match up to any date:
+python scripts/01_build_data.py --freeze-date 2026-06-10        # -> data/processed/asof_2026-06-10/
+```
+
+`predict_match.py` computes Elo over every played match (current), applies the
+fitted Dixon-Coles model, and prints the score matrix, 1X2 / O-U / BTTS, and
+top-5 scores. The `--freeze-date` flag routes non-default builds to
+`data/processed/asof_<date>/`, so the **frozen backtest artifacts are never
+touched** — and `03_run_backtest.py` asserts its model was frozen at the
+tournament cutoff, failing loudly if it ever isn't.
+
 ## Repo layout
 
 ```
 src/wcmodel/   data.py · elo.py · model.py · matrix.py · backtest.py · baselines.py
-scripts/       01_build_data.py · 02_fit_model.py · 03_run_backtest.py · run_all.sh
+scripts/       01_build_data.py · 02_fit_model.py · 03_run_backtest.py · run_all.sh · predict_match.py
 data/          raw/ · processed/ · test/ · external/
 tests/         test_elo.py · test_leakage.py · test_model.py · test_matrix.py · test_metrics.py
 ```

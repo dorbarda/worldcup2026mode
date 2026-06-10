@@ -43,6 +43,14 @@ def main(t: data.Tournament = data.QATAR2022) -> None:
     print(f"=== Backtest: {t.name} group stage (freeze {t.freeze:%Y-%m-%d}) ===\n")
 
     model = FittedModel.load(t.proc_dir / "model.json")
+    # Freeze-pin guard: the backtest is self-contained and must only ever read
+    # artifacts frozen at the tournament cutoff. If a forward/current build had
+    # somehow overwritten them, the cutoff would mismatch and we fail loudly
+    # rather than silently scoring on leaked ratings.
+    assert pd.Timestamp(model.cutoff) == t.freeze, (
+        f"frozen-artifact mismatch: model cutoff {model.cutoff} != {t.freeze:%Y-%m-%d}. "
+        f"Rebuild with `python scripts/01_build_data.py {t.key}`."
+    )
     test = pd.read_csv(t.test_path, parse_dates=["date"])
     assert len(test) == 48, f"expected 48 fixtures, got {len(test)}"
 

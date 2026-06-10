@@ -114,6 +114,19 @@ RUSSIA2018 = Tournament(
 
 TOURNAMENTS = {t.key: t for t in (QATAR2022, RUSSIA2018)}
 
+
+def asof_proc_dir(freeze: pd.Timestamp) -> Path:
+    """Processed-artifact directory for an arbitrary as-of build.
+
+    The Qatar 2022 freeze maps to the canonical flat ``data/processed/`` (the
+    backtest's frozen home); every other date gets its own ``asof_<date>/`` dir
+    so a forward/current build never overwrites the frozen backtest artifacts.
+    """
+    freeze = pd.Timestamp(freeze)
+    if freeze == QATAR2022.freeze:
+        return PROCESSED
+    return PROCESSED / f"asof_{freeze:%Y-%m-%d}"
+
 # --------------------------------------------------------------------------- #
 # Country-name normalization
 # --------------------------------------------------------------------------- #
