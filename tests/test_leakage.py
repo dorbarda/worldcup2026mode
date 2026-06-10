@@ -41,16 +41,16 @@ def test_test_set_disjoint_from_training():
     assert train["date"].max() < test["date"].min()
 
 
-def test_qatar_match_is_home_others_neutral():
+def test_qatar_matches_non_neutral_others_neutral():
     raw = data.load_raw()
     test = data.extract_test_set(raw)
+    # All three of host Qatar's group matches are non-neutral (Qatar is home).
     qatar = test[(test.home_team == "Qatar") | (test.away_team == "Qatar")]
-    # Qatar's group matches: the one where Qatar is home must be non-neutral.
-    qatar_home = test[test.home_team == "Qatar"]
-    assert len(qatar_home) >= 1
-    assert not qatar_home["neutral"].iloc[0]
-    # Every non-Qatar-hosted match is neutral ground.
-    non_qatar = test[(test.home_team != "Qatar")]
+    assert len(qatar) == 3
+    assert (~qatar["neutral"]).all()
+    assert (qatar["home_team"] == "Qatar").all()
+    # Every match not involving Qatar is played on neutral ground.
+    non_qatar = test[(test.home_team != "Qatar") & (test.away_team != "Qatar")]
     assert non_qatar["neutral"].all()
 
 

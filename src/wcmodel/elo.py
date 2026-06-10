@@ -16,7 +16,7 @@ Conventions (per the PRD / eloratings.net):
 * Expectancy: ``W_e = 1 / (10**(-dr/400) + 1)`` with ``dr`` the rating diff
   including the home bonus.
 * Updates are zero-sum: the points the winner gains, the loser loses.
-* Burn-in from 1993; ratings from 2000+ are what the model trusts as features.
+* Burn-in from 1960; ratings from 2000+ are what the model trusts as features.
 """
 
 from __future__ import annotations

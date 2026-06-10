@@ -34,7 +34,9 @@ TEST_FIXTURES = DATA / "test" / "qatar2022_group_stage.csv"
 FREEZE_DATE = pd.Timestamp("2022-11-19")
 
 # Elo burn-in start, and the date from which ratings are trusted as features.
-ELO_BURN_IN_START = pd.Timestamp("1993-01-01")
+# Burn-in runs from 1960 so ratings have ~40 years to converge before the
+# feature era; only 2000+ ratings are used as model features.
+ELO_BURN_IN_START = pd.Timestamp("1960-01-01")
 FEATURE_START = pd.Timestamp("2000-01-01")
 
 # Qatar 2022 group stage window (the test set).

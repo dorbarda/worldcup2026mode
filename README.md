@@ -51,23 +51,29 @@ Recomputed from results (not scraped) so we get the rating each team held *on
 each match date*. Follows eloratings.net conventions: start 1500, K by
 competition (WC 60 / continental 50 / qualifiers 40 / other 30 / friendly 20),
 goal-difference multiplier, +100 home advantage (0 on neutral ground),
-zero-sum updates, 1993 burn-in, 2000+ trusted as features.
+zero-sum updates, 1960 burn-in, 2000+ trusted as features.
 
 Top of the table at the freeze (2022-11-19), as a sanity check — ordering
 matches the known pre-tournament consensus:
 
 | Rank | Team | Elo |
 |---|---|---|
-| 1 | Brazil | 2207 |
-| 2 | Argentina | 2171 |
-| 3 | Netherlands | 2074 |
-| 4 | Spain | 2071 |
-| 5 | Italy | 2030 |
+| 1 | Brazil | 2234 |
+| 2 | Argentina | 2199 |
+| 3 | Netherlands | 2115 |
+| 4 | Spain | 2110 |
+| 5 | Italy | 2070 |
 
-> Our absolute levels run ~30–40 pts above eloratings.net because we seed all
-> teams flat at 1500 and burn in from 1993; the *ordering* and *spread* are what
+> Our absolute levels run above eloratings.net (≈40–65 pts) because we seed all
+> teams flat at 1500 and burn in from 1960; the *ordering* and *spread* are what
 > the model consumes, and those align. Per the PRD risk log, we accept this:
 > ours is reproducible, theirs is not.
+
+> **Neutral-venue note:** all three of host **Qatar's** group matches are
+> non-neutral (`neutral=False`), not just the opener — Qatar is the home side in
+> each. Every other group match is played on neutral ground. The dataset's
+> `neutral` flag captures this and the model honors it (home advantage applies
+> only to Qatar in this tournament).
 
 ## Repo layout
 
