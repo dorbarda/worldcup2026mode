@@ -23,6 +23,7 @@ supplied cutoff.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -253,6 +254,54 @@ class FittedModel:
             raise AssertionError(f"is_home coef must be > 0, got {self.params.get('is_home')}")
         if self.rho >= 0:
             raise AssertionError(f"Dixon-Coles rho must be < 0, got {self.rho}")
+
+    def fixture_lambdas(
+        self,
+        ratings: "pd.Series | dict",
+        home: str,
+        away: str,
+        neutral: bool = True,
+    ) -> tuple[float, float]:
+        """(lambda_home, lambda_away) for a fixture given an as-of ratings snapshot.
+
+        Home advantage applies only on a non-neutral pitch (to the home side).
+        """
+        r_home = float(ratings[home])
+        r_away = float(ratings[away])
+        is_home = 0 if neutral else 1
+        row_h = pd.DataFrame(
+            {"team_elo_pre": [r_home], "opp_elo_pre": [r_away], "is_home": [is_home]}
+        )
+        row_a = pd.DataFrame(
+            {"team_elo_pre": [r_away], "opp_elo_pre": [r_home], "is_home": [0]}
+        )
+        return float(self.predict_lambdas(row_h)[0]), float(self.predict_lambdas(row_a)[0])
+
+    # --- persistence -------------------------------------------------------- #
+    def to_dict(self) -> dict:
+        return {
+            "features": self.features,
+            "params": {k: float(v) for k, v in self.params.items()},
+            "xi": self.xi,
+            "rho": self.rho,
+            "cutoff": str(pd.Timestamp(self.cutoff).date()),
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "FittedModel":
+        return cls(
+            features=list(d["features"]),
+            params=pd.Series(d["params"]),
+            xi=float(d["xi"]),
+            rho=float(d["rho"]),
+            cutoff=pd.Timestamp(d["cutoff"]),
+        )
+
+    @classmethod
+    def load(cls, path) -> "FittedModel":
+        import json
+
+        return cls.from_dict(json.loads(Path(path).read_text()))
 
 
 def fit_model(

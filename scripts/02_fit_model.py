@@ -115,6 +115,23 @@ def main() -> None:
     fitted.assert_sane()
     print("\nSign gate PASSED: elo_diff > 0, is_home > 0, rho < 0.")
 
+    # --- eyeball gate: predicted lambdas for four known fixtures ------------- #
+    el = pd.read_parquet(data.PROCESSED / "elo_history.parquet")
+    snap = (
+        el[el.date < cutoff].sort_values("date").groupby("team")["rating_post_match"].last()
+    )
+    eyeball = [
+        ("Argentina", "Saudi Arabia"),
+        ("Spain", "Costa Rica"),
+        ("Brazil", "Serbia"),
+        ("England", "Iran"),
+    ]
+    print("\nEyeball gate (predicted λ, neutral venue):")
+    print(f"  {'fixture':<26}{'λ_home':>8}{'λ_away':>8}{'total':>8}{'ratio':>8}")
+    for h, a in eyeball:
+        lam_h, lam_a = fitted.fixture_lambdas(snap, h, a, neutral=True)
+        print(f"  {h+' - '+a:<26}{lam_h:>8.2f}{lam_a:>8.2f}{lam_h+lam_a:>8.2f}{lam_h/lam_a:>8.1f}")
+
     out = {
         "features": fitted.features,
         "params": {k: float(v) for k, v in fitted.params.items()},

@@ -18,8 +18,8 @@ See [`PRD.md`](PRD.md) for the full specification.
 | M1 | Data pipeline (clean, normalize, leakage freeze, team-match rows) | ✅ done |
 | M2 | Elo engine (as-of-date ratings) | ✅ done |
 | M3 | Poisson GLM + ξ time-decay tuning + Dixon-Coles ρ | ✅ done |
-| M4 | Score matrix + heatmap render | ⬜ next |
-| M5 | Backtest (RPS / log-loss / Brier / calibration) + baselines B0–B3 | ⬜ |
+| M4 | Score matrix + heatmap render | ✅ done |
+| M5 | Backtest (RPS / log-loss / Brier / calibration) + baselines B0–B3 | ⬜ next |
 | M6 | Auto report + README headline numbers | ⬜ |
 
 ## Quickstart
@@ -98,13 +98,36 @@ Fitted values at the freeze:
 | elo_sum | dropped | no out-of-sample gain |
 
 A sign gate (`elo_diff > 0`, `is_home > 0`, `ρ < 0`) is asserted in code before
-the model is accepted.
+the model is accepted. An **eyeball gate** then prints predicted λs for four
+known fixtures (Argentina–Saudi Arabia, Spain–Costa Rica, Brazil–Serbia,
+England–Iran) so a flattened slope would be caught before the matrix machinery:
+
+| Fixture (neutral) | λ home | λ away | ratio |
+|---|---|---|---|
+| Argentina – Saudi Arabia | 2.47 | 0.45 | 5.5× |
+| Spain – Costa Rica | 1.68 | 0.66 | 2.6× |
+| Brazil – Serbia | 1.76 | 0.63 | 2.8× |
+| England – Iran | 1.16 | 0.95 | 1.2× |
+
+The `elo_diff` slope is robust: refitting with friendlies fully excluded moves
+it by <0.01 (0.768 → 0.773), so friendlies are not flattening it. A 500-pt Elo
+gap maps to a ~6.8× goal ratio (both λs shift), in line with the market shape.
+
+### Score matrix (`src/wcmodel/matrix.py`)
+`score_matrix(λ, μ, ρ)` builds the 9×9 exact-score grid in a fixed order:
+**(1)** independent Poisson outer product on a wide grid → **(2)** Dixon-Coles τ
+on the four low cells → **(3)** fold the 9+ tail into the 8-bucket →
+**(4)** renormalize last. The grid sums to 1 to machine precision (tested at
+1e-9). `derived_markets` gives 1X2 / O-U 2.5 / BTTS / top-5 scores;
+`render_matrix` draws the green→red heatmap.
+
+![sample score matrices](reports/figures/sample_matrices.png)
 
 ## Repo layout
 
 ```
-src/wcmodel/   data.py · elo.py · model.py  (matrix.py · backtest.py · baselines.py to come)
+src/wcmodel/   data.py · elo.py · model.py · matrix.py  (backtest.py · baselines.py to come)
 scripts/       01_build_data.py · 02_fit_model.py  (03_run_backtest.py to come)
 data/          raw/ · processed/ · test/ · external/
-tests/         test_elo.py · test_leakage.py · test_model.py  (test_matrix.py · test_metrics.py to come)
+tests/         test_elo.py · test_leakage.py · test_model.py · test_matrix.py  (test_metrics.py to come)
 ```

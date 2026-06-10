@@ -211,6 +211,7 @@ Suggested order of Claude Code sessions: M1+M2 together, M3, M4, M5+M6.
 |---|---|
 | Country naming mismatches across years | Normalization map in `data.py`, unit-tested |
 | Elo divergence from eloratings.net | Accept ±25 pts; ours is reproducible, theirs is not |
+| Elo deviation concentrated in France | France runs −25 to −45 on pairwise diffs vs one external reference (eloratings.net); persisted across the 1993→1960 burn-in extension; accepted as a modeling difference, not a bug. Flagged so France backtest predictions aren't mis-debugged later. |
 | Closing-odds data unobtainable | B2 marked N/A; B0/B1 sufficient for v1 acceptance |
 | Single-tournament test variance | Stated caveat; optional stretch: also backtest WC 2018 group stage with freeze at 2018-06-13 (cheap once pipeline exists — recommended if time allows) |
 | Tail goals (>8) | Aggregated into the 8-bucket; matrix always sums to 1 |
