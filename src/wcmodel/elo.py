@@ -107,6 +107,7 @@ def compute_elo(
 
     ratings: dict[str, float] = {}
     records: list[dict] = []
+    match_id = 0
 
     for row in matches.itertuples(index=False):
         if row.date < burn_in_start:
@@ -138,6 +139,7 @@ def compute_elo(
         ratings[away] = r_away_post
 
         common = {
+            "match_id": match_id,
             "date": row.date,
             "neutral": row.neutral,
             "tournament": row.tournament,
@@ -147,6 +149,7 @@ def compute_elo(
         records.append(
             {
                 **common,
+                "side": "home",
                 "team": home,
                 "opponent": away,
                 "is_home": 0 if row.neutral else 1,
@@ -160,6 +163,7 @@ def compute_elo(
         records.append(
             {
                 **common,
+                "side": "away",
                 "team": away,
                 "opponent": home,
                 "is_home": 0,
@@ -170,9 +174,12 @@ def compute_elo(
                 "team_elo_post": r_away_post,
             }
         )
+        match_id += 1
 
     cols = [
+        "match_id",
         "date",
+        "side",
         "team",
         "opponent",
         "is_home",

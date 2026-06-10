@@ -17,8 +17,8 @@ See [`PRD.md`](PRD.md) for the full specification.
 |---|---|---|
 | M1 | Data pipeline (clean, normalize, leakage freeze, team-match rows) | ✅ done |
 | M2 | Elo engine (as-of-date ratings) | ✅ done |
-| M3 | Poisson GLM + ξ time-decay tuning + Dixon-Coles ρ | ⬜ next |
-| M4 | Score matrix + heatmap render | ⬜ |
+| M3 | Poisson GLM + ξ time-decay tuning + Dixon-Coles ρ | ✅ done |
+| M4 | Score matrix + heatmap render | ⬜ next |
 | M5 | Backtest (RPS / log-loss / Brier / calibration) + baselines B0–B3 | ⬜ |
 | M6 | Auto report + README headline numbers | ⬜ |
 
@@ -75,11 +75,36 @@ matches the known pre-tournament consensus:
 > `neutral` flag captures this and the model honors it (home advantage applies
 > only to Qatar in this tournament).
 
+### Model (`src/wcmodel/model.py`)
+A weighted Poisson GLM (log link), `goals ~ intercept + elo_diff + is_home`,
+with multiplicative sample weights: exponential time decay `exp(-ξ·days)`,
+competition importance (WC/continental 1.0 / qualifier 0.9 / other 0.7 /
+friendly 0.5), and a COVID empty-stadium down-weight (×0.7, 2020-03→2021-06).
+Then a Dixon-Coles ρ correction fit by MLE on the low-score cells.
+
+`ξ` is tuned by maximizing log-likelihood on a 1-year out-of-sample slice
+(full curve → `reports/xi_tuning.csv` + `reports/figures/xi_tuning.png`). The
+optional `elo_sum` feature is kept only if it improves the held-out score.
+
+Fitted values at the freeze:
+
+| | value | note |
+|---|---|---|
+| ξ | 0.0015 /day | half-life ≈ 462 days (~1.3 yr) |
+| intercept | +0.048 | even neutral match ≈ 1.05 goals/side |
+| elo_diff | +0.768 | stronger team scores more ✓ |
+| is_home | +0.254 | ≈ +29% home goal rate ✓ |
+| ρ (Dixon-Coles) | −0.048 | slight low-score dependence ✓ |
+| elo_sum | dropped | no out-of-sample gain |
+
+A sign gate (`elo_diff > 0`, `is_home > 0`, `ρ < 0`) is asserted in code before
+the model is accepted.
+
 ## Repo layout
 
 ```
-src/wcmodel/   data.py · elo.py  (model.py · matrix.py · backtest.py · baselines.py to come)
-scripts/       01_build_data.py  (02_fit_model.py · 03_run_backtest.py to come)
+src/wcmodel/   data.py · elo.py · model.py  (matrix.py · backtest.py · baselines.py to come)
+scripts/       01_build_data.py · 02_fit_model.py  (03_run_backtest.py to come)
 data/          raw/ · processed/ · test/ · external/
-tests/         test_elo.py · test_leakage.py  (test_matrix.py · test_metrics.py to come)
+tests/         test_elo.py · test_leakage.py · test_model.py  (test_matrix.py · test_metrics.py to come)
 ```
