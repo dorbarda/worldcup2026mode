@@ -16,5 +16,8 @@ venv/
 # Forward/current as-of Elo builds are date-specific and regenerable.
 data/processed/asof_*/
 
+# Per-fixture 2026 heatmaps (regenerable via predict_fixtures.py --plot).
+reports/figures/wc2026/
+
 # Keep committed data snapshots & processed artifacts tracked explicitly.
 # (Processed parquet files are small and committed for reproducibility.)

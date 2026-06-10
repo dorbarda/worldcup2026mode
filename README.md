@@ -213,6 +213,25 @@ python scripts/predict_match.py 'Brazil' 'Argentina'           # neutral venue
 python scripts/01_build_data.py --freeze-date 2026-06-10        # -> data/processed/asof_2026-06-10/
 ```
 
+### 2026 World Cup group stage (update-as-you-go)
+
+The snapshot already carries the full 72-fixture 2026 group stage with correct
+host/neutral flags. `predict_fixtures.py` predicts **each team's next unplayed
+group match** from current Elo (the openers now, the next matchday after results
+land), writing `reports/wc2026_predictions.csv`:
+
+```bash
+python scripts/predict_fixtures.py            # each team's next match (24 now)
+python scripts/predict_fixtures.py --refresh  # pull latest results, then predict
+python scripts/predict_fixtures.py --all      # all remaining group games
+python scripts/predict_fixtures.py --plot     # also save per-fixture heatmaps
+```
+
+The loop: run → play the matches → `--refresh` re-pulls results so Elo updates →
+re-run for the next matchday. Model coefficients stay frozen at the
+backtest-validated 2022-11-19 fit; only the ratings move. Knockouts are out of
+scope (no ET/penalties layer yet).
+
 `predict_match.py` computes Elo over every played match (current), applies the
 fitted Dixon-Coles model, and prints the score matrix, 1X2 / O-U / BTTS, and
 top-5 scores. The `--freeze-date` flag routes non-default builds to
@@ -224,7 +243,8 @@ tournament cutoff, failing loudly if it ever isn't.
 
 ```
 src/wcmodel/   data.py · elo.py · model.py · matrix.py · backtest.py · baselines.py
-scripts/       01_build_data.py · 02_fit_model.py · 03_run_backtest.py · run_all.sh · predict_match.py
+scripts/       01_build_data.py · 02_fit_model.py · 03_run_backtest.py · run_all.sh
+               predict_match.py · predict_fixtures.py · experiment_goal_level.py
 data/          raw/ · processed/ · test/ · external/
 tests/         test_elo.py · test_leakage.py · test_model.py · test_matrix.py · test_metrics.py
 ```
