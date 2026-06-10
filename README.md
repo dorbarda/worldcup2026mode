@@ -11,6 +11,37 @@ against the **Qatar 2022 group stage** (48 matches), with honest baselines.
 
 See [`PRD.md`](PRD.md) for the full specification.
 
+## Headline results — Qatar 2022 group stage (48 matches)
+
+Predictions frozen at 2022-11-19, scored against the actual results. Lower is
+better. Full auto-generated report: [`reports/qatar2022_backtest.md`](reports/qatar2022_backtest.md).
+
+| Source | RPS ↓ | Log loss ↓ | Brier ↓ |
+|---|---|---|---|
+| **Model (Dixon-Coles)** | **0.2389** | **3.019** | **0.640** |
+| B0 Naive (1.35/1.35) | 0.2398 | 3.071 | 0.647 |
+| B1 Elo-only (MNLogit) | 0.2454 | — | 0.653 |
+| B2 Market / B3 538 | N/A | N/A | N/A |
+
+The model **beats both baselines on RPS** (the primary metric) and on Brier and
+log loss — passing v1 acceptance. Honest caveats:
+
+- The margin over the naive baseline is **thin (0.0009 RPS)**. Qatar 2022 was
+  famously upset-heavy (Saudi over Argentina, Cameroon over Brazil, Japan over
+  Germany *and* Spain), and **48 matches is a smoke test, not a verdict** — the
+  PRD says as much. B1's confident Elo predictions were punished hardest, so it
+  trails even the naive baseline here.
+- **Round 3 was far harder** (RPS 0.303) than rounds 1–2 (0.207) — the
+  dead-rubber / late-upset effect.
+- The model **under-predicts goal totals** (every fixture's O2.5 prob < 0.56):
+  the worst misses are blowouts it didn't see (England 6-2 Iran, Spain 7-0 Costa
+  Rica). The training mix pools lower-scoring qualifiers/friendlies, pulling the
+  intercept below the WC-finals scoring rate — the clearest lever for v2.
+- Exact-score hit rate **6/48** (in the PRD's expected 5–7 band; a vanity metric).
+- Calibration: on well-supported deciles the largest gap is 22.6pp (n=12, ~1.6
+  binomial SEs — within noise); the 84pp headline gap is a 2-point bin holding
+  exactly the two marquee upsets.
+
 ## Status
 
 | Milestone | Description | State |
@@ -19,8 +50,10 @@ See [`PRD.md`](PRD.md) for the full specification.
 | M2 | Elo engine (as-of-date ratings) | ✅ done |
 | M3 | Poisson GLM + ξ time-decay tuning + Dixon-Coles ρ | ✅ done |
 | M4 | Score matrix + heatmap render | ✅ done |
-| M5 | Backtest (RPS / log-loss / Brier / calibration) + baselines B0–B3 | ⬜ next |
-| M6 | Auto report + README headline numbers | ⬜ |
+| M5 | Backtest (RPS / log-loss / Brier / calibration) + baselines B0–B3 | ✅ done |
+| M6 | Auto report + README headline numbers | ✅ done |
+
+**v1 complete.** `./scripts/run_all.sh` goes raw CSV → report with no manual steps; `pytest` is green (72 tests).
 
 ## Quickstart
 
@@ -123,11 +156,19 @@ on the four low cells → **(3)** fold the 9+ tail into the 8-bucket →
 
 ![sample score matrices](reports/figures/sample_matrices.png)
 
+### Backtest (`src/wcmodel/backtest.py`, `baselines.py`)
+Predicts all 48 group matches from the frozen snapshot (Elo *not* updated
+between rounds), scores RPS / exact-score log loss / Brier / calibration, and
+auto-writes the markdown report with a per-match table, the 5 worst misses, and
+the round split. Baselines B0 (naive) and B1 (Elo-only multinomial logit) are
+implemented; B2 (de-vigged closing odds) and B3 (538) are wired with documented
+CSV schemas but N/A here — odds weren't compiled and 538's data is offline.
+
 ## Repo layout
 
 ```
-src/wcmodel/   data.py · elo.py · model.py · matrix.py  (backtest.py · baselines.py to come)
-scripts/       01_build_data.py · 02_fit_model.py  (03_run_backtest.py to come)
+src/wcmodel/   data.py · elo.py · model.py · matrix.py · backtest.py · baselines.py
+scripts/       01_build_data.py · 02_fit_model.py · 03_run_backtest.py · run_all.sh
 data/          raw/ · processed/ · test/ · external/
-tests/         test_elo.py · test_leakage.py · test_model.py · test_matrix.py  (test_metrics.py to come)
+tests/         test_elo.py · test_leakage.py · test_model.py · test_matrix.py · test_metrics.py
 ```
