@@ -23,9 +23,12 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from wcmodel import backtest as bt, data, matrix as mx, odds  # noqa: E402
-from wcmodel.forward import current_ratings, load_schedule, refresh_snapshot  # noqa: E402
+from wcmodel import backtest as bt, data, elo, matrix as mx, odds  # noqa: E402
+from wcmodel.forward import load_schedule, refresh_snapshot  # noqa: E402
 from wcmodel.model import FittedModel  # noqa: E402
+
+EDGE_THRESHOLD_PAGE = 0.15
+EDGE_MOMENTUM_ALPHA = 2.0
 
 DOCS = data.ROOT / "docs"
 FORWARD_LOG = data.DATA / "external" / "wc2026_odds.csv"  # (only used via odds module)
@@ -95,6 +98,59 @@ def _game_card(rec) -> str:
     </div>"""
 
 
+def _probs3(model, ratings, h, a, neutral):
+    lam, mu = model.fixture_lambdas(ratings, h, a, neutral=neutral)
+    d = mx.derived_markets(mx.score_matrix(lam, mu, model.rho))
+    return np.array([d["p_home"], d["p_draw"], d["p_away"]])
+
+
+def _edges_section(model, upcoming, snap, elo_long, as_of, max_show=10):
+    """Upcoming games where |model - market| >= threshold, with the 3 checks."""
+    devig = odds.load_market(upcoming.reset_index(drop=True))
+    if devig is None:
+        return ""
+    bonus = elo.momentum(elo_long, as_of, alpha=EDGE_MOMENTUM_ALPHA,
+                         half_life_days=270, cap=120)
+    eff = snap.add(bonus.reindex(snap.index).fillna(0.0))
+
+    items = []
+    for i, fx in enumerate(upcoming.itertuples(index=False)):
+        h, a, neutral = fx.home_team, fx.away_team, bool(fx.neutral)
+        if h not in snap.index or a not in snap.index or np.isnan(devig[i]).all():
+            continue
+        ours = _probs3(model, snap, h, a, neutral)
+        edge = float(np.max(np.abs(ours - devig[i])))
+        if edge < EDGE_THRESHOLD_PAGE:
+            continue
+        new_edge = float(np.max(np.abs(_probs3(model, eff, h, a, neutral) - devig[i])))
+        if new_edge < edge - 0.02:
+            form = "<span class='toward'>form may explain it</span>"
+        elif new_edge > edge + 0.02:
+            form = "<span class='away'>not a form story</span>"
+        else:
+            form = "<span class='muted'>form ≈ no change</span>"
+        host = ""
+        if not neutral:
+            tag = "over" if ours[0] > devig[i][0] + 0.05 else (
+                "under" if ours[0] < devig[i][0] - 0.05 else "≈")
+            host = f"<span class='host'>HOST {h} ({tag})</span>"
+        items.append((edge, f"""
+        <div class="erow">
+          <div class="etop"><b>{h} v {a}</b><span class="epp">{edge*100:.0f}pp</span></div>
+          <div class="emid">{fx.date:%b %d} · ours {ours[0]*100:.0f}/{ours[1]*100:.0f}/{ours[2]*100:.0f}
+               · mkt {devig[i][0]*100:.0f}/{devig[i][1]*100:.0f}/{devig[i][2]*100:.0f}</div>
+          <div class="eflags">{host}{form}<span class="inj">🔍 check injuries</span></div>
+        </div>"""))
+    if not items:
+        return ""
+    items.sort(reverse=True, key=lambda t: t[0])
+    body = "".join(h for _, h in items[:max_show])
+    extra = f"<div class='emore'>+{len(items)-max_show} more</div>" if len(items) > max_show else ""
+    return (f"<div class='edges'><div class='etitle'>⚠️ Big disagreements vs market "
+            f"(≥{EDGE_THRESHOLD_PAGE*100:.0f}pp)</div>{body}{extra}"
+            f"<div class='ehint'>Where we differ most — check injuries & host/form before trusting either side.</div></div>")
+
+
 def build(n: int, refresh: bool) -> None:
     if refresh:
         refresh_snapshot()
@@ -103,7 +159,9 @@ def build(n: int, refresh: bool) -> None:
     if upcoming.empty:
         raise SystemExit("No upcoming fixtures.")
     fixtures = upcoming.head(n).reset_index(drop=True)
-    snap, as_of = current_ratings(played)
+    elo_long = elo.compute_elo(played.sort_values("date", kind="mergesort"))
+    as_of = played["date"].max() + pd.Timedelta(days=1)
+    snap = elo.latest_ratings(elo_long, as_of)
     devig = odds.load_market(fixtures)
     decimal = odds.load_market_decimal(fixtures)
 
@@ -129,6 +187,8 @@ def build(n: int, refresh: bool) -> None:
             "best_ev": best_ev,
         })
 
+    edges_html = _edges_section(model, upcoming, snap, elo_long, as_of)
+
     sc = _scorecard()
     sc_html = ""
     if sc:
@@ -141,6 +201,7 @@ def build(n: int, refresh: bool) -> None:
     html = _PAGE.format(
         updated=pd.Timestamp.now("UTC").strftime("%Y-%m-%d %H:%M UTC"),
         asof=f"{as_of:%Y-%m-%d}", scorecard=sc_html, cards=cards, n=len(recs),
+        edges=edges_html,
     )
     DOCS.mkdir(exist_ok=True)
     (DOCS / "index.html").write_text(html, encoding="utf-8")
@@ -179,6 +240,21 @@ _PAGE = """<!doctype html>
   .scores {{ margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; }}
   .chip {{ background:#232733; border-radius:20px; padding:3px 10px; font-size:12px; color:#c7ccd4; }}
   .meta {{ color:#8b929c; font-size:12px; margin-top:8px; }}
+  .edges {{ margin:18px 0 6px; }}
+  .etitle {{ font-size:15px; font-weight:600; color:#f0c34b; margin-bottom:8px; }}
+  .erow {{ background:#171a21; border:1px solid #232733; border-left:3px solid #f0c34b;
+           border-radius:10px; padding:10px 12px; margin:8px 0; }}
+  .etop {{ display:flex; justify-content:space-between; font-size:15px; }}
+  .etop .epp {{ color:#f0a93b; font-weight:700; }}
+  .emid {{ color:#8b929c; font-size:12px; margin-top:3px; }}
+  .eflags {{ margin-top:7px; display:flex; gap:6px; flex-wrap:wrap; font-size:11px; }}
+  .eflags span {{ padding:2px 7px; border-radius:12px; background:#232733; }}
+  .eflags .host {{ background:#2a1f12; color:#e0894a; }}
+  .eflags .toward {{ background:#13251a; color:#37d67a; }}
+  .eflags .away {{ color:#9aa1ab; }}
+  .eflags .inj {{ background:#1c1b2a; color:#b9a7f0; }}
+  .emore {{ color:#8b929c; font-size:12px; padding:4px; }}
+  .ehint {{ color:#5b626d; font-size:11px; margin-top:6px; }}
   footer {{ color:#5b626d; font-size:11px; text-align:center; padding:20px 16px 40px; }}
 </style></head>
 <body>
@@ -187,7 +263,7 @@ _PAGE = """<!doctype html>
     <div class="sub">Next {n} kickoffs · Dixon-Coles Poisson on current Elo (to {asof}) · updated {updated}</div>
   </header>
   {scorecard}
-  <div class="wrap">{cards}</div>
+  <div class="wrap">{cards}{edges}</div>
   <footer>
     Our model is independent of the odds. <b>Fair</b> = 1/our probability;
     <b>EV</b> = our&nbsp;prob × book&nbsp;odds − 1 (positive ⇒ value by the model).

@@ -30,12 +30,27 @@
   .scores { margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; }
   .chip { background:#232733; border-radius:20px; padding:3px 10px; font-size:12px; color:#c7ccd4; }
   .meta { color:#8b929c; font-size:12px; margin-top:8px; }
+  .edges { margin:18px 0 6px; }
+  .etitle { font-size:15px; font-weight:600; color:#f0c34b; margin-bottom:8px; }
+  .erow { background:#171a21; border:1px solid #232733; border-left:3px solid #f0c34b;
+           border-radius:10px; padding:10px 12px; margin:8px 0; }
+  .etop { display:flex; justify-content:space-between; font-size:15px; }
+  .etop .epp { color:#f0a93b; font-weight:700; }
+  .emid { color:#8b929c; font-size:12px; margin-top:3px; }
+  .eflags { margin-top:7px; display:flex; gap:6px; flex-wrap:wrap; font-size:11px; }
+  .eflags span { padding:2px 7px; border-radius:12px; background:#232733; }
+  .eflags .host { background:#2a1f12; color:#e0894a; }
+  .eflags .toward { background:#13251a; color:#37d67a; }
+  .eflags .away { color:#9aa1ab; }
+  .eflags .inj { background:#1c1b2a; color:#b9a7f0; }
+  .emore { color:#8b929c; font-size:12px; padding:4px; }
+  .ehint { color:#5b626d; font-size:11px; margin-top:6px; }
   footer { color:#5b626d; font-size:11px; text-align:center; padding:20px 16px 40px; }
 </style></head>
 <body>
   <header>
     <h1>⚽ World Cup 2026 — Model vs Market</h1>
-    <div class="sub">Next 3 kickoffs · Dixon-Coles Poisson on current Elo (to 2026-06-12) · updated 2026-06-12 21:11 UTC</div>
+    <div class="sub">Next 3 kickoffs · Dixon-Coles Poisson on current Elo (to 2026-06-13) · updated 2026-06-12 21:15 UTC</div>
   </header>
   <div class='scorebar'>Forward record · 3 games · model RPS <b>0.164</b> vs market <b>0.157</b> <span class='market'>(market ahead)</span></div>
   <div class="wrap">
@@ -71,7 +86,67 @@
       <div class='edge'>Model's biggest gap vs book: <b>Morocco</b> (+45% EV by our numbers)</div>
       <div class="scores"><span class='chip'>1-0 <b>14%</b></span><span class='chip'>1-1 <b>14%</b></span><span class='chip'>0-0 <b>13%</b></span></div>
       <div class="meta">xG 1.24–0.89 · Over 2.5 36% · BTTS 42%</div>
-    </div></div>
+    </div><div class='edges'><div class='etitle'>⚠️ Big disagreements vs market (≥15pp)</div>
+        <div class="erow">
+          <div class="etop"><b>Ghana v Panama</b><span class="epp">34pp</span></div>
+          <div class="emid">Jun 17 · ours 14/25/61
+               · mkt 45/28/27</div>
+          <div class="eflags"><span class='away'>not a form story</span><span class="inj">🔍 check injuries</span></div>
+        </div>
+        <div class="erow">
+          <div class="etop"><b>Belgium v Iran</b><span class="epp">28pp</span></div>
+          <div class="emid">Jun 21 · ours 40/31/29
+               · mkt 68/20/12</div>
+          <div class="eflags"><span class='away'>not a form story</span><span class="inj">🔍 check injuries</span></div>
+        </div>
+        <div class="erow">
+          <div class="etop"><b>Austria v Jordan</b><span class="epp">26pp</span></div>
+          <div class="emid">Jun 16 · ours 46/30/24
+               · mkt 72/17/11</div>
+          <div class="eflags"><span class='away'>not a form story</span><span class="inj">🔍 check injuries</span></div>
+        </div>
+        <div class="erow">
+          <div class="etop"><b>Ecuador v Germany</b><span class="epp">23pp</span></div>
+          <div class="emid">Jun 25 · ours 37/31/31
+               · mkt 20/25/55</div>
+          <div class="eflags"><span class='away'>not a form story</span><span class="inj">🔍 check injuries</span></div>
+        </div>
+        <div class="erow">
+          <div class="etop"><b>Curaçao v Ivory Coast</b><span class="epp">21pp</span></div>
+          <div class="emid">Jun 25 · ours 17/27/56
+               · mkt 7/16/77</div>
+          <div class="eflags"><span class='away'>not a form story</span><span class="inj">🔍 check injuries</span></div>
+        </div>
+        <div class="erow">
+          <div class="etop"><b>United States v Australia</b><span class="epp">19pp</span></div>
+          <div class="emid">Jun 19 · ours 35/29/36
+               · mkt 54/25/21</div>
+          <div class="eflags"><span class='host'>HOST United States (under)</span><span class='away'>not a form story</span><span class="inj">🔍 check injuries</span></div>
+        </div>
+        <div class="erow">
+          <div class="etop"><b>Ivory Coast v Ecuador</b><span class="epp">19pp</span></div>
+          <div class="emid">Jun 14 · ours 15/26/59
+               · mkt 26/34/40</div>
+          <div class="eflags"><span class='muted'>form ≈ no change</span><span class="inj">🔍 check injuries</span></div>
+        </div>
+        <div class="erow">
+          <div class="etop"><b>Iraq v Norway</b><span class="epp">18pp</span></div>
+          <div class="emid">Jun 16 · ours 14/25/62
+               · mkt 7/14/80</div>
+          <div class="eflags"><span class='toward'>form may explain it</span><span class="inj">🔍 check injuries</span></div>
+        </div>
+        <div class="erow">
+          <div class="etop"><b>Egypt v Iran</b><span class="epp">17pp</span></div>
+          <div class="emid">Jun 26 · ours 26/30/44
+               · mkt 42/31/27</div>
+          <div class="eflags"><span class='toward'>form may explain it</span><span class="inj">🔍 check injuries</span></div>
+        </div>
+        <div class="erow">
+          <div class="etop"><b>Jordan v Algeria</b><span class="epp">17pp</span></div>
+          <div class="emid">Jun 22 · ours 24/30/46
+               · mkt 15/23/63</div>
+          <div class="eflags"><span class='away'>not a form story</span><span class="inj">🔍 check injuries</span></div>
+        </div><div class='emore'>+4 more</div><div class='ehint'>Where we differ most — check injuries & host/form before trusting either side.</div></div></div>
   <footer>
     Our model is independent of the odds. <b>Fair</b> = 1/our probability;
     <b>EV</b> = our&nbsp;prob × book&nbsp;odds − 1 (positive ⇒ value by the model).
