@@ -259,6 +259,28 @@ top-5 scores. The `--freeze-date` flag routes non-default builds to
 touched** — and `03_run_backtest.py` asserts its model was frozen at the
 tournament cutoff, failing loudly if it ever isn't.
 
+## Live page & daily automation
+
+A simple static page (`docs/index.html`, built by `scripts/build_site.py`) shows
+the **next 3 kickoffs** with our 1X2 (probability + fair odds), top-3 scorelines,
+the market price, and the model's EV — plus a running model-vs-market RPS strip.
+
+`.github/workflows/daily.yml` runs **06:00 UTC daily** (= 09:00 Israel during the
+summer tournament) and on demand: fetch odds → refresh results & Elo → rebuild
+the page and report → commit back. To enable it:
+
+1. Make `main` the **default branch** (scheduled Actions only fire from default).
+2. **Settings → Pages → Deploy from branch → `main` / `docs`** (the page is public).
+3. Add repo secret **`ODDS_API_KEY`** from [the-odds-api.com](https://the-odds-api.com)
+   (free tier; `scripts/fetch_odds.py` pulls `soccer_fifa_world_cup` h2h odds and
+   writes the median price per fixture). Everything is **fail-soft**: no key or a
+   bad response just keeps the existing odds CSV, so the page never breaks.
+
+```bash
+python scripts/build_site.py          # rebuild docs/index.html
+ODDS_API_KEY=xxxx python scripts/fetch_odds.py   # refresh market odds
+```
+
 ## Repo layout
 
 ```

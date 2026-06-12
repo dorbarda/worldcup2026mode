@@ -31,9 +31,9 @@ jobs:
       - name: Install
         run: pip install -e .
 
-      - name: Fetch bookmaker odds (fail-soft)
+      - name: Fetch bookmaker odds from The Odds API (fail-soft)
         env:
-          ODDS_SOURCE_URL: ${{ vars.ODDS_SOURCE_URL }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python scripts/fetch_odds.py || true
 
       - name: Refresh results, update Elo + forward log
