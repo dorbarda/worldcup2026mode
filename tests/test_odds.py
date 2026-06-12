@@ -74,6 +74,19 @@ def test_load_market_missing_file_is_none():
                             "/no/such/file.csv") is None
 
 
+def test_load_market_decimal_returns_raw_prices(tmp_path):
+    csv = tmp_path / "odds.csv"
+    csv.write_text(
+        "home_team,away_team,odds_home,odds_draw,odds_away\n"
+        "Brazil,Morocco,-160,+285,+475\n"
+    )
+    fixtures = pd.DataFrame({"home_team": ["Brazil"], "away_team": ["Morocco"]})
+    dec = odds.load_market_decimal(fixtures, csv)
+    # Raw decimal (with vig) -> sums of inverse exceed 1, unlike the de-vigged probs.
+    assert dec[0][0] == pytest.approx(1 + 100 / 160)  # -160 home favourite
+    assert (1 / dec[0]).sum() > 1.0
+
+
 # --------------------------------------------------------------------------- #
 # Forward-log result backfill must key on DATE (no historical-friendly bleed)
 # --------------------------------------------------------------------------- #
