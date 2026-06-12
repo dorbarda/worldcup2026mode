@@ -79,3 +79,27 @@ def load_market(fixtures: pd.DataFrame, path: Path | str | None = None):
     if np.isnan(out).all():
         return None
     return out
+
+
+def load_market_decimal(fixtures: pd.DataFrame, path: Path | str | None = None):
+    """Raw (with-vig) decimal odds aligned to ``fixtures``: (n, 3) or None.
+
+    Unlike :func:`load_market` (de-vigged probabilities), these are the prices you
+    actually bet at — needed for value/EV: a bet is +EV by the model when
+    ``our_prob * offered_decimal > 1``.
+    """
+    path = Path(path) if path is not None else (DATA / "external" / "wc2026_odds.csv")
+    if not Path(path).exists():
+        return None
+    odds = pd.read_csv(path)
+    odds["home_team"] = odds["home_team"].astype(str)
+    odds["away_team"] = odds["away_team"].astype(str)
+    merged = fixtures.merge(odds, on=["home_team", "away_team"], how="left")
+
+    out = np.full((len(merged), 3), np.nan)
+    for i, r in enumerate(merged.itertuples(index=False)):
+        if pd.notna(getattr(r, "odds_home", np.nan)):
+            out[i] = [parse_odds(r.odds_home), parse_odds(r.odds_draw), parse_odds(r.odds_away)]
+    if np.isnan(out).all():
+        return None
+    return out
