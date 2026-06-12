@@ -16,7 +16,18 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .data import DATA
+from .data import DATA, normalize_team
+
+
+def canon_team(name) -> str:
+    """Canonical team label for odds matching.
+
+    Folds the '&' vs 'and' spelling difference (The Odds API writes
+    'Bosnia & Herzegovina'; the football dataset uses 'Bosnia and Herzegovina')
+    and then applies the usual country-name normalization, so odds from any
+    source join cleanly onto the fixtures.
+    """
+    return normalize_team(str(name).replace(" & ", " and ").strip())
 
 
 def _american_to_decimal(m: float) -> float:
@@ -68,8 +79,12 @@ def load_market(fixtures: pd.DataFrame, path: Path | str | None = None):
     if not Path(path).exists():
         return None
     odds = pd.read_csv(path)
-    odds["home_team"] = odds["home_team"].astype(str)
-    odds["away_team"] = odds["away_team"].astype(str)
+    odds["home_team"] = odds["home_team"].map(canon_team)
+    odds["away_team"] = odds["away_team"].map(canon_team)
+    odds = odds.drop_duplicates(subset=["home_team", "away_team"], keep="last")
+    fixtures = fixtures.copy()
+    fixtures["home_team"] = fixtures["home_team"].map(canon_team)
+    fixtures["away_team"] = fixtures["away_team"].map(canon_team)
     merged = fixtures.merge(odds, on=["home_team", "away_team"], how="left")
 
     out = np.full((len(merged), 3), np.nan)
@@ -92,8 +107,12 @@ def load_market_decimal(fixtures: pd.DataFrame, path: Path | str | None = None):
     if not Path(path).exists():
         return None
     odds = pd.read_csv(path)
-    odds["home_team"] = odds["home_team"].astype(str)
-    odds["away_team"] = odds["away_team"].astype(str)
+    odds["home_team"] = odds["home_team"].map(canon_team)
+    odds["away_team"] = odds["away_team"].map(canon_team)
+    odds = odds.drop_duplicates(subset=["home_team", "away_team"], keep="last")
+    fixtures = fixtures.copy()
+    fixtures["home_team"] = fixtures["home_team"].map(canon_team)
+    fixtures["away_team"] = fixtures["away_team"].map(canon_team)
     merged = fixtures.merge(odds, on=["home_team", "away_team"], how="left")
 
     out = np.full((len(merged), 3), np.nan)

@@ -69,6 +69,22 @@ def test_load_market_alignment(tmp_path):
     assert m[0].sum() == pytest.approx(1.0)
 
 
+def test_canon_team_folds_ampersand():
+    assert odds.canon_team("Bosnia & Herzegovina") == "Bosnia and Herzegovina"
+    assert odds.canon_team("USA") == "United States"  # also applies country normalization
+
+
+def test_load_market_matches_across_ampersand_spelling(tmp_path):
+    # Odds use the API '&' spelling; fixtures use 'and' — they must still join.
+    csv = tmp_path / "odds.csv"
+    csv.write_text("home_team,away_team,odds_home,odds_draw,odds_away\n"
+                   "Canada,Bosnia & Herzegovina,1.83,3.5,4.5\n")
+    fixtures = pd.DataFrame({"home_team": ["Canada"],
+                             "away_team": ["Bosnia and Herzegovina"]})
+    m = odds.load_market(fixtures, csv)
+    assert m is not None and not pd.isna(m).any()
+
+
 def test_load_market_missing_file_is_none():
     assert odds.load_market(pd.DataFrame({"home_team": [], "away_team": []}),
                             "/no/such/file.csv") is None

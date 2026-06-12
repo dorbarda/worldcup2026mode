@@ -29,6 +29,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from wcmodel import data  # noqa: E402
+from wcmodel.odds import canon_team  # noqa: E402
 
 ODDS_CSV = data.DATA / "external" / "wc2026_odds.csv"
 API_KEY = os.environ.get("ODDS_API_KEY", "")
@@ -52,7 +53,9 @@ API_TEAM_ALIASES = {
 
 
 def _canon(name: str) -> str:
-    return data.normalize_team(API_TEAM_ALIASES.get(name, name))
+    # Apply known API aliases, then the shared canonicaliser (folds '&'/'and'
+    # and country-name normalization) so written names match the fixtures.
+    return canon_team(API_TEAM_ALIASES.get(name, name))
 
 
 def parse_odds_api(events: list[dict]) -> list[dict]:
