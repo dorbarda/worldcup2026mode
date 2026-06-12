@@ -213,3 +213,57 @@ def latest_ratings(elo_long: pd.DataFrame, as_of: pd.Timestamp) -> pd.Series:
     hist = elo_long.loc[elo_long["date"] < as_of]
     hist = hist.sort_values("date", kind="mergesort")
     return hist.groupby("team")["team_elo_post"].last()
+
+
+# --------------------------------------------------------------------------- #
+# Momentum / form layer (experimental — off by default; not yet backtested)
+# --------------------------------------------------------------------------- #
+# Competition emphasis for the momentum term: friendlies count for nothing,
+# qualifiers some, and finals tournaments fully.
+def momentum_weight(tournament: str) -> float:
+    t = str(tournament).lower()
+    if t == "friendly":
+        return 0.0
+    if "qualification" in t or "qualifier" in t:
+        return 0.6
+    if t == "fifa world cup" or any(name in t for name in _CONTINENTAL_FINALS):
+        return 1.0
+    return 0.3  # other tournaments
+
+
+def momentum(
+    elo_long: pd.DataFrame,
+    as_of: pd.Timestamp,
+    alpha: float = 0.5,
+    half_life_days: float = 270.0,
+    cap: float = 60.0,
+) -> pd.Series:
+    """Per-team form bonus (Elo points) from recent **competitive** results.
+
+    For each team, sum the Elo points won/lost in its matches before ``as_of``,
+    weighted by recency (exponential half-life) and competition importance
+    (:func:`momentum_weight`; friendlies excluded). The result is scaled by
+    ``alpha`` and clipped to +/- ``cap``. This is a *prediction-time* add-on:
+    ``effective_rating = base_rating + momentum`` — the stored Elo history is
+    untouched, so the bonus is a single tunable knob (alpha=0 turns it off).
+    """
+    as_of = pd.Timestamp(as_of)
+    df = elo_long.loc[elo_long["date"] < as_of]
+    if df.empty:
+        return pd.Series(dtype=float)
+    delta = df["team_elo_post"] - df["team_elo_pre"]
+    days = (as_of - df["date"]).dt.days.to_numpy()
+    recency = 0.5 ** (days / half_life_days)
+    comp = df["tournament"].map(momentum_weight).to_numpy()
+    contrib = recency * comp * delta.to_numpy()
+    raw = pd.Series(contrib, index=df["team"].to_numpy()).groupby(level=0).sum()
+    return (alpha * raw).clip(-cap, cap)
+
+
+def effective_ratings(
+    elo_long: pd.DataFrame, as_of: pd.Timestamp, **momentum_kwargs
+) -> pd.Series:
+    """Base as-of ratings plus the momentum bonus (0 for teams with no history)."""
+    base = latest_ratings(elo_long, as_of)
+    bonus = momentum(elo_long, as_of, **momentum_kwargs)
+    return base.add(bonus.reindex(base.index).fillna(0.0))
