@@ -3,6 +3,7 @@
 import importlib.util
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -84,6 +85,23 @@ def test_next_round_is_each_teams_next_match():
     teams = set(nr.home_team) | set(nr.away_team)
     assert teams == {"A", "B", "C", "D"}
     assert (nr["date"] == pd.Timestamp("2026-06-11")).all()
+
+
+def test_apply_results_overlay_fills_scheduled_score(tmp_path):
+    from wcmodel import forward
+    raw = pd.DataFrame({
+        "date": pd.to_datetime(["2026-06-11", "2026-06-11"]),
+        "home_team": ["Mexico", "South Korea"],
+        "away_team": ["South Africa", "Czech Republic"],
+        "home_score": [np.nan, np.nan], "away_score": [np.nan, np.nan],
+    })
+    ov = tmp_path / "results.csv"
+    ov.write_text("date,home_team,away_team,home_score,away_score\n2026-06-11,Mexico,South Africa,2,0\n")
+    out = forward.apply_results_overlay(raw, ov)
+    mex = out[(out.home_team == "Mexico")].iloc[0]
+    assert mex.home_score == 2 and mex.away_score == 0
+    # Unlisted fixture stays scheduled (NaN).
+    assert pd.isna(out[out.home_team == "South Korea"].iloc[0].home_score)
 
 
 def test_next_round_advances_when_earlier_matches_drop_off():

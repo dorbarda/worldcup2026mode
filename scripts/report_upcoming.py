@@ -30,12 +30,13 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
 
-from wcmodel import data, matrix as mx, odds  # noqa: E402
+from wcmodel import backtest as bt, data, matrix as mx, odds  # noqa: E402
 from wcmodel.forward import current_ratings, load_schedule, next_round, refresh_snapshot  # noqa: E402
 from wcmodel.model import FittedModel  # noqa: E402
 
 REPORTS = data.ROOT / "reports"
 FIG_DIR = REPORTS / "figures" / "wc2026"
+FORWARD_LOG = data.DATA / "external" / "wc2026_forward_log.csv"
 GREENRED = LinearSegmentedColormap.from_list("greenred", ["#1a9850", "#ffffbf", "#d73027"])
 EDGE_THRESHOLD = 0.10
 
@@ -111,6 +112,38 @@ def _fav_line(r):
     return base + f"; **model {side} than the market on {r['home']}** (Δ{r['edge']*100:.0f}pp)."
 
 
+def _results_scorecard(A) -> None:
+    """Completed-match scorecard from the forward log: model call vs market vs result."""
+    if not FORWARD_LOG.exists():
+        return
+    log = pd.read_csv(FORWARD_LOG)
+    done = log[log["outcome_idx"].notna()].copy()
+    if done.empty:
+        return
+    names = {0: "home", 1: "draw", 2: "away"}
+    A("## Results so far\n")
+    A("How the pre-match forecasts have fared, model vs de-vigged market "
+      "(this is the B2 baseline, scored live going forward):\n")
+    A("| Match | Result | Our call (H/D/A) | Market (H/D/A) | Winner |")
+    A("|---|---|---|---|---|")
+    m_rps, k_rps = [], []
+    for r in done.itertuples(index=False):
+        o = int(r.outcome_idx)
+        our = np.array([r.p_home, r.p_draw, r.p_away])
+        mkt = np.array([r.mkt_home, r.mkt_draw, r.mkt_away])
+        mr, kr = bt.rps(our, o), bt.rps(mkt, o)
+        m_rps.append(mr); k_rps.append(kr)
+        sharper = "model" if mr < kr else ("market" if kr < mr else "tie")
+        A(f"| {r.home_team} v {r.away_team} | {int(r.home_score)}-{int(r.away_score)} "
+          f"({names[o]}) | {r.p_home*100:.0f}/{r.p_draw*100:.0f}/{r.p_away*100:.0f} | "
+          f"{r.mkt_home*100:.0f}/{r.mkt_draw*100:.0f}/{r.mkt_away*100:.0f} | {sharper} |")
+    A("")
+    mm, kk = float(np.mean(m_rps)), float(np.mean(k_rps))
+    lead = "model ahead" if mm < kk else ("market ahead" if kk < mm else "level")
+    A(f"**Running RPS over {len(done)} match(es): model {mm:.4f} vs market {kk:.4f} "
+      f"— {lead}.** (Tiny sample — a smoke signal, not a verdict.)\n")
+
+
 def _write_report(recs, as_of, have_mkt, path, label):
     L = []
     A = L.append
@@ -124,6 +157,8 @@ def _write_report(recs, as_of, have_mkt, path, label):
         A("De-vigged bookmaker odds are shown for comparison only — they do **not** "
           "feed the model. `Edge` = largest gap between our probability and the "
           "market on any outcome.\n")
+
+    _results_scorecard(A)
 
     A("![overview](figures/wc2026/overview.png)\n")
 

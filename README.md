@@ -232,9 +232,16 @@ re-run for the next matchday. Model coefficients stay frozen at the
 backtest-validated 2022-11-19 fit; only the ratings move. Knockouts are out of
 scope (no ET/penalties layer yet).
 
+**Recording results before the upstream feed updates.** Drop known scores into
+`data/external/wc2026_results.csv` (`date, home_team, away_team, home_score,
+away_score`); they're folded onto the snapshot so Elo updates and the fixtures
+drop out of "upcoming" immediately (redundant once `--refresh` pulls the
+official result).
+
 **Market as a comparison / edge layer (not a model input).** If
 `data/external/wc2026_odds.csv` holds bookmaker odds (`home_team, away_team,
-odds_home, odds_draw, odds_away` — fractional *or* decimal), `predict_fixtures.py`
+odds_home, odds_draw, odds_away` — **fractional, decimal, or US moneyline** like
+`-160`/`+260`), `predict_fixtures.py`
 de-vigs them and shows market H/D/A beside ours, flags fixtures where they
 disagree by ≥ `--edge` (default 0.10), and accumulates a forward log
 (`data/external/wc2026_forward_log.csv`) of pre-match forecast + market +

@@ -19,15 +19,29 @@ import pandas as pd
 from .data import DATA
 
 
+def _american_to_decimal(m: float) -> float:
+    """US moneyline -> decimal odds: +150 -> 2.50, -200 -> 1.50."""
+    return 1.0 + m / 100.0 if m > 0 else 1.0 + 100.0 / abs(m)
+
+
 def parse_odds(value) -> float:
-    """Return decimal odds (> 1) from a fractional string, decimal string, or number."""
+    """Return decimal odds (> 1) from fractional ("4/9"), decimal ("1.44"),
+    or US moneyline ("+260" / "-3000") input.
+
+    Disambiguation: a "/" means fractional; a leading +/- (or magnitude >= 100)
+    means moneyline; everything else is treated as decimal.
+    """
     if isinstance(value, (int, float)) and not isinstance(value, bool):
-        return float(value)
+        v = float(value)
+        return _american_to_decimal(v) if abs(v) >= 100 else v
     s = str(value).strip()
     if "/" in s:
         num, den = s.split("/")
         return 1.0 + float(num) / float(den)
-    return float(s)
+    if s[:1] in "+-":
+        return _american_to_decimal(float(s))
+    v = float(s)
+    return _american_to_decimal(v) if abs(v) >= 100 else v
 
 
 def implied_probs(home, draw, away) -> np.ndarray:

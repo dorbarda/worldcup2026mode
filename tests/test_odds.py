@@ -30,8 +30,23 @@ def test_implied_probs_sum_to_one_and_devig():
     assert p[2] == pytest.approx(0.104, abs=0.01)
 
 
+def test_parse_odds_american_moneyline():
+    assert odds.parse_odds("+150") == pytest.approx(2.5)
+    assert odds.parse_odds("-200") == pytest.approx(1.5)
+    assert odds.parse_odds("+100") == pytest.approx(2.0)
+    assert odds.parse_odds("-3000") == pytest.approx(1 + 100 / 3000)
+    assert odds.parse_odds(260) == pytest.approx(3.6)  # unsigned magnitude >= 100
+
+
+def test_implied_probs_american_favourite():
+    p = odds.implied_probs("-160", "+285", "+475")  # Brazil-Morocco shape
+    assert p.sum() == pytest.approx(1.0)
+    assert p[0] > p[1] > p[2]  # home favoured
+
+
 def test_overround_positive_for_vigged_book():
     assert odds.overround("4/9", "15/4", "17/2") > 0
+    assert odds.overround("-3000", "+1500", "+2800") > 0  # American too
 
 
 def test_implied_probs_ordering_favours_shorter_odds():

@@ -12,10 +12,35 @@ import urllib.request
 import pandas as pd
 
 from . import elo
-from .data import RAW_RESULTS, ROOT, normalize_team
+from .data import DATA, RAW_RESULTS, ROOT, normalize_team
 
 RESULTS_URL = "https://raw.githubusercontent.com/martj42/international_results/master/results.csv"
 WC_TOURNAMENT = "FIFA World Cup"
+
+# Manually-entered results, applied on top of the snapshot so the update-as-you-go
+# loop works before the upstream dataset publishes a match. Redundant once
+# `--refresh` brings the official result in (the snapshot wins ties).
+RESULTS_OVERLAY = DATA / "external" / "wc2026_results.csv"
+
+
+def apply_results_overlay(raw: pd.DataFrame, path=RESULTS_OVERLAY) -> pd.DataFrame:
+    """Fill scheduled fixtures' scores from a manual overlay (matched on home/away/date)."""
+    if not path.exists():
+        return raw
+    ov = pd.read_csv(path)
+    ov["date"] = pd.to_datetime(ov["date"], errors="coerce")
+    ov["home_team"] = ov["home_team"].map(normalize_team)
+    ov["away_team"] = ov["away_team"].map(normalize_team)
+    raw = raw.copy()
+    for o in ov.itertuples(index=False):
+        mask = (
+            (raw["home_team"] == o.home_team)
+            & (raw["away_team"] == o.away_team)
+            & (raw["date"] == o.date)
+            & (raw["home_score"].isna())  # only fill not-yet-played rows
+        )
+        raw.loc[mask, ["home_score", "away_score"]] = [o.home_score, o.away_score]
+    return raw
 
 
 def refresh_snapshot() -> None:
@@ -37,6 +62,8 @@ def load_schedule() -> tuple[pd.DataFrame, pd.DataFrame]:
             {"TRUE": True, "FALSE": False}
         )
     raw["neutral"] = raw["neutral"].astype(bool)
+
+    raw = apply_results_overlay(raw)  # fold in manually-entered results
 
     played = raw.dropna(subset=["home_score", "away_score"]).copy()
     upcoming = raw[
