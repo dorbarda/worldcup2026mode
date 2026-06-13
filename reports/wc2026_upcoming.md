@@ -1,6 +1,6 @@
-# World Cup 2026 — Opening Matches (Jun 12–Jun 18)
+# World Cup 2026 — Opening Matches (Jun 13–Jun 18)
 
-Model-based forecasts for the next round of group matches (24 fixtures), generated from **current Elo** (all played matches through 2026-06-11). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
+Model-based forecasts for the next round of group matches (22 fixtures), generated from **current Elo** (all played matches through 2026-06-12). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
 
 De-vigged bookmaker odds are shown for comparison only — they do **not** feed the model. `Edge` = largest gap between our probability and the market on any outcome.
 
@@ -12,8 +12,10 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 |---|---|---|---|---|
 | Mexico v South Africa | 2-0 (home) | 80/14/6 | 69/21/10 | model |
 | South Korea v Czech Republic | 2-1 (home) | 42/31/27 | 37/30/33 | model |
+| Canada v Bosnia and Herzegovina | 1-1 (draw) | 72/18/9 | 53/26/21 | market |
+| United States v Paraguay | 4-1 (home) | 33/29/38 | 49/28/23 | market |
 
-**Running RPS over 2 match(es): model 0.1125 vs market 0.1549 — model ahead.** (Tiny sample — a smoke signal, not a verdict.)
+**Running RPS over 4 match(es): model 0.1973 vs market 0.1573 — market ahead.** (Tiny sample — a smoke signal, not a verdict.)
 
 ![overview](figures/wc2026/overview.png)
 
@@ -21,8 +23,6 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jun 12 | Canada v Bosnia and Herzegovina | Canada (H) | 2.19–0.65 | 72/18/9 | 52/27/21 | 20pp | 2-0 |
-| Jun 12 | United States v Paraguay | United States (H) | 1.14–1.25 | 33/29/38 | 46/30/24 | 14pp | 1-1 |
 | Jun 13 | Qatar v Switzerland | neutral | 0.50–2.20 | 7/17/76 | 7/15/78 | 2pp | 0-2 |
 | Jun 13 | Brazil v Morocco | neutral | 1.24–0.89 | 44/30/26 | 58/25/17 | 15pp | 1-0 |
 | Jun 13 | Haiti v Scotland | neutral | 0.81–1.35 | 22/29/49 | 16/23/61 | 12pp | 0-1 |
@@ -54,34 +54,16 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 |---|---|---|---|---|
 | Ghana v Panama | 14/25/61 | 45/28/27 | 34pp | model lower on Ghana |
 | Austria v Jordan | 46/30/24 | 72/17/11 | 26pp | model lower on Austria |
-| Canada v Bosnia and Herzegovina | 72/18/9 | 52/27/21 | 20pp | model higher on Canada |
 | Ivory Coast v Ecuador | 15/26/59 | 26/34/40 | 19pp | model lower on Ivory Coast |
 | Iraq v Norway | 14/25/62 | 7/14/80 | 18pp | model higher on Iraq |
 | Germany v Curaçao | 76/17/7 | 92/6/2 | 16pp | model lower on Germany |
 | Brazil v Morocco | 44/30/26 | 58/25/17 | 15pp | model lower on Brazil |
 | Australia v Turkey | 27/31/42 | 19/25/56 | 14pp | model higher on Australia |
-| United States v Paraguay | 33/29/38 | 46/30/24 | 14pp | model lower on United States |
 | Haiti v Scotland | 22/29/49 | 16/23/61 | 12pp | model higher on Haiti |
 | Sweden v Tunisia | 39/31/30 | 51/28/22 | 12pp | model lower on Sweden |
 | Netherlands v Japan | 36/31/33 | 48/27/26 | 12pp | model lower on Netherlands |
 
 ## Match-by-match
-
-### Friday, June 12
-
-**Canada vs Bosnia and Herzegovina** — _Canada at home_  
-Elo Canada 1907 · Bosnia and Herzegovina 1656  |  expected goals **2.19 – 0.65**  
-- **1X2:** Canada 72% · Draw 18% · Bosnia and Herzegovina 9%   _(market 52/27/21)_
-- **Goals:** Over 2.5 54% · BTTS 43%
-- **Likeliest scores:** 2-0 14% · 1-0 12% · 3-0 10% · 2-1 9% · 1-1 9%
-- Canada favoured (72%); **model higher than the market on Canada** (Δ20pp).
-
-**United States vs Paraguay** — _United States at home_  
-Elo United States 1832 · Paraguay 1922  |  expected goals **1.14 – 1.25**  
-- **1X2:** United States 33% · Draw 29% · Paraguay 38%   _(market 46/30/24)_
-- **Goals:** Over 2.5 43% · BTTS 49%
-- **Likeliest scores:** 1-1 14% · 0-1 11% · 1-0 10% · 0-0 10% · 1-2 8%
-- Paraguay favoured (38%); **model lower than the market on United States** (Δ14pp).
 
 ### Saturday, June 13
 
@@ -258,4 +240,4 @@ Elo Mexico 1997 · South Korea 1907  |  expected goals **1.61 – 0.88**
 
 - **Market is a benchmark, not an input.** Where we disagree, the market is usually the sharper number; the gaps are flagged so you can judge for yourself.
 
-- _Generated 2026-06-12 · Elo current to 2026-06-11 · model frozen 2022-11-19._
+- _Generated 2026-06-13 · Elo current to 2026-06-12 · model frozen 2022-11-19._
