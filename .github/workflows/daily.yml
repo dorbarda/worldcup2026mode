@@ -1,11 +1,14 @@
 name: daily-update
 
-# Runs 06:00 UTC = 09:00 Israel time during the 2026 World Cup (Jun–Jul = IDT,
-# UTC+3, so no daylight-saving drift in the tournament window). Also runnable
-# on demand from the Actions tab.
+# Runs ~06:00 UTC = ~09:00 Israel time during the 2026 World Cup (Jun–Jul = IDT,
+# UTC+3, so no daylight-saving drift in the tournament window). We use :17 rather
+# than :00 because GitHub's scheduled runs are best-effort and the top of the
+# hour is heavily congested (frequent delays/skips); an off-peak minute is far
+# more reliable. Also runnable on demand from the Actions tab.
 on:
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "17 6 * * *"
+    - cron: "17 8 * * *"   # safety net: if the 06:17 run was skipped, this catches up (job is idempotent)
   workflow_dispatch:
 
 # NOTE: scheduled workflows only fire from the repository's DEFAULT branch, so
