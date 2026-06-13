@@ -275,7 +275,7 @@ _PAGE = """<!doctype html>
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Build the static next-fixtures page.")
-    ap.add_argument("--n", type=int, default=3, help="number of upcoming fixtures (default 3)")
+    ap.add_argument("--n", type=int, default=4, help="number of upcoming fixtures (default 4)")
     ap.add_argument("--refresh", action="store_true", help="pull latest results first")
     args = ap.parse_args()
     build(args.n, args.refresh)
