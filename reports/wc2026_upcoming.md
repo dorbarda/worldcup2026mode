@@ -35,7 +35,7 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Jun 15 | Iran v New Zealand | neutral | 1.43–0.77 | 52/28/20 | 52/28/20 | 1pp | 1-0 |
 | Jun 15 | Spain v Cape Verde | neutral | 3.16–0.35 | 91/8/2 | 88/9/4 | 3pp | 3-0 |
 | Jun 15 | Saudi Arabia v Uruguay | neutral | 0.61–1.80 | 11/23/66 | 12/22/66 | 1pp | 0-1 |
-| Jun 16 | France v Senegal | neutral | 1.60–0.69 | 59/26/15 | 65/22/13 | 7pp | 1-0 |
+| Jun 16 | France v Senegal | neutral | 1.60–0.69 | 59/26/15 | 65/22/13 | 6pp | 1-0 |
 | Jun 16 | Iraq v Norway | neutral | 0.65–1.68 | 14/25/62 | 6/14/80 | 18pp | 0-1 |
 | Jun 16 | Argentina v Algeria | neutral | 1.90–0.58 | 69/21/10 | 69/21/11 | 1pp | 1-0 |
 | Jun 16 | Austria v Jordan | neutral | 1.30–0.85 | 46/30/24 | 72/18/11 | 25pp | 1-0 |
@@ -50,7 +50,7 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Jun 19 | Scotland v Morocco | neutral | 0.84–1.32 | 23/30/47 | 19/27/54 | 6pp | 0-1 |
 | Jun 19 | Brazil v Haiti | neutral | 2.10–0.52 | 74/19/8 | 86/10/4 | 12pp | 2-0 |
 | Jun 19 | United States v Australia | United States (H) | 1.17–1.21 | 34/29/37 | 60/23/17 | 26pp | 1-1 |
-| Jun 19 | Turkey v Paraguay | neutral | 1.16–0.95 | 40/31/29 | 47/29/24 | 7pp | 1-1 |
+| Jun 19 | Turkey v Paraguay | neutral | 1.16–0.95 | 40/31/29 | 47/29/25 | 7pp | 1-1 |
 
 ## Where we disagree with the market
 
@@ -238,7 +238,7 @@ Elo Scotland 1874 · Morocco 1993  |  expected goals **0.84 – 1.32**
 
 **Turkey vs Paraguay** — _neutral venue_  
 Elo Turkey 1923 · Paraguay 1871  |  expected goals **1.16 – 0.95**  
-- **1X2:** Turkey 40% · Draw 31% · Paraguay 29%   _(market 47/29/24)_
+- **1X2:** Turkey 40% · Draw 31% · Paraguay 29%   _(market 47/29/25)_
 - **Goals:** Over 2.5 35% · BTTS 43%
 - **Likeliest scores:** 1-1 14% · 1-0 13% · 0-0 13% · 0-1 11% · 2-0 8%
 - Turkey favoured (40%); in line with the market.
