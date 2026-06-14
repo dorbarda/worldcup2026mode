@@ -54,6 +54,40 @@ def _scorecard():
     return {"n": len(done), "model": m, "market": k}
 
 
+def _score_grid(rec) -> str:
+    M = rec["matrix"]  # 4×4 ndarray: M[home_goals, away_goals]
+    top5_set = {(i, j) for (i, j), _ in rec["top5"][:3]}
+    peak = float(M.max())
+    home, away = rec["home"], rec["away"]
+
+    def _cell(i, j):
+        p = float(M[i, j])
+        # Intensity 0-100 for background opacity
+        intensity = int(p / peak * 100) if peak > 0 else 0
+        highlight = " grid-top" if (i, j) in top5_set else ""
+        return (f"<td class='gc{highlight}' style='--gi:{intensity}'>"
+                f"{p*100:.1f}%</td>")
+
+    header_cells = "".join(f"<th class='gah'>{j}</th>" for j in range(4))
+    body_rows = ""
+    for i in range(4):
+        cells = "".join(_cell(i, j) for j in range(4))
+        body_rows += f"<tr><th class='ghh'>{i}</th>{cells}</tr>"
+
+    return f"""
+      <div class="grid-wrap">
+        <div class="grid-labels">
+          <span class="gl-home">{home} goals →</span>
+          <span class="gl-away">{away} goals ↓</span>
+        </div>
+        <table class="grid-tbl">
+          <thead><tr><th></th>{header_cells}</tr></thead>
+          <tbody>{body_rows}</tbody>
+        </table>
+        <div class="grid-note">rows = {home} · cols = {away} · top-3 scorelines highlighted</div>
+      </div>"""
+
+
 def _game_card(rec) -> str:
     rows = []
     labels = [(rec["home"], "pH", "mH", "dH"), ("Draw", "pD", "mD", "dD"),
@@ -88,6 +122,7 @@ def _game_card(rec) -> str:
     <div class="card">
       <div class="when">{rec['date']:%a %b %d} · {venue}</div>
       <div class="match"><span>{rec['home']}</span><span class="vs">v</span><span>{rec['away']}</span></div>
+      {_score_grid(rec)}
       <table>
         <thead><tr><th></th><th>Our</th><th>Fair</th><th>Book</th><th>EV</th></tr></thead>
         <tbody>{''.join(rows)}</tbody>
@@ -184,7 +219,7 @@ def build(n: int, refresh: bool) -> None:
             "lam": lam, "mu": mu, "pH": d["p_home"], "pD": d["p_draw"], "pA": d["p_away"],
             "dH": dec[0], "dD": dec[1], "dA": dec[2],
             "over25": d["p_over_2_5"], "btts": d["btts_yes"], "top5": d["top5_scores"],
-            "best_ev": best_ev,
+            "best_ev": best_ev, "matrix": M[:4, :4],
         })
 
     edges_html = _edges_section(model, upcoming, snap, elo_long, as_of)
@@ -240,6 +275,15 @@ _PAGE = """<!doctype html>
   .scores {{ margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; }}
   .chip {{ background:#232733; border-radius:20px; padding:3px 10px; font-size:12px; color:#c7ccd4; }}
   .meta {{ color:#8b929c; font-size:12px; margin-top:8px; }}
+  .grid-wrap {{ margin:10px 0 14px; }}
+  .grid-labels {{ display:flex; justify-content:space-between; font-size:11px; color:#8b929c; margin-bottom:4px; }}
+  .grid-tbl {{ width:100%; border-collapse:collapse; table-layout:fixed; }}
+  .grid-tbl th, .grid-tbl td {{ padding:6px 2px; text-align:center; font-size:12px; }}
+  .ghh {{ color:#8b929c; font-weight:600; font-size:12px; width:20px; }}
+  .gah {{ color:#8b929c; font-weight:600; font-size:12px; }}
+  .gc {{ background:rgba(55,214,122,calc(var(--gi)*0.008)); color:#c7ccd4; border-radius:4px; }}
+  .gc.grid-top {{ outline:1px solid #37d67a; color:#37d67a; font-weight:600; }}
+  .grid-note {{ color:#5b626d; font-size:10px; margin-top:4px; text-align:center; }}
   .edges {{ margin:18px 0 6px; }}
   .etitle {{ font-size:15px; font-weight:600; color:#f0c34b; margin-bottom:8px; }}
   .erow {{ background:#171a21; border:1px solid #232733; border-left:3px solid #f0c34b;
