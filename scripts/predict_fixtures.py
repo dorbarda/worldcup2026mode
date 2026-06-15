@@ -189,7 +189,9 @@ def main() -> None:
                 lean = "model higher on home" if r.p_home > r.mkt_home else "model lower on home"
                 print(f"  {r.home_team} v {r.away_team}: ours {r.p_home:.2f}/{r.p_draw:.2f}/{r.p_away:.2f} "
                       f"vs mkt {r.mkt_home:.2f}/{r.mkt_draw:.2f}/{r.mkt_away:.2f}  ({lean})")
-        _update_forward_log(out, played)
+
+    # Result backfill runs unconditionally — it doesn't require market odds.
+    _update_forward_log(out, played)
 
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(args.out, index=False)
