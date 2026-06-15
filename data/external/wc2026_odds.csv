@@ -11,57 +11,57 @@ Germany,Curaçao,1.04,19.0,44.0
 Netherlands,Japan,2.02,3.5,3.7
 Ivory Coast,Ecuador,3.25,2.85,2.55
 Sweden,Tunisia,1.935,3.45,4.2
-Spain,Cape Verde,1.07,13.0,34.0
-Belgium,Egypt,1.595,4.0,6.0
-Saudi Arabia,Uruguay,8.0,4.3,1.45
-Iran,New Zealand,1.85,3.4,4.725
-France,Senegal,1.46,4.425,7.305
-Iraq,Norway,15.0,7.0,1.19
-Argentina,Algeria,1.39,4.6,9.0
-Austria,Jordan,1.33,5.4,9.0
-Portugal,DR Congo,1.28,5.75,11.0
+Spain,Cape Verde,1.07,14.0,34.0
+Belgium,Egypt,1.57,4.0,6.0
+Saudi Arabia,Uruguay,8.0,4.33,1.44
+Iran,New Zealand,1.81,3.425,4.9
+France,Senegal,1.455,4.4,7.3
+Iraq,Norway,15.0,7.325,1.18
+Argentina,Algeria,1.4,4.6,9.0
+Austria,Jordan,1.33,5.275,9.0
+Portugal,DR Congo,1.28,5.7,11.0
 England,Croatia,1.71,3.75,5.0
-Ghana,Panama,2.15,3.35,3.47
+Ghana,Panama,2.15,3.35,3.45
 Uzbekistan,Colombia,9.0,4.7,1.38
 Czech Republic,South Africa,1.76,3.75,4.6
-Switzerland,Bosnia and Herzegovina,1.57,4.0,6.0
-Canada,Qatar,1.26,5.75,12.0
+Switzerland,Bosnia and Herzegovina,1.55,4.05,6.2
+Canada,Qatar,1.27,5.75,12.0
 Mexico,South Korea,1.97,3.3,4.1
-United States,Australia,1.6,4.1,5.5
+United States,Australia,1.6,4.2,5.5
 Scotland,Morocco,5.0,3.6,1.74
-Brazil,Haiti,1.1,10.0,22.375
-Turkey,Paraguay,2.03,3.35,3.8
-Netherlands,Sweden,1.67,3.93,5.0
-Germany,Ivory Coast,1.54,4.33,5.8
-Ecuador,Curaçao,1.1,10.0,24.77
-Tunisia,Japan,6.93,4.1,1.5
-Spain,Saudi Arabia,1.1,9.5,26.0
-Belgium,Iran,1.38,4.785,8.4
-Uruguay,Cape Verde,1.425,4.5,7.75
-New Zealand,Egypt,4.825,3.675,1.73
-Argentina,Austria,1.62,3.85,5.6
-France,Iraq,1.11,9.0,24.0
-Norway,Senegal,2.12,3.45,3.4
+Brazil,Haiti,1.1,10.0,22.0
+Turkey,Paraguay,2.025,3.35,3.9
+Netherlands,Sweden,1.67,3.95,5.0
+Germany,Ivory Coast,1.54,4.33,5.775
+Ecuador,Curaçao,1.1,10.0,23.0
+Tunisia,Japan,7.0,4.1,1.5
+Spain,Saudi Arabia,1.1,10.0,24.0
+Belgium,Iran,1.38,4.77,8.25
+Uruguay,Cape Verde,1.42,4.5,7.75
+New Zealand,Egypt,4.825,3.7,1.725
+Argentina,Austria,1.61,3.85,5.6
+France,Iraq,1.11,9.0,23.98
+Norway,Senegal,2.12,3.45,3.38
 Jordan,Algeria,6.7,4.2,1.5
-Portugal,Uzbekistan,1.25,6.0,11.5
+Portugal,Uzbekistan,1.24,6.0,11.5
 England,Ghana,1.32,5.25,9.5
-Panama,Croatia,6.5,3.9,1.55
+Panama,Croatia,6.4,3.9,1.55
 Colombia,DR Congo,1.45,4.2,7.5
 Bosnia and Herzegovina,Qatar,1.54,4.0,6.0
 Switzerland,Canada,2.1,3.3,3.5
-Scotland,Brazil,6.825,4.8,1.42
+Scotland,Brazil,6.75,4.8,1.42
 Morocco,Haiti,1.29,5.5,10.0
-Czech Republic,Mexico,4.56,3.5,1.8
-South Africa,South Korea,5.7,3.915,1.595
+Czech Republic,Mexico,4.55,3.5,1.8
+South Africa,South Korea,5.75,3.95,1.59
 Curaçao,Ivory Coast,16.0,7.5,1.15
 Ecuador,Germany,4.66,3.75,1.73
-Japan,Sweden,2.1,3.37,3.5
+Japan,Sweden,2.1,3.35,3.5
 Tunisia,Netherlands,8.5,5.0,1.33
 Paraguay,Australia,2.15,3.25,3.43
 Turkey,United States,2.75,3.55,2.4
 Norway,France,4.3,3.6,1.82
 Senegal,Iraq,1.4,4.5,8.0
-Cape Verde,Saudi Arabia,2.5,3.4,2.74
+Cape Verde,Saudi Arabia,2.5,3.4,2.7
 Uruguay,Spain,5.25,3.9,1.62
 New Zealand,Belgium,10.0,5.5,1.29
 Egypt,Iran,2.23,3.05,3.5
@@ -70,4 +70,4 @@ Panama,England,10.0,5.75,1.27
 Colombia,Portugal,3.5,3.3,2.1
 DR Congo,Uzbekistan,2.3,3.25,3.1
 Algeria,Austria,3.5,3.2,2.15
-Jordan,Argentina,14.0,6.7,1.19
+Jordan,Argentina,14.0,6.6,1.19
