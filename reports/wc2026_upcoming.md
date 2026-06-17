@@ -39,13 +39,13 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jun 17 | Portugal v DR Congo | neutral | 1.87–0.59 | 68/22/11 | 74/17/9 | 6pp | 1-0 |
-| Jun 17 | Uzbekistan v Colombia | neutral | 0.65–1.68 | 14/25/62 | 10/20/70 | 8pp | 0-1 |
+| Jun 17 | Portugal v DR Congo | neutral | 1.87–0.59 | 68/22/11 | 74/17/9 | 7pp | 1-0 |
+| Jun 17 | Uzbekistan v Colombia | neutral | 0.65–1.68 | 14/25/62 | 10/20/70 | 9pp | 0-1 |
 | Jun 17 | England v Croatia | neutral | 1.32–0.83 | 48/30/23 | 56/26/18 | 8pp | 1-0 |
-| Jun 17 | Ghana v Panama | neutral | 0.66–1.66 | 14/25/61 | 41/30/29 | 31pp | 0-1 |
+| Jun 17 | Ghana v Panama | neutral | 0.66–1.66 | 14/25/61 | 41/30/29 | 32pp | 0-1 |
 | Jun 18 | Czech Republic v South Africa | neutral | 1.35–0.82 | 49/29/22 | 54/26/20 | 6pp | 1-0 |
 | Jun 18 | Mexico v South Korea | Mexico (H) | 1.61–0.88 | 54/26/20 | 47/29/24 | 6pp | 1-0 |
-| Jun 18 | Switzerland v Bosnia and Herzegovina | neutral | 1.70–0.65 | 62/24/13 | 61/23/16 | 2pp | 1-0 |
+| Jun 18 | Switzerland v Bosnia and Herzegovina | neutral | 1.70–0.65 | 62/24/13 | 62/23/15 | 2pp | 1-0 |
 | Jun 18 | Canada v Qatar | Canada (H) | 2.37–0.60 | 77/16/7 | 75/17/8 | 2pp | 2-0 |
 | Jun 19 | Scotland v Morocco | neutral | 0.84–1.32 | 23/30/47 | 18/27/55 | 8pp | 0-1 |
 | Jun 19 | Brazil v Haiti | neutral | 2.10–0.52 | 74/19/8 | 86/9/5 | 13pp | 2-0 |
@@ -59,10 +59,10 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Jun 21 | New Zealand v Egypt | neutral | 0.91–1.21 | 27/31/42 | 17/24/59 | 17pp | 0-1 |
 | Jun 21 | Spain v Saudi Arabia | neutral | 2.66–0.41 | 85/12/4 | 87/10/4 | 2pp | 2-0 |
 | Jun 21 | Uruguay v Cape Verde | neutral | 1.79–0.62 | 65/23/12 | 64/23/13 | 1pp | 1-0 |
-| Jun 22 | France v Iraq | neutral | 2.41–0.46 | 80/15/5 | 87/9/4 | 7pp | 2-0 |
+| Jun 22 | France v Iraq | neutral | 2.41–0.46 | 80/15/5 | 88/9/4 | 7pp | 2-0 |
 | Jun 22 | Norway v Senegal | neutral | 1.31–0.84 | 47/30/23 | 41/27/32 | 8pp | 1-0 |
-| Jun 22 | Argentina v Austria | neutral | 1.83–0.60 | 66/22/11 | 62/24/15 | 5pp | 1-0 |
-| Jun 22 | Jordan v Algeria | neutral | 0.83–1.33 | 23/29/48 | 16/23/61 | 13pp | 0-1 |
+| Jun 22 | Argentina v Austria | neutral | 1.83–0.60 | 66/22/11 | 61/24/15 | 5pp | 1-0 |
+| Jun 22 | Jordan v Algeria | neutral | 0.83–1.33 | 23/29/48 | 16/24/60 | 12pp | 0-1 |
 
 ## Where we disagree with the market
 
@@ -70,12 +70,12 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 | Match | Our H/D/A | Market H/D/A | Edge | Lean |
 |---|---|---|---|---|
-| Ghana v Panama | 14/25/61 | 41/30/29 | 31pp | model lower on Ghana |
+| Ghana v Panama | 14/25/61 | 41/30/29 | 32pp | model lower on Ghana |
 | Belgium v Iran | 40/31/29 | 67/21/12 | 27pp | model lower on Belgium |
 | United States v Australia | 34/29/37 | 59/23/18 | 25pp | model lower on United States |
 | New Zealand v Egypt | 27/31/42 | 17/24/59 | 17pp | model higher on New Zealand |
-| Jordan v Algeria | 23/29/48 | 16/23/61 | 13pp | model higher on Jordan |
 | Brazil v Haiti | 74/19/8 | 86/9/5 | 13pp | model lower on Brazil |
+| Jordan v Algeria | 23/29/48 | 16/24/60 | 12pp | model higher on Jordan |
 | Ecuador v Curaçao | 76/17/7 | 88/9/4 | 12pp | model lower on Ecuador |
 | Germany v Ivory Coast | 51/28/20 | 62/22/17 | 10pp | model lower on Germany |
 
@@ -95,7 +95,7 @@ Elo Ghana 1626 · Panama 1864  |  expected goals **0.66 – 1.66**
 - **1X2:** Ghana 14% · Draw 25% · Panama 61%   _(market 41/30/29)_
 - **Goals:** Over 2.5 41% · BTTS 40%
 - **Likeliest scores:** 0-1 16% · 0-2 13% · 1-1 11% · 0-0 10% · 1-2 9%
-- Panama favoured (61%); **model lower than the market on Ghana** (Δ31pp).
+- Panama favoured (61%); **model lower than the market on Ghana** (Δ32pp).
 
 **Portugal vs DR Congo** — _neutral venue_  
 Elo Portugal 2063 · DR Congo 1763  |  expected goals **1.87 – 0.59**  
@@ -136,7 +136,7 @@ Elo Mexico 1997 · South Korea 1907  |  expected goals **1.61 – 0.88**
 
 **Switzerland vs Bosnia and Herzegovina** — _neutral venue_  
 Elo Switzerland 1931 · Bosnia and Herzegovina 1679  |  expected goals **1.70 – 0.65**  
-- **1X2:** Switzerland 62% · Draw 24% · Bosnia and Herzegovina 13%   _(market 61/23/16)_
+- **1X2:** Switzerland 62% · Draw 24% · Bosnia and Herzegovina 13%   _(market 62/23/15)_
 - **Goals:** Over 2.5 42% · BTTS 39%
 - **Likeliest scores:** 1-0 16% · 2-0 14% · 1-1 11% · 0-0 10% · 2-1 9%
 - Switzerland favoured (62%); in line with the market.
@@ -235,24 +235,24 @@ Elo Uruguay 1959 · Cape Verde 1681  |  expected goals **1.79 – 0.62**
 
 **Argentina vs Austria** — _neutral venue_  
 Elo Argentina 2208 · Austria 1919  |  expected goals **1.83 – 0.60**  
-- **1X2:** Argentina 66% · Draw 22% · Austria 11%   _(market 62/24/15)_
+- **1X2:** Argentina 66% · Draw 22% · Austria 11%   _(market 61/24/15)_
 - **Goals:** Over 2.5 44% · BTTS 38%
 - **Likeliest scores:** 1-0 16% · 2-0 15% · 1-1 10% · 0-0 9% · 3-0 9%
 - Argentina favoured (66%); in line with the market.
 
 **France vs Iraq** — _neutral venue_  
 Elo France 2152 · Iraq 1720  |  expected goals **2.41 – 0.46**  
-- **1X2:** France 80% · Draw 15% · Iraq 5%   _(market 87/9/4)_
+- **1X2:** France 80% · Draw 15% · Iraq 5%   _(market 88/9/4)_
 - **Goals:** Over 2.5 55% · BTTS 34%
 - **Likeliest scores:** 2-0 17% · 1-0 13% · 3-0 13% · 4-0 8% · 2-1 8%
 - France favoured (80%); in line with the market.
 
 **Jordan vs Algeria** — _neutral venue_  
 Elo Jordan 1746 · Algeria 1869  |  expected goals **0.83 – 1.33**  
-- **1X2:** Jordan 23% · Draw 29% · Algeria 48%   _(market 16/23/61)_
+- **1X2:** Jordan 23% · Draw 29% · Algeria 48%   _(market 16/24/60)_
 - **Goals:** Over 2.5 37% · BTTS 42%
 - **Likeliest scores:** 0-1 15% · 1-1 13% · 0-0 12% · 0-2 10% · 1-0 9%
-- Algeria favoured (48%); **model higher than the market on Jordan** (Δ13pp).
+- Algeria favoured (48%); **model higher than the market on Jordan** (Δ12pp).
 
 **Norway vs Senegal** — _neutral venue_  
 Elo Norway 2007 · Senegal 1893  |  expected goals **1.31 – 0.84**  
