@@ -1,6 +1,6 @@
-# World Cup 2026 — Opening Matches (Jun 16–Jun 21)
+# World Cup 2026 — Opening Matches (Jun 17–Jun 22)
 
-Model-based forecasts for the next round of group matches (24 fixtures), generated from **current Elo** (all played matches through 2026-06-15). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
+Model-based forecasts for the next round of group matches (24 fixtures), generated from **current Elo** (all played matches through 2026-06-16). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
 
 De-vigged bookmaker odds are shown for comparison only — they do **not** feed the model. `Edge` = largest gap between our probability and the market on any outcome.
 
@@ -26,8 +26,12 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Iran v New Zealand | 2-2 (draw) | 52/28/20 | 51/28/21 | market |
 | Spain v Cape Verde | 0-0 (draw) | 90/8/2 | 89/8/3 | market |
 | Saudi Arabia v Uruguay | 1-1 (draw) | 11/22/66 | 11/22/67 | model |
+| France v Senegal | 3-1 (home) | 58/26/16 | 66/22/12 | market |
+| Iraq v Norway | 1-4 (away) | 14/25/60 | 6/14/80 | market |
+| Argentina v Algeria | 3-0 (home) | 70/21/10 | 70/20/10 | model |
+| Austria v Jordan | 3-1 (home) | 46/30/24 | 73/17/10 | market |
 
-**Running RPS over 16 match(es): model 0.2230 vs market 0.2067 — market ahead.** (Tiny sample — a smoke signal, not a verdict.)
+**Running RPS over 20 match(es): model 0.1990 vs market 0.1744 — market ahead.** (Tiny sample — a smoke signal, not a verdict.)
 
 ![overview](figures/wc2026/overview.png)
 
@@ -35,10 +39,6 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jun 16 | France v Senegal | neutral | 1.60–0.69 | 59/26/15 | 65/21/13 | 7pp | 1-0 |
-| Jun 16 | Iraq v Norway | neutral | 0.65–1.68 | 14/25/62 | 7/14/79 | 17pp | 0-1 |
-| Jun 16 | Argentina v Algeria | neutral | 1.90–0.58 | 69/21/10 | 66/21/13 | 3pp | 1-0 |
-| Jun 16 | Austria v Jordan | neutral | 1.30–0.85 | 46/30/24 | 70/19/11 | 24pp | 1-0 |
 | Jun 17 | Portugal v DR Congo | neutral | 1.87–0.59 | 68/22/11 | 75/17/9 | 7pp | 1-0 |
 | Jun 17 | Uzbekistan v Colombia | neutral | 0.65–1.68 | 14/25/62 | 11/20/69 | 7pp | 0-1 |
 | Jun 17 | England v Croatia | neutral | 1.32–0.83 | 48/30/23 | 55/26/19 | 8pp | 1-0 |
@@ -59,6 +59,10 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Jun 21 | New Zealand v Egypt | neutral | 0.91–1.21 | 27/31/42 | 17/24/59 | 17pp | 0-1 |
 | Jun 21 | Spain v Saudi Arabia | neutral | 2.66–0.41 | 85/12/4 | 87/10/4 | 2pp | 2-0 |
 | Jun 21 | Uruguay v Cape Verde | neutral | 1.79–0.62 | 65/23/12 | 64/23/13 | 2pp | 1-0 |
+| Jun 22 | France v Iraq | neutral | 2.41–0.46 | 80/15/5 | 86/11/4 | 5pp | 2-0 |
+| Jun 22 | Norway v Senegal | neutral | 1.31–0.84 | 47/30/23 | 45/27/28 | 5pp | 1-0 |
+| Jun 22 | Argentina v Austria | neutral | 1.83–0.60 | 66/22/11 | 58/25/17 | 8pp | 1-0 |
+| Jun 22 | Jordan v Algeria | neutral | 0.83–1.33 | 23/29/48 | 14/22/63 | 16pp | 0-1 |
 
 ## Where we disagree with the market
 
@@ -69,44 +73,13 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 | Ghana v Panama | 14/25/61 | 43/29/28 | 33pp | model lower on Ghana |
 | Belgium v Iran | 40/31/29 | 67/20/12 | 28pp | model lower on Belgium |
 | United States v Australia | 34/29/37 | 59/23/18 | 25pp | model lower on United States |
-| Austria v Jordan | 46/30/24 | 70/19/11 | 24pp | model lower on Austria |
-| Iraq v Norway | 14/25/62 | 7/14/79 | 17pp | model higher on Iraq |
 | New Zealand v Egypt | 27/31/42 | 17/24/59 | 17pp | model higher on New Zealand |
+| Jordan v Algeria | 23/29/48 | 14/22/63 | 16pp | model higher on Jordan |
 | Brazil v Haiti | 74/19/8 | 87/9/4 | 13pp | model lower on Brazil |
 | Ecuador v Curaçao | 76/17/7 | 87/9/4 | 12pp | model lower on Ecuador |
 | Germany v Ivory Coast | 51/28/20 | 62/22/16 | 10pp | model lower on Germany |
 
 ## Match-by-match
-
-### Tuesday, June 16
-
-**Argentina vs Algeria** — _neutral venue_  
-Elo Argentina 2193 · Algeria 1885  |  expected goals **1.90 – 0.58**  
-- **1X2:** Argentina 69% · Draw 21% · Algeria 10%   _(market 66/21/13)_
-- **Goals:** Over 2.5 45% · BTTS 38%
-- **Likeliest scores:** 1-0 15% · 2-0 15% · 1-1 10% · 3-0 10% · 0-0 9%
-- Argentina favoured (69%); in line with the market.
-
-**Austria vs Jordan** — _neutral venue_  
-Elo Austria 1888 · Jordan 1778  |  expected goals **1.30 – 0.85**  
-- **1X2:** Austria 46% · Draw 30% · Jordan 24%   _(market 70/19/11)_
-- **Goals:** Over 2.5 36% · BTTS 42%
-- **Likeliest scores:** 1-0 15% · 1-1 13% · 0-0 12% · 2-0 10% · 0-1 9%
-- Austria favoured (46%); **model lower than the market on Austria** (Δ24pp).
-
-**France vs Senegal** — _neutral venue_  
-Elo France 2132 · Senegal 1913  |  expected goals **1.60 – 0.69**  
-- **1X2:** France 59% · Draw 26% · Senegal 15%   _(market 65/21/13)_
-- **Goals:** Over 2.5 40% · BTTS 40%
-- **Likeliest scores:** 1-0 16% · 2-0 13% · 1-1 12% · 0-0 11% · 2-1 9%
-- France favoured (59%); in line with the market.
-
-**Iraq vs Norway** — _neutral venue_  
-Elo Iraq 1740 · Norway 1987  |  expected goals **0.65 – 1.68**  
-- **1X2:** Iraq 14% · Draw 25% · Norway 62%   _(market 7/14/79)_
-- **Goals:** Over 2.5 41% · BTTS 40%
-- **Likeliest scores:** 0-1 16% · 0-2 14% · 1-1 11% · 0-0 10% · 1-2 9%
-- Norway favoured (62%); **model higher than the market on Iraq** (Δ17pp).
 
 ### Wednesday, June 17
 
@@ -258,6 +231,36 @@ Elo Uruguay 1959 · Cape Verde 1681  |  expected goals **1.79 – 0.62**
 - **Likeliest scores:** 1-0 16% · 2-0 14% · 1-1 10% · 0-0 10% · 2-1 9%
 - Uruguay favoured (65%); in line with the market.
 
+### Monday, June 22
+
+**Argentina vs Austria** — _neutral venue_  
+Elo Argentina 2208 · Austria 1919  |  expected goals **1.83 – 0.60**  
+- **1X2:** Argentina 66% · Draw 22% · Austria 11%   _(market 58/25/17)_
+- **Goals:** Over 2.5 44% · BTTS 38%
+- **Likeliest scores:** 1-0 16% · 2-0 15% · 1-1 10% · 0-0 9% · 3-0 9%
+- Argentina favoured (66%); in line with the market.
+
+**France vs Iraq** — _neutral venue_  
+Elo France 2152 · Iraq 1720  |  expected goals **2.41 – 0.46**  
+- **1X2:** France 80% · Draw 15% · Iraq 5%   _(market 86/11/4)_
+- **Goals:** Over 2.5 55% · BTTS 34%
+- **Likeliest scores:** 2-0 17% · 1-0 13% · 3-0 13% · 4-0 8% · 2-1 8%
+- France favoured (80%); in line with the market.
+
+**Jordan vs Algeria** — _neutral venue_  
+Elo Jordan 1746 · Algeria 1869  |  expected goals **0.83 – 1.33**  
+- **1X2:** Jordan 23% · Draw 29% · Algeria 48%   _(market 14/22/63)_
+- **Goals:** Over 2.5 37% · BTTS 42%
+- **Likeliest scores:** 0-1 15% · 1-1 13% · 0-0 12% · 0-2 10% · 1-0 9%
+- Algeria favoured (48%); **model higher than the market on Jordan** (Δ16pp).
+
+**Norway vs Senegal** — _neutral venue_  
+Elo Norway 2007 · Senegal 1893  |  expected goals **1.31 – 0.84**  
+- **1X2:** Norway 47% · Draw 30% · Senegal 23%   _(market 45/27/28)_
+- **Goals:** Over 2.5 36% · BTTS 42%
+- **Likeliest scores:** 1-0 15% · 1-1 13% · 0-0 12% · 2-0 10% · 0-1 9%
+- Norway favoured (47%); in line with the market.
+
 ---
 ## How to read this & caveats
 
@@ -267,4 +270,4 @@ Elo Uruguay 1959 · Cape Verde 1681  |  expected goals **1.79 – 0.62**
 
 - **Market is a benchmark, not an input.** Where we disagree, the market is usually the sharper number; the gaps are flagged so you can judge for yourself.
 
-- _Generated 2026-06-16 · Elo current to 2026-06-15 · model frozen 2022-11-19._
+- _Generated 2026-06-17 · Elo current to 2026-06-16 · model frozen 2022-11-19._
