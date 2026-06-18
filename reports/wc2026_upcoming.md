@@ -43,10 +43,10 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jun 18 | Czech Republic v South Africa | neutral | 1.35–0.82 | 49/29/22 | 54/26/20 | 6pp | 1-0 |
-| Jun 18 | Mexico v South Korea | Mexico (H) | 1.61–0.88 | 54/26/20 | 47/29/24 | 6pp | 1-0 |
-| Jun 18 | Switzerland v Bosnia and Herzegovina | neutral | 1.70–0.65 | 62/24/13 | 62/23/15 | 2pp | 1-0 |
-| Jun 18 | Canada v Qatar | Canada (H) | 2.37–0.60 | 77/16/7 | 75/17/8 | 2pp | 2-0 |
+| Jun 18 | Czech Republic v South Africa | neutral | 1.35–0.82 | 49/29/22 | 51/27/22 | 3pp | 1-0 |
+| Jun 18 | Mexico v South Korea | Mexico (H) | 1.61–0.88 | 54/26/20 | 47/29/24 | 7pp | 1-0 |
+| Jun 18 | Switzerland v Bosnia and Herzegovina | neutral | 1.70–0.65 | 62/24/13 | 62/24/15 | 1pp | 1-0 |
+| Jun 18 | Canada v Qatar | Canada (H) | 2.37–0.60 | 77/16/7 | 75/17/8 | 1pp | 2-0 |
 | Jun 19 | Scotland v Morocco | neutral | 0.84–1.32 | 23/30/47 | 18/27/55 | 8pp | 0-1 |
 | Jun 19 | Brazil v Haiti | neutral | 2.10–0.52 | 74/19/8 | 86/9/5 | 13pp | 2-0 |
 | Jun 19 | United States v Australia | United States (H) | 1.17–1.21 | 34/29/37 | 59/23/18 | 25pp | 1-1 |
@@ -97,7 +97,7 @@ Elo Canada 1884 · Qatar 1592  |  expected goals **2.37 – 0.60**
 
 **Czech Republic vs South Africa** — _neutral venue_  
 Elo Czech Republic 1786 · South Africa 1656  |  expected goals **1.35 – 0.82**  
-- **1X2:** Czech Republic 49% · Draw 29% · South Africa 22%   _(market 54/26/20)_
+- **1X2:** Czech Republic 49% · Draw 29% · South Africa 22%   _(market 51/27/22)_
 - **Goals:** Over 2.5 37% · BTTS 42%
 - **Likeliest scores:** 1-0 15% · 1-1 13% · 0-0 12% · 2-0 10% · 0-1 9%
 - Czech Republic favoured (49%); in line with the market.
@@ -111,7 +111,7 @@ Elo Mexico 1997 · South Korea 1907  |  expected goals **1.61 – 0.88**
 
 **Switzerland vs Bosnia and Herzegovina** — _neutral venue_  
 Elo Switzerland 1931 · Bosnia and Herzegovina 1679  |  expected goals **1.70 – 0.65**  
-- **1X2:** Switzerland 62% · Draw 24% · Bosnia and Herzegovina 13%   _(market 62/23/15)_
+- **1X2:** Switzerland 62% · Draw 24% · Bosnia and Herzegovina 13%   _(market 62/24/15)_
 - **Goals:** Over 2.5 42% · BTTS 39%
 - **Likeliest scores:** 1-0 16% · 2-0 14% · 1-1 11% · 0-0 10% · 2-1 9%
 - Switzerland favoured (62%); in line with the market.
