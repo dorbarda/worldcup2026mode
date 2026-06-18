@@ -236,6 +236,12 @@ class FittedModel:
     xi: float
     rho: float
     cutoff: pd.Timestamp = FREEZE_DATE
+    # World-Cup goal-level calibration applied at *prediction* time only (the GLM
+    # and rho fits are untouched). v1 = 1.0; v2 = 1.10, the factor by which the
+    # model under-predicts goals in training-era World Cup matches (actual/pred =
+    # 1.105 over 2002-2018), confirmed out-of-sample on both backtests. Symmetric,
+    # so it sharpens the exact score / totals while leaving the 1X2 ratio ~fixed.
+    goal_scale: float = 1.0
     xi_curve: pd.DataFrame | None = field(default=None, repr=False)
 
     def predict_lambdas(
@@ -275,7 +281,9 @@ class FittedModel:
         row_a = pd.DataFrame(
             {"team_elo_pre": [r_away], "opp_elo_pre": [r_home], "is_home": [0]}
         )
-        return float(self.predict_lambdas(row_h)[0]), float(self.predict_lambdas(row_a)[0])
+        c = self.goal_scale
+        return (c * float(self.predict_lambdas(row_h)[0]),
+                c * float(self.predict_lambdas(row_a)[0]))
 
     # --- persistence -------------------------------------------------------- #
     def to_dict(self) -> dict:
@@ -285,6 +293,7 @@ class FittedModel:
             "xi": self.xi,
             "rho": self.rho,
             "cutoff": str(pd.Timestamp(self.cutoff).date()),
+            "goal_scale": self.goal_scale,
         }
 
     @classmethod
@@ -295,6 +304,7 @@ class FittedModel:
             xi=float(d["xi"]),
             rho=float(d["rho"]),
             cutoff=pd.Timestamp(d["cutoff"]),
+            goal_scale=float(d.get("goal_scale", 1.0)),
         )
 
     @classmethod

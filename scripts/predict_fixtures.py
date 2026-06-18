@@ -41,13 +41,13 @@ FORWARD_LOG = data.DATA / "external" / "wc2026_forward_log.csv"
 # Forward-log schema. The prediction block (lambdas, 1X2, exact-score picks,
 # market) is refreshed each run *until the match is played*; once a result lands
 # the row is locked, so the scored forecast is the freshest pre-kickoff one.
-LOG_COLS = ["date", "home_team", "away_team",
+LOG_COLS = ["date", "home_team", "away_team", "model_version",
             "lambda_home", "lambda_away", "p_home", "p_draw", "p_away",
             "top_score", "top1_p", "top3",
             "mkt_home", "mkt_draw", "mkt_away",
             "home_score", "away_score", "outcome_idx"]
 # Columns refreshed on every run while a fixture is still unplayed.
-PRED_COLS = ["lambda_home", "lambda_away", "p_home", "p_draw", "p_away",
+PRED_COLS = ["model_version", "lambda_home", "lambda_away", "p_home", "p_draw", "p_away",
              "top_score", "top1_p", "top3", "mkt_home", "mkt_draw", "mkt_away"]
 
 
@@ -67,7 +67,8 @@ def _update_forward_log(out: pd.DataFrame, played: pd.DataFrame) -> None:
            for i, r in enumerate(log.itertuples())}
 
     def _payload(r) -> dict:
-        return {"lambda_home": r.lam_full, "lambda_away": r.mu_full,
+        return {"model_version": r.model_version,
+                "lambda_home": r.lam_full, "lambda_away": r.mu_full,
                 "p_home": r.p_home, "p_draw": r.p_draw, "p_away": r.p_away,
                 "top_score": r.top_score, "top1_p": r.top1_p, "top3": r.top3,
                 "mkt_home": r.mkt_home, "mkt_draw": r.mkt_draw, "mkt_away": r.mkt_away}
@@ -126,7 +127,7 @@ def main() -> None:
     ap.add_argument("--all", action="store_true",
                     help="predict all remaining group games (default: each team's next match)")
     ap.add_argument("--refresh", action="store_true", help="re-download the results snapshot first")
-    ap.add_argument("--model", default=str(data.PROCESSED / "model.json"))
+    ap.add_argument("--model", default=str(data.forward_model_path()))
     ap.add_argument("--out", default=str(data.ROOT / "reports" / "wc2026_predictions.csv"))
     ap.add_argument("--plot", action="store_true", help="save a heatmap PNG per fixture")
     ap.add_argument("--odds", default=str(data.DATA / "external" / "wc2026_odds.csv"),
@@ -139,6 +140,7 @@ def main() -> None:
         refresh_snapshot()
 
     model = FittedModel.load(args.model)
+    model_version = "v2" if model.goal_scale != 1.0 else "v1"
     played, upcoming = load_schedule()
     if upcoming.empty:
         raise SystemExit("No upcoming FIFA World Cup fixtures in the snapshot.")
@@ -176,7 +178,7 @@ def main() -> None:
             "top_score": f"{ms_h}-{ms_a}",
             "top3": "; ".join(f"{i2}-{j2} ({p*100:.0f}%)" for (i2, j2), p in d["top5_scores"][:3]),
             # full-precision helpers for the forward log (dropped before the report CSV)
-            "lam_full": lam, "mu_full": mu, "top1_p": float(top1_p),
+            "model_version": model_version, "lam_full": lam, "mu_full": mu, "top1_p": float(top1_p),
         })
 
         if args.plot:

@@ -181,7 +181,7 @@ def _edges_section(model, upcoming, snap, elo_long, as_of, max_show=10):
 def build(n: int, refresh: bool) -> None:
     if refresh:
         refresh_snapshot()
-    model = FittedModel.load(data.PROCESSED / "model.json")
+    model = FittedModel.load(data.forward_model_path())
     played, upcoming = load_schedule()
     if upcoming.empty:
         raise SystemExit("No upcoming fixtures.")

@@ -34,7 +34,7 @@ def main() -> None:
     if not LOG.exists():
         raise SystemExit(f"No forward log at {LOG}")
     log = pd.read_csv(LOG)
-    model = FittedModel.load(data.PROCESSED / "model.json")
+    model = FittedModel.load(data.forward_model_path())
     s = bt.score_forward_log(log, model.rho)
     if s["n"] == 0:
         print("No completed matches in the forward log yet.")

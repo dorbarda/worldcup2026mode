@@ -29,6 +29,17 @@ RAW_RESULTS = DATA / "raw" / "results.csv"
 PROCESSED = DATA / "processed"
 TEST_FIXTURES = DATA / "test" / "qatar2022_group_stage.csv"
 
+# Frozen backtest model (v1) vs the forward model (v2 = v1 + World-Cup goal-level
+# calibration). The backtest scripts pin v1; the forward/live scripts default to
+# v2 and fall back to v1 if the v2 artifact is absent.
+MODEL_V1 = PROCESSED / "model.json"
+MODEL_V2 = PROCESSED / "model_v2.json"
+
+
+def forward_model_path() -> Path:
+    """Path the live/forward scripts load (v2 if built, else v1)."""
+    return MODEL_V2 if MODEL_V2.exists() else MODEL_V1
+
 # --------------------------------------------------------------------------- #
 # Hard freeze: the model may only ever see matches on or before this date.
 # --------------------------------------------------------------------------- #

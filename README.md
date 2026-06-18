@@ -67,8 +67,20 @@ log loss — passing v1 acceptance. Honest caveats:
 | M4 | Score matrix + heatmap render | ✅ done |
 | M5 | Backtest (RPS / log-loss / Brier / calibration) + baselines B0–B3 | ✅ done |
 | M6 | Auto report + README headline numbers | ✅ done |
+| F1 | Forward exact-score persistence + live scorecard (round 2) | ✅ done |
+| F2 | **v2** World-Cup goal-scale (exact-score recalibration) | ✅ done |
 
-**v1 complete.** `./scripts/run_all.sh` goes raw CSV → report with no manual steps; `pytest` is green (104 tests).
+**v1 complete.** `./scripts/run_all.sh` goes raw CSV → report with no manual steps; `pytest` is green (106 tests).
+
+**v2 (forward model).** v1 under-predicts World Cup goals by ~10.5% (actual/predicted
+= 1.105 over training-era WC matches; continental finals ≈1.00), which biases the
+*exact score* — our primary goal — toward low-scoring favourite wins. v2 multiplies
+both λ by a fixed `goal_scale = 1.10` at prediction time (GLM/ρ untouched), improving
+exact-score log loss and hit rate on **both** backtests out-of-sample. A draw/favourite
+recalibration was tested and **rejected** (failed the both-backtests rule — round-1
+favourite-overconfidence was small-sample noise). Full validation:
+[`reports/v2_recalibration.md`](reports/v2_recalibration.md). The frozen v1 backtest is
+unchanged; forward scripts use v2 (`data/processed/model_v2.json`) and fall back to v1.
 
 ## Quickstart
 

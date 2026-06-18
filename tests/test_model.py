@@ -126,3 +126,32 @@ def test_real_model_passes_sign_gate():
     # Fixed xi (no tuning) keeps this fast; we only assert the gate here.
     fitted = model.fit_model(df, features=["elo_diff", "is_home"], xi=0.002)
     fitted.assert_sane()
+
+
+# --------------------------------------------------------------------------- #
+# v2 goal_scale: applied at prediction time only, persisted, 1X2 ratio ~fixed
+# --------------------------------------------------------------------------- #
+def _toy_model(goal_scale=1.0):
+    return model.FittedModel(
+        features=["elo_diff", "is_home"],
+        params=pd.Series({"intercept": 0.05, "elo_diff": 0.77, "is_home": 0.25}),
+        xi=0.0015, rho=-0.05, goal_scale=goal_scale,
+    )
+
+
+def test_goal_scale_scales_fixture_lambdas():
+    ratings = pd.Series({"A": 1800.0, "B": 1500.0})
+    lam1, mu1 = _toy_model(1.0).fixture_lambdas(ratings, "A", "B", neutral=True)
+    lam2, mu2 = _toy_model(1.1).fixture_lambdas(ratings, "A", "B", neutral=True)
+    assert lam2 == pytest.approx(1.1 * lam1)
+    assert mu2 == pytest.approx(1.1 * mu1)
+
+
+def test_goal_scale_default_is_one_and_roundtrips():
+    assert _toy_model().goal_scale == 1.0
+    m2 = model.FittedModel.from_dict(_toy_model(1.1).to_dict())
+    assert m2.goal_scale == 1.1
+    # v1 JSON without the key loads as 1.0 (backward compatible)
+    d = _toy_model().to_dict()
+    del d["goal_scale"]
+    assert model.FittedModel.from_dict(d).goal_scale == 1.0

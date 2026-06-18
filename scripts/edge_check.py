@@ -47,7 +47,7 @@ def main() -> None:
     ap.add_argument("--all", action="store_true", help="scan all upcoming games (default: next matchday)")
     args = ap.parse_args()
 
-    model = FittedModel.load(data.PROCESSED / "model.json")
+    model = FittedModel.load(data.forward_model_path())
     played, upcoming = load_schedule()
     fixtures = upcoming if args.all else next_round(upcoming)
     elo_long = elo.compute_elo(played.sort_values("date", kind="mergesort"))
