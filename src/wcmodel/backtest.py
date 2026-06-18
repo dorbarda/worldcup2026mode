@@ -17,6 +17,8 @@ Outcome ordering for 1X2 is ordinal: index 0 = home win, 1 = draw, 2 = away win.
 
 from __future__ import annotations
 
+import re
+
 import numpy as np
 import pandas as pd
 
@@ -166,6 +168,79 @@ def score_1x2_frame(probs: np.ndarray, outcomes: np.ndarray) -> dict:
 # --------------------------------------------------------------------------- #
 # Calibration
 # --------------------------------------------------------------------------- #
+# --------------------------------------------------------------------------- #
+# Forward exact-score scoring (the primary goal, measured live)
+# --------------------------------------------------------------------------- #
+_SCORELINE = re.compile(r"(\d+)\s*-\s*(\d+)")
+
+
+def parse_scorelines(text: str) -> list[tuple[int, int]]:
+    """Extract ``[(h, a), ...]`` from a "1-0 (15%); 1-1 (13%)" top-3 string."""
+    return [(int(h), int(a)) for h, a in _SCORELINE.findall(str(text))]
+
+
+def score_forward_log(log: pd.DataFrame, rho: float) -> dict:
+    """Score completed forward-log rows on the exact-score goal (and 1X2).
+
+    The headline exact / top-3 hits use the **published** picks (``top_score`` /
+    ``top3``) so we grade exactly what we forecast. Deeper diagnostics (top-5,
+    exact-score log loss, goal bias) rebuild the matrix from the stored lambdas.
+    """
+    done = log[log["outcome_idx"].notna()].copy()
+    recs = []
+    for r in done.itertuples(index=False):
+        hs, as_ = int(r.home_score), int(r.away_score)
+        actual = (hs, as_)
+        top3 = parse_scorelines(r.top3)
+        # rebuilt matrix for the deeper metrics (uses stored lambdas)
+        if pd.notna(r.lambda_home) and pd.notna(r.lambda_away):
+            M = mx.score_matrix(float(r.lambda_home), float(r.lambda_away), rho)
+            d = mx.derived_markets(M)
+            top5 = [s for s, _ in d["top5_scores"]]
+            in_top5 = actual in top5
+            logloss = exact_log_loss(M, hs, as_)
+            p_actual = float(M[min(hs, M.shape[0] - 1), min(as_, M.shape[1] - 1)])
+            xg = float(r.lambda_home) + float(r.lambda_away)
+        else:
+            in_top5, logloss, p_actual, xg = np.nan, np.nan, np.nan, np.nan
+        probs = np.array([r.p_home, r.p_draw, r.p_away], dtype=float)
+        oidx = int(r.outcome_idx)
+        recs.append({
+            "date": r.date, "home_team": r.home_team, "away_team": r.away_team,
+            "actual": f"{hs}-{as_}", "top_score": r.top_score,
+            "exact_hit": str(r.top_score) == f"{hs}-{as_}",
+            "in_top3": actual in top3, "in_top5": in_top5,
+            "within1": abs((top3[0][0] if top3 else -9) - hs) <= 1
+                       and abs((top3[0][1] if top3 else -9) - as_) <= 1,
+            "dir_hit": int(np.argmax(probs)) == oidx,
+            "logloss": logloss, "p_actual": p_actual,
+            "total_goals": hs + as_, "xg": xg,
+            "rps": rps(probs, oidx),
+            "mkt_rps": rps(np.array([r.mkt_home, r.mkt_draw, r.mkt_away], dtype=float), oidx)
+                       if pd.notna(r.mkt_home) else np.nan,
+        })
+    per = pd.DataFrame(recs)
+    if per.empty:
+        return {"n": 0, "per_match": per}
+    mkt = per.dropna(subset=["mkt_rps"])
+    return {
+        "n": len(per),
+        "exact": int(per["exact_hit"].sum()),
+        "top3": int(per["in_top3"].sum()),
+        "top5": int(per["in_top5"].sum(skipna=True)),
+        "within1": int(per["within1"].sum()),
+        "dir": int(per["dir_hit"].sum()),
+        "rps": float(per["rps"].mean()),
+        "mkt_rps": float(mkt["mkt_rps"].mean()) if len(mkt) else float("nan"),
+        "mkt_rps_model": float(mkt["rps"].mean()) if len(mkt) else float("nan"),
+        "n_mkt": int(len(mkt)),
+        "logloss": float(per["logloss"].mean(skipna=True)),
+        "goals_actual": int(per["total_goals"].sum()),
+        "xg": float(per["xg"].sum(skipna=True)),
+        "per_match": per,
+    }
+
+
 def calibration_points(
     probs: np.ndarray, outcomes: np.ndarray, n_bins: int = 10
 ) -> pd.DataFrame:

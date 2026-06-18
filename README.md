@@ -67,8 +67,20 @@ log loss — passing v1 acceptance. Honest caveats:
 | M4 | Score matrix + heatmap render | ✅ done |
 | M5 | Backtest (RPS / log-loss / Brier / calibration) + baselines B0–B3 | ✅ done |
 | M6 | Auto report + README headline numbers | ✅ done |
+| F1 | Forward exact-score persistence + live scorecard (round 2) | ✅ done |
+| F2 | **v2** World-Cup goal-scale (exact-score recalibration) | ✅ done |
 
-**v1 complete.** `./scripts/run_all.sh` goes raw CSV → report with no manual steps; `pytest` is green (72 tests).
+**v1 complete.** `./scripts/run_all.sh` goes raw CSV → report with no manual steps; `pytest` is green (106 tests).
+
+**v2 (forward model).** v1 under-predicts World Cup goals by ~10.5% (actual/predicted
+= 1.105 over training-era WC matches; continental finals ≈1.00), which biases the
+*exact score* — our primary goal — toward low-scoring favourite wins. v2 multiplies
+both λ by a fixed `goal_scale = 1.10` at prediction time (GLM/ρ untouched), improving
+exact-score log loss and hit rate on **both** backtests out-of-sample. A draw/favourite
+recalibration was tested and **rejected** (failed the both-backtests rule — round-1
+favourite-overconfidence was small-sample noise). Full validation:
+[`reports/v2_recalibration.md`](reports/v2_recalibration.md). The frozen v1 backtest is
+unchanged; forward scripts use v2 (`data/processed/model_v2.json`) and fall back to v1.
 
 ## Quickstart
 
@@ -244,13 +256,25 @@ odds_home, odds_draw, odds_away` — **fractional, decimal, or US moneyline** li
 `-160`/`+260`), `predict_fixtures.py`
 de-vigs them and shows market H/D/A beside ours, flags fixtures where they
 disagree by ≥ `--edge` (default 0.10), and accumulates a forward log
-(`data/external/wc2026_forward_log.csv`) of pre-match forecast + market +
-backfilled result. Once matches are played it scores **model vs market RPS** —
-the B2 baseline, finally measured forward. The model and the frozen backtest are
+(`data/external/wc2026_forward_log.csv`) of pre-match forecast (**incl. the
+exact-score pick — λ, modal score and top-3**) + market + backfilled result.
+Once matches are played it scores **model vs market RPS** — the B2 baseline,
+finally measured forward. The model and the frozen backtest are
 never touched; the odds are deliberately *beside* the model, so disagreements
 stay visible (they turn out to track the model's known weak spots — host
 calibration and favourite-compression). The decision rationale is in
 [`reports/odds_integration_decision.md`](reports/odds_integration_decision.md).
+
+**Forecast freshness ("refresh until kickoff").** A fixture's logged forecast is
+re-written from the latest Elo on every run *while it is still unplayed*, then
+**locked** the moment its result is backfilled — so the scored forecast is the
+freshest pre-kickoff one, and future matchdays are never frozen at stale ratings.
+
+**Scoring the primary goal.** `scripts/score_forward.py` grades every completed
+fixture on the **exact score** first — exact-hit rate, top-3 / top-5 coverage,
+"within one goal", then directional / RPS / log loss / goals-vs-xG — writing
+`reports/wc2026_forward_scored.csv` (per match) and
+`reports/wc2026_forward_metrics.csv` (one summary row per matchday milestone).
 
 `predict_match.py` computes Elo over every played match (current), applies the
 fitted Dixon-Coles model, and prints the score matrix, 1X2 / O-U / BTTS, and
@@ -262,7 +286,7 @@ tournament cutoff, failing loudly if it ever isn't.
 ## Live page & daily automation
 
 A simple static page (`docs/index.html`, built by `scripts/build_site.py`) shows
-the **next 4 kickoffs** with our 1X2 (probability + fair odds), top-3 scorelines,
+the **next 8 kickoffs** with our 1X2 (probability + fair odds), top-3 scorelines,
 the market price, and the model's EV — plus a running model-vs-market RPS strip.
 
 `.github/workflows/daily.yml` runs **06:00 UTC daily** (= 09:00 Israel during the

@@ -49,7 +49,7 @@ def main() -> None:
     ap.add_argument("--cap", type=float, default=60.0)
     args = ap.parse_args()
 
-    model = FittedModel.load(data.PROCESSED / "model.json")
+    model = FittedModel.load(data.forward_model_path())
     played, _ = load_schedule()
     elo_long = elo.compute_elo(played.sort_values("date", kind="mergesort"))
     mk = dict(alpha=args.alpha, half_life_days=args.half_life, cap=args.cap)

@@ -44,6 +44,9 @@ jobs:
       - name: Refresh results, update Elo + forward log
         run: python scripts/predict_fixtures.py --refresh
 
+      - name: Score the forward log (exact-score goal + 1X2)
+        run: python scripts/score_forward.py
+
       - name: Regenerate the page and the matchup report
         run: |
           python scripts/build_site.py

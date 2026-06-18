@@ -245,7 +245,7 @@ def main() -> None:
     ap.add_argument("--all", action="store_true", help="all remaining group games")
     ap.add_argument("--refresh", action="store_true", help="re-download results first")
     ap.add_argument("--odds", default=str(data.DATA / "external" / "wc2026_odds.csv"))
-    ap.add_argument("--model", default=str(data.PROCESSED / "model.json"))
+    ap.add_argument("--model", default=str(data.forward_model_path()))
     args = ap.parse_args()
 
     if args.refresh:

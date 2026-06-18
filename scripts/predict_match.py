@@ -65,8 +65,8 @@ def main() -> None:
     ap.add_argument("team2")
     ap.add_argument("--home", default=None,
                     help="which side is home (gets home advantage). Omit for a neutral venue.")
-    ap.add_argument("--model", default=str(data.PROCESSED / "model.json"),
-                    help="fitted model JSON (default: the frozen 2022-11-19 fit)")
+    ap.add_argument("--model", default=str(data.forward_model_path()),
+                    help="fitted model JSON (default: forward model v2 if built, else v1)")
     ap.add_argument("--plot", default=None, help="optional path to save a heatmap PNG")
     args = ap.parse_args()
 

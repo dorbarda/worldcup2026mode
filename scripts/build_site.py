@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Build a simple static page (docs/index.html) for the next 3 World Cup fixtures.
+"""Build a simple static page (docs/index.html) for the next 8 World Cup fixtures.
 
-For each of the next 3 kickoffs it shows our model's 1X2 (probability + fair
+For each of the next 8 kickoffs it shows our model's 1X2 (probability + fair
 decimal odds), the top-3 scorelines, and — when bookmaker odds are present —
 the market price and the **value/EV** by our model (``our_prob * odds - 1``).
 A small scorecard tracks model-vs-market RPS over completed games.
@@ -9,7 +9,7 @@ A small scorecard tracks model-vs-market RPS over completed games.
 The page is self-contained (inline CSS) and mobile-first, made to be served by
 GitHub Pages from the ``/docs`` folder.
 
-    python scripts/build_site.py [--n 3] [--refresh]
+    python scripts/build_site.py [--n 8] [--refresh]
 """
 
 from __future__ import annotations
@@ -39,19 +39,11 @@ def _fair(p: float) -> str:
     return f"{1/p:.2f}" if p > 0 else "—"
 
 
-def _scorecard():
+def _scorecard(rho: float):
     if not LOG.exists():
         return None
-    log = pd.read_csv(LOG)
-    done = log[log["outcome_idx"].notna()]
-    if done.empty:
-        return None
-    o = done["outcome_idx"].astype(int).to_numpy()
-    m = float(np.mean([bt.rps(p, o[i]) for i, p in
-                       enumerate(done[["p_home", "p_draw", "p_away"]].to_numpy())]))
-    k = float(np.mean([bt.rps(p, o[i]) for i, p in
-                       enumerate(done[["mkt_home", "mkt_draw", "mkt_away"]].to_numpy())]))
-    return {"n": len(done), "model": m, "market": k}
+    s = bt.score_forward_log(pd.read_csv(LOG), rho)
+    return s if s["n"] else None
 
 
 def _score_grid(rec) -> str:
@@ -189,7 +181,7 @@ def _edges_section(model, upcoming, snap, elo_long, as_of, max_show=10):
 def build(n: int, refresh: bool) -> None:
     if refresh:
         refresh_snapshot()
-    model = FittedModel.load(data.PROCESSED / "model.json")
+    model = FittedModel.load(data.forward_model_path())
     played, upcoming = load_schedule()
     if upcoming.empty:
         raise SystemExit("No upcoming fixtures.")
@@ -224,13 +216,16 @@ def build(n: int, refresh: bool) -> None:
 
     edges_html = _edges_section(model, upcoming, snap, elo_long, as_of)
 
-    sc = _scorecard()
+    sc = _scorecard(model.rho)
     sc_html = ""
     if sc:
-        lead = "model" if sc["model"] < sc["market"] else "market"
+        lead = "model" if sc["mkt_rps_model"] < sc["mkt_rps"] else "market"
+        rps_txt = (f"model RPS <b>{sc['mkt_rps_model']:.3f}</b> vs market <b>{sc['mkt_rps']:.3f}</b> "
+                   f"<span class='{lead}'>({lead} ahead)</span>") if sc["n_mkt"] else \
+                  f"model RPS <b>{sc['rps']:.3f}</b>"
         sc_html = (f"<div class='scorebar'>Forward record · {sc['n']} games · "
-                   f"model RPS <b>{sc['model']:.3f}</b> vs market <b>{sc['market']:.3f}</b> "
-                   f"<span class='{lead}'>({lead} ahead)</span></div>")
+                   f"🎯 exact <b>{sc['exact']}/{sc['n']}</b> · top-3 <b>{sc['top3']}/{sc['n']}</b> · "
+                   f"winner <b>{sc['dir']}/{sc['n']}</b> · {rps_txt}</div>")
 
     cards = "".join(_game_card(r) for r in recs)
     html = _PAGE.format(
@@ -319,7 +314,7 @@ _PAGE = """<!doctype html>
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Build the static next-fixtures page.")
-    ap.add_argument("--n", type=int, default=4, help="number of upcoming fixtures (default 4)")
+    ap.add_argument("--n", type=int, default=8, help="number of upcoming fixtures (default 8)")
     ap.add_argument("--refresh", action="store_true", help="pull latest results first")
     args = ap.parse_args()
     build(args.n, args.refresh)

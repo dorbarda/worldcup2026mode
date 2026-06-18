@@ -38,33 +38,55 @@ from wcmodel.model import FittedModel  # noqa: E402
 FORWARD_LOG = data.DATA / "external" / "wc2026_forward_log.csv"
 
 
+# Forward-log schema. The prediction block (lambdas, 1X2, exact-score picks,
+# market) is refreshed each run *until the match is played*; once a result lands
+# the row is locked, so the scored forecast is the freshest pre-kickoff one.
+LOG_COLS = ["date", "home_team", "away_team", "model_version",
+            "lambda_home", "lambda_away", "p_home", "p_draw", "p_away",
+            "top_score", "top1_p", "top3",
+            "mkt_home", "mkt_draw", "mkt_away",
+            "home_score", "away_score", "outcome_idx"]
+# Columns refreshed on every run while a fixture is still unplayed.
+PRED_COLS = ["model_version", "lambda_home", "lambda_away", "p_home", "p_draw", "p_away",
+             "top_score", "top1_p", "top3", "mkt_home", "mkt_draw", "mkt_away"]
+
+
 def _update_forward_log(out: pd.DataFrame, played: pd.DataFrame) -> None:
-    """Accumulate {prediction, market, result} per fixture for forward B2 scoring.
+    """Accumulate {prediction, market, exact-score, result} per fixture, forward.
 
-    Predictions are logged **once** (the pre-match forecast is never overwritten,
-    even if a later run's Elo would change it). Results are backfilled from the
-    snapshot as matches get played. Once results exist, prints model-vs-market
-    RPS — the market baseline (B2) finally scored, honestly, going forward.
+    Freshness policy ("refresh until kickoff"): a fixture's prediction block is
+    re-written from the current run while the match is still unplayed, then
+    **locked** the moment a result is backfilled — so the forecast we score is
+    the last one published before kickoff (no stale pre-logged forecasts). The
+    exact-score pick (the project's primary goal) is recorded alongside 1X2 so it
+    can be scored forward, not just reconstructed from git.
     """
-    cols = ["date", "home_team", "away_team", "p_home", "p_draw", "p_away",
-            "mkt_home", "mkt_draw", "mkt_away", "home_score", "away_score", "outcome_idx"]
-    log = pd.read_csv(FORWARD_LOG) if FORWARD_LOG.exists() else pd.DataFrame(columns=cols)
-    keyed = {(r.home_team, r.away_team) for r in log.itertuples(index=False)}
+    log = pd.read_csv(FORWARD_LOG) if FORWARD_LOG.exists() else pd.DataFrame(columns=LOG_COLS)
+    log = log.reindex(columns=LOG_COLS)  # tolerate an older, narrower schema
+    pos = {(r.home_team, r.away_team, pd.to_datetime(r.date).date()): i
+           for i, r in enumerate(log.itertuples())}
 
-    new = out[out["mkt_home"].notna()].copy()
-    for r in new.itertuples(index=False):
-        if (r.home_team, r.away_team) in keyed:
-            continue  # keep the first (pre-match) forecast
-        log.loc[len(log)] = {
-            "date": pd.Timestamp(r.date).date(), "home_team": r.home_team, "away_team": r.away_team,
-            "p_home": r.p_home, "p_draw": r.p_draw, "p_away": r.p_away,
-            "mkt_home": r.mkt_home, "mkt_draw": r.mkt_draw, "mkt_away": r.mkt_away,
-            "home_score": np.nan, "away_score": np.nan, "outcome_idx": np.nan,
-        }
+    def _payload(r) -> dict:
+        return {"model_version": r.model_version,
+                "lambda_home": r.lam_full, "lambda_away": r.mu_full,
+                "p_home": r.p_home, "p_draw": r.p_draw, "p_away": r.p_away,
+                "top_score": r.top_score, "top1_p": r.top1_p, "top3": r.top3,
+                "mkt_home": r.mkt_home, "mkt_draw": r.mkt_draw, "mkt_away": r.mkt_away}
 
-    # Backfill results from the snapshot for any logged fixture now played.
-    # Key on (home, away, DATE) so a past friendly between the same teams can't
-    # masquerade as the WC fixture result.
+    for r in out.itertuples(index=False):
+        key = (r.home_team, r.away_team, pd.Timestamp(r.date).date())
+        if key not in pos:  # first time we predict this fixture
+            row = {"date": key[2], "home_team": r.home_team, "away_team": r.away_team,
+                   **_payload(r), "home_score": np.nan, "away_score": np.nan, "outcome_idx": np.nan}
+            log.loc[len(log)] = row
+            pos[key] = len(log) - 1
+        elif pd.isna(log.at[pos[key], "home_score"]):  # unplayed -> refresh forecast
+            for c, v in _payload(r).items():
+                log.at[pos[key], c] = v
+
+    # Backfill results from the snapshot for any logged fixture now played. Key on
+    # (home, away, DATE) so a past friendly between the same teams can't masquerade
+    # as the WC fixture result. A backfilled result locks the row from here on.
     res = {(r.home_team, r.away_team, pd.Timestamp(r.date).date()): (r.home_score, r.away_score)
            for r in played.itertuples(index=False)}
     for idx, row in log.iterrows():
@@ -83,11 +105,21 @@ def _update_forward_log(out: pd.DataFrame, played: pd.DataFrame) -> None:
         o = done["outcome_idx"].astype(int).to_numpy()
         m_rps = np.mean([bt.rps(p, o[i]) for i, p in
                          enumerate(done[["p_home", "p_draw", "p_away"]].to_numpy())])
-        k_rps = np.mean([bt.rps(p, o[i]) for i, p in
-                         enumerate(done[["mkt_home", "mkt_draw", "mkt_away"]].to_numpy())])
-        print(f"\nForward B2 scoring over {len(done)} completed match(es):  "
-              f"model RPS {m_rps:.4f}  |  market RPS {k_rps:.4f}  "
-              f"({'model ahead' if m_rps < k_rps else 'market ahead'})")
+        scored = done[done["mkt_home"].notna()]
+        msg = f"\nForward scoring over {len(done)} completed match(es):  model RPS {m_rps:.4f}"
+        if len(scored):
+            os_ = scored["outcome_idx"].astype(int).to_numpy()
+            k_rps = np.mean([bt.rps(p, os_[i]) for i, p in
+                             enumerate(scored[["mkt_home", "mkt_draw", "mkt_away"]].to_numpy())])
+            ms_rps = np.mean([bt.rps(p, os_[i]) for i, p in
+                              enumerate(scored[["p_home", "p_draw", "p_away"]].to_numpy())])
+            msg += (f"  |  vs market over {len(scored)}: model {ms_rps:.4f} / market {k_rps:.4f}"
+                    f" ({'model ahead' if ms_rps < k_rps else 'market ahead'})")
+        # Exact-score scoreboard — the primary goal.
+        exact = int((done["top_score"] == done["home_score"].astype("Int64").astype(str) + "-"
+                     + done["away_score"].astype("Int64").astype(str)).sum())
+        msg += f"\nExact-score hits (top pick == result): {exact}/{len(done)}"
+        print(msg)
 
 
 def main() -> None:
@@ -95,7 +127,7 @@ def main() -> None:
     ap.add_argument("--all", action="store_true",
                     help="predict all remaining group games (default: each team's next match)")
     ap.add_argument("--refresh", action="store_true", help="re-download the results snapshot first")
-    ap.add_argument("--model", default=str(data.PROCESSED / "model.json"))
+    ap.add_argument("--model", default=str(data.forward_model_path()))
     ap.add_argument("--out", default=str(data.ROOT / "reports" / "wc2026_predictions.csv"))
     ap.add_argument("--plot", action="store_true", help="save a heatmap PNG per fixture")
     ap.add_argument("--odds", default=str(data.DATA / "external" / "wc2026_odds.csv"),
@@ -108,6 +140,7 @@ def main() -> None:
         refresh_snapshot()
 
     model = FittedModel.load(args.model)
+    model_version = "v2" if model.goal_scale != 1.0 else "v1"
     played, upcoming = load_schedule()
     if upcoming.empty:
         raise SystemExit("No upcoming FIFA World Cup fixtures in the snapshot.")
@@ -129,7 +162,7 @@ def main() -> None:
         lam, mu = model.fixture_lambdas(snap, h, a, neutral=neutral)
         M = mx.score_matrix(lam, mu, model.rho)
         d = mx.derived_markets(M)
-        (ms_h, ms_a), _ = d["top5_scores"][0]
+        (ms_h, ms_a), top1_p = d["top5_scores"][0]
         mkt = market[i] if market is not None else (np.nan, np.nan, np.nan)
         edge = float(np.nanmax(np.abs(np.array([d["p_home"], d["p_draw"], d["p_away"]]) - mkt))) \
             if market is not None and not np.isnan(mkt).all() else np.nan
@@ -144,6 +177,8 @@ def main() -> None:
             "edge": round(edge, 3) if edge == edge else np.nan,
             "top_score": f"{ms_h}-{ms_a}",
             "top3": "; ".join(f"{i2}-{j2} ({p*100:.0f}%)" for (i2, j2), p in d["top5_scores"][:3]),
+            # full-precision helpers for the forward log (dropped before the report CSV)
+            "model_version": model_version, "lam_full": lam, "mu_full": mu, "top1_p": float(top1_p),
         })
 
         if args.plot:
@@ -194,7 +229,7 @@ def main() -> None:
     _update_forward_log(out, played)
 
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
-    out.to_csv(args.out, index=False)
+    out.drop(columns=["lam_full", "mu_full", "top1_p"], errors="ignore").to_csv(args.out, index=False)
     print(f"\nWrote {Path(args.out).relative_to(data.ROOT)}"
           + (f" + heatmaps in reports/figures/wc2026/" if args.plot else ""))
     print("Update loop: once these are played, re-run with --refresh for the next matchday.")
