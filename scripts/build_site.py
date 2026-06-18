@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Build a simple static page (docs/index.html) for the next 3 World Cup fixtures.
+"""Build a simple static page (docs/index.html) for the next 8 World Cup fixtures.
 
-For each of the next 3 kickoffs it shows our model's 1X2 (probability + fair
+For each of the next 8 kickoffs it shows our model's 1X2 (probability + fair
 decimal odds), the top-3 scorelines, and — when bookmaker odds are present —
 the market price and the **value/EV** by our model (``our_prob * odds - 1``).
 A small scorecard tracks model-vs-market RPS over completed games.
@@ -9,7 +9,7 @@ A small scorecard tracks model-vs-market RPS over completed games.
 The page is self-contained (inline CSS) and mobile-first, made to be served by
 GitHub Pages from the ``/docs`` folder.
 
-    python scripts/build_site.py [--n 3] [--refresh]
+    python scripts/build_site.py [--n 8] [--refresh]
 """
 
 from __future__ import annotations
@@ -314,7 +314,7 @@ _PAGE = """<!doctype html>
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Build the static next-fixtures page.")
-    ap.add_argument("--n", type=int, default=4, help="number of upcoming fixtures (default 4)")
+    ap.add_argument("--n", type=int, default=8, help="number of upcoming fixtures (default 8)")
     ap.add_argument("--refresh", action="store_true", help="pull latest results first")
     args = ap.parse_args()
     build(args.n, args.refresh)

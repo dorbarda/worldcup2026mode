@@ -286,7 +286,7 @@ tournament cutoff, failing loudly if it ever isn't.
 ## Live page & daily automation
 
 A simple static page (`docs/index.html`, built by `scripts/build_site.py`) shows
-the **next 4 kickoffs** with our 1X2 (probability + fair odds), top-3 scorelines,
+the **next 8 kickoffs** with our 1X2 (probability + fair odds), top-3 scorelines,
 the market price, and the model's EV — plus a running model-vs-market RPS strip.
 
 `.github/workflows/daily.yml` runs **06:00 UTC daily** (= 09:00 Israel during the
