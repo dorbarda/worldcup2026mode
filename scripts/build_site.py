@@ -39,19 +39,11 @@ def _fair(p: float) -> str:
     return f"{1/p:.2f}" if p > 0 else "—"
 
 
-def _scorecard():
+def _scorecard(rho: float):
     if not LOG.exists():
         return None
-    log = pd.read_csv(LOG)
-    done = log[log["outcome_idx"].notna()]
-    if done.empty:
-        return None
-    o = done["outcome_idx"].astype(int).to_numpy()
-    m = float(np.mean([bt.rps(p, o[i]) for i, p in
-                       enumerate(done[["p_home", "p_draw", "p_away"]].to_numpy())]))
-    k = float(np.mean([bt.rps(p, o[i]) for i, p in
-                       enumerate(done[["mkt_home", "mkt_draw", "mkt_away"]].to_numpy())]))
-    return {"n": len(done), "model": m, "market": k}
+    s = bt.score_forward_log(pd.read_csv(LOG), rho)
+    return s if s["n"] else None
 
 
 def _score_grid(rec) -> str:
@@ -224,13 +216,16 @@ def build(n: int, refresh: bool) -> None:
 
     edges_html = _edges_section(model, upcoming, snap, elo_long, as_of)
 
-    sc = _scorecard()
+    sc = _scorecard(model.rho)
     sc_html = ""
     if sc:
-        lead = "model" if sc["model"] < sc["market"] else "market"
+        lead = "model" if sc["mkt_rps_model"] < sc["mkt_rps"] else "market"
+        rps_txt = (f"model RPS <b>{sc['mkt_rps_model']:.3f}</b> vs market <b>{sc['mkt_rps']:.3f}</b> "
+                   f"<span class='{lead}'>({lead} ahead)</span>") if sc["n_mkt"] else \
+                  f"model RPS <b>{sc['rps']:.3f}</b>"
         sc_html = (f"<div class='scorebar'>Forward record · {sc['n']} games · "
-                   f"model RPS <b>{sc['model']:.3f}</b> vs market <b>{sc['market']:.3f}</b> "
-                   f"<span class='{lead}'>({lead} ahead)</span></div>")
+                   f"🎯 exact <b>{sc['exact']}/{sc['n']}</b> · top-3 <b>{sc['top3']}/{sc['n']}</b> · "
+                   f"winner <b>{sc['dir']}/{sc['n']}</b> · {rps_txt}</div>")
 
     cards = "".join(_game_card(r) for r in recs)
     html = _PAGE.format(

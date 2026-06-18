@@ -119,6 +119,8 @@ def _prediction_row():
         "date": pd.Timestamp("2026-06-13"), "home_team": "Brazil", "away_team": "Morocco",
         "p_home": 0.44, "p_draw": 0.30, "p_away": 0.26,
         "mkt_home": 0.58, "mkt_draw": 0.24, "mkt_away": 0.18,
+        "lam_full": 1.46, "mu_full": 0.92, "top_score": "1-0", "top1_p": 0.13,
+        "top3": "1-0 (13%); 1-1 (12%); 0-0 (11%)",
     }])
 
 

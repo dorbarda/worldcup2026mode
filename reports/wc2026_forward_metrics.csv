@@ -1,0 +1,2 @@
+n_completed,exact,top3,top5,within1,dir,rps,mkt_rps,logloss,goals_actual,xg
+24,2,7,9,12,11,0.2087,0.1719,3.2101,75,57.5
