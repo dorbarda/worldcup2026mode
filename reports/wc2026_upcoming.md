@@ -47,15 +47,15 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jun 19 | Scotland v Morocco | neutral | 0.92–1.45 | 23/28/49 | 17/27/56 | 7pp | 1-1 |
+| Jun 19 | Scotland v Morocco | neutral | 0.92–1.45 | 23/28/49 | 17/26/57 | 8pp | 1-1 |
 | Jun 19 | Brazil v Haiti | neutral | 2.31–0.58 | 76/17/7 | 87/9/4 | 11pp | 2-0 |
 | Jun 19 | United States v Australia | United States (H) | 1.29–1.33 | 35/27/37 | 60/22/18 | 25pp | 1-1 |
-| Jun 19 | Turkey v Paraguay | neutral | 1.28–1.04 | 41/29/30 | 47/28/25 | 6pp | 1-1 |
+| Jun 19 | Turkey v Paraguay | neutral | 1.28–1.04 | 41/29/30 | 47/28/25 | 5pp | 1-1 |
 | Jun 20 | Germany v Ivory Coast | neutral | 1.55–0.86 | 53/27/20 | 62/21/17 | 9pp | 1-0 |
 | Jun 20 | Ecuador v Curaçao | neutral | 2.40–0.56 | 78/16/6 | 86/10/4 | 8pp | 2-0 |
 | Jun 20 | Netherlands v Sweden | neutral | 1.64–0.81 | 56/26/18 | 55/25/20 | 3pp | 1-0 |
-| Jun 20 | Tunisia v Japan | neutral | 0.64–2.09 | 10/19/71 | 14/23/63 | 8pp | 0-2 |
-| Jun 21 | Belgium v Iran | neutral | 1.27–1.04 | 41/29/30 | 67/20/12 | 26pp | 1-1 |
+| Jun 20 | Tunisia v Japan | neutral | 0.64–2.09 | 10/19/71 | 14/24/62 | 9pp | 0-2 |
+| Jun 21 | Belgium v Iran | neutral | 1.27–1.04 | 41/29/30 | 67/20/13 | 26pp | 1-1 |
 | Jun 21 | New Zealand v Egypt | neutral | 1.00–1.33 | 28/29/43 | 17/24/59 | 16pp | 1-1 |
 | Jun 21 | Spain v Saudi Arabia | neutral | 2.92–0.46 | 87/10/3 | 87/10/4 | 1pp | 2-0 |
 | Jun 21 | Uruguay v Cape Verde | neutral | 1.96–0.68 | 67/21/11 | 66/23/12 | 2pp | 2-0 |
@@ -78,7 +78,7 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 | Match | Our H/D/A | Market H/D/A | Edge | Lean |
 |---|---|---|---|---|
-| Belgium v Iran | 41/29/30 | 67/20/12 | 26pp | model lower on Belgium |
+| Belgium v Iran | 41/29/30 | 67/20/13 | 26pp | model lower on Belgium |
 | United States v Australia | 35/27/37 | 60/22/18 | 25pp | model lower on United States |
 | Bosnia and Herzegovina v Qatar | 44/29/27 | 67/19/14 | 23pp | model lower on Bosnia and Herzegovina |
 | Portugal v Uzbekistan | 63/23/14 | 80/14/6 | 17pp | model lower on Portugal |
@@ -100,7 +100,7 @@ Elo Brazil 2065 · Haiti 1704  |  expected goals **2.31 – 0.58**
 
 **Scotland vs Morocco** — _neutral venue_  
 Elo Scotland 1874 · Morocco 1993  |  expected goals **0.92 – 1.45**  
-- **1X2:** Scotland 23% · Draw 28% · Morocco 49%   _(market 17/27/56)_
+- **1X2:** Scotland 23% · Draw 28% · Morocco 49%   _(market 17/26/57)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 0-1 13% · 0-0 10% · 0-2 10% · 1-2 9%
 - Morocco favoured (49%); in line with the market.
@@ -144,7 +144,7 @@ Elo Netherlands 2011 · Sweden 1828  |  expected goals **1.64 – 0.81**
 
 **Tunisia vs Japan** — _neutral venue_  
 Elo Tunisia 1688 · Japan 1998  |  expected goals **0.64 – 2.09**  
-- **1X2:** Tunisia 10% · Draw 19% · Japan 71%   _(market 14/23/63)_
+- **1X2:** Tunisia 10% · Draw 19% · Japan 71%   _(market 14/24/62)_
 - **Goals:** Over 2.5 51% · BTTS 42%
 - **Likeliest scores:** 0-2 14% · 0-1 13% · 0-3 10% · 1-1 9% · 1-2 9%
 - Japan favoured (71%); in line with the market.
@@ -153,7 +153,7 @@ Elo Tunisia 1688 · Japan 1998  |  expected goals **0.64 – 2.09**
 
 **Belgium vs Iran** — _neutral venue_  
 Elo Belgium 1936 · Iran 1885  |  expected goals **1.27 – 1.04**  
-- **1X2:** Belgium 41% · Draw 29% · Iran 30%   _(market 67/20/12)_
+- **1X2:** Belgium 41% · Draw 29% · Iran 30%   _(market 67/20/13)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 1-0 12% · 0-0 10% · 0-1 10% · 2-1 8%
 - Belgium favoured (41%); **model lower than the market on Belgium** (Δ26pp).
