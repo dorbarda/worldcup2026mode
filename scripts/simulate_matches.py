@@ -37,7 +37,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOG = ROOT / "data" / "external" / "wc2026_forward_log.csv"
 OUT = ROOT / "reports" / "wc2026_simulation.md"
 
-SHRINK_K = 18.0   # pseudo-matches; extra_scale -> raw ratio as completed games grow
+SHRINK_K = 0.0   # pseudo-matches; 0 = aggressive (use the raw actual/xG ratio in full)
 
 
 def fit_tweaks(done: pd.DataFrame) -> tuple[float, float, float]:
@@ -94,8 +94,10 @@ def main() -> None:
     lines.append("# WC-2026 simulation — last 8 & next 8 group games\n")
     lines.append(f"*Monte-Carlo, {args.sims:,} draws/match, seed {args.seed}. "
                  f"Generated from `data/external/wc2026_forward_log.csv`.*\n")
-    lines.append("## Tweaks applied (fit on the completed games)\n")
-    lines.append(f"- **Level:** raw actual/xG = {raw:.3f}; shrunk extra scale = "
+    mode = "AGGRESSIVE (raw ratio, no shrink)" if SHRINK_K == 0 else f"shrunk (k={SHRINK_K:.0f})"
+    lines.append(f"## Tweaks applied (fit on the completed games) — {mode}\n")
+    label = "extra scale" if SHRINK_K == 0 else "shrunk extra scale"
+    lines.append(f"- **Level:** raw actual/xG = {raw:.3f}; {label} = "
                  f"**×{extra:.3f}** on top of v2's 1.10 (effective ≈ {1.10*extra:.2f}).")
     lines.append(f"- **Fat tail:** Negative-Binomial dispersion **r = {r:.1f}** "
                  f"(Poisson = ∞), fit by MLE on completed team innings.\n")
