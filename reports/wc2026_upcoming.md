@@ -1,6 +1,6 @@
-# World Cup 2026 — Opening Matches (Jun 21–Jun 25)
+# World Cup 2026 — Opening Matches (Jun 22–Jun 26)
 
-Model-based forecasts for the next round of group matches (24 fixtures), generated from **current Elo** (all played matches through 2026-06-20). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
+Model-based forecasts for the next round of group matches (24 fixtures), generated from **current Elo** (all played matches through 2026-06-21). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
 
 De-vigged bookmaker odds are shown for comparison only — they do **not** feed the model. `Edge` = largest gap between our probability and the market on any outcome.
 
@@ -46,8 +46,12 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Ecuador v Curaçao | 0-0 (draw) | 78/16/6 | 86/10/4 | model |
 | Netherlands v Sweden | 5-1 (home) | 56/26/18 | 56/24/20 | model |
 | Tunisia v Japan | 0-4 (away) | 10/19/71 | 15/24/61 | model |
+| Belgium v Iran | 0-0 (draw) | 41/29/30 | 67/20/12 | model |
+| New Zealand v Egypt | 1-3 (away) | 28/29/43 | 16/24/60 | market |
+| Spain v Saudi Arabia | 4-0 (home) | 87/10/3 | 87/9/4 | market |
+| Uruguay v Cape Verde | 2-2 (draw) | 67/21/12 | 66/23/11 | market |
 
-**Running RPS over 36 match(es): model 0.1881 vs market 0.1619 — market ahead.** (Tiny sample — a smoke signal, not a verdict.)
+**Running RPS over 40 match(es): model 0.1835 vs market 0.1597 — market ahead.** (Tiny sample — a smoke signal, not a verdict.)
 
 ![overview](figures/wc2026/overview.png)
 
@@ -55,30 +59,30 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jun 21 | Belgium v Iran | neutral | 1.27–1.04 | 41/29/30 | 67/20/12 | 26pp | 1-1 |
-| Jun 21 | New Zealand v Egypt | neutral | 1.00–1.33 | 28/29/43 | 16/24/60 | 17pp | 1-1 |
-| Jun 21 | Spain v Saudi Arabia | neutral | 2.92–0.46 | 87/10/3 | 87/9/4 | 1pp | 2-0 |
-| Jun 21 | Uruguay v Cape Verde | neutral | 1.96–0.68 | 67/21/11 | 66/23/11 | 1pp | 2-0 |
-| Jun 22 | France v Iraq | neutral | 2.65–0.50 | 83/13/5 | 88/9/3 | 5pp | 2-0 |
-| Jun 22 | Norway v Senegal | neutral | 1.44–0.93 | 48/28/24 | 42/27/31 | 7pp | 1-1 |
-| Jun 22 | Argentina v Austria | neutral | 2.01–0.66 | 69/21/11 | 62/23/14 | 7pp | 2-0 |
+| Jun 22 | France v Iraq | neutral | 2.65–0.50 | 83/13/5 | 89/8/3 | 6pp | 2-0 |
+| Jun 22 | Norway v Senegal | neutral | 1.44–0.93 | 48/28/24 | 44/27/28 | 5pp | 1-1 |
+| Jun 22 | Argentina v Austria | neutral | 2.01–0.66 | 69/21/11 | 65/22/13 | 4pp | 2-0 |
 | Jun 22 | Jordan v Algeria | neutral | 0.91–1.46 | 23/28/49 | 16/23/61 | 12pp | 0-1 |
 | Jun 23 | Portugal v Uzbekistan | neutral | 1.82–0.73 | 63/23/14 | 80/14/6 | 17pp | 1-0 |
-| Jun 23 | Colombia v DR Congo | neutral | 2.06–0.65 | 70/20/10 | 64/23/14 | 6pp | 2-0 |
+| Jun 23 | Colombia v DR Congo | neutral | 2.06–0.65 | 70/20/10 | 63/23/14 | 7pp | 2-0 |
 | Jun 23 | England v Ghana | neutral | 2.76–0.48 | 84/12/4 | 79/15/7 | 6pp | 2-0 |
 | Jun 23 | Panama v Croatia | neutral | 0.90–1.48 | 22/28/50 | 14/24/62 | 12pp | 0-1 |
 | Jun 24 | Mexico v Czech Republic | Mexico (H) | 2.34–0.73 | 73/17/10 | — | — | 2-0 |
-| Jun 24 | South Africa v South Korea | neutral | 0.75–1.78 | 15/24/61 | 17/24/59 | 2pp | 0-1 |
+| Jun 24 | South Africa v South Korea | neutral | 0.75–1.78 | 15/24/61 | 17/24/59 | 3pp | 0-1 |
 | Jun 24 | Canada v Switzerland | Canada (H) | 1.34–1.28 | 38/27/35 | — | — | 1-1 |
-| Jun 24 | Bosnia and Herzegovina v Qatar | neutral | 1.34–0.99 | 44/29/27 | 67/19/14 | 23pp | 1-1 |
-| Jun 24 | Scotland v Brazil | neutral | 0.75–1.77 | 15/24/61 | 12/19/69 | 8pp | 0-1 |
+| Jun 24 | Bosnia and Herzegovina v Qatar | neutral | 1.34–0.99 | 44/29/27 | 66/20/14 | 22pp | 1-1 |
+| Jun 24 | Scotland v Brazil | neutral | 0.75–1.77 | 15/24/61 | 13/19/69 | 8pp | 0-1 |
 | Jun 24 | Morocco v Haiti | neutral | 2.14–0.62 | 72/19/9 | 80/14/6 | 8pp | 2-0 |
 | Jun 25 | United States v Turkey | United States (H) | 1.59–1.08 | 49/26/25 | — | — | 1-1 |
-| Jun 25 | Paraguay v Australia | neutral | 1.13–1.18 | 34/30/37 | 34/42/24 | 12pp | 1-1 |
+| Jun 25 | Paraguay v Australia | neutral | 1.13–1.18 | 34/30/37 | 33/42/25 | 12pp | 1-1 |
 | Jun 25 | Curaçao v Ivory Coast | neutral | 0.76–1.74 | 16/24/60 | 5/11/84 | 23pp | 0-1 |
-| Jun 25 | Ecuador v Germany | neutral | 1.00–1.32 | 28/29/43 | 26/25/49 | 5pp | 1-1 |
-| Jun 25 | Japan v Sweden | neutral | 1.74–0.76 | 60/24/15 | 47/28/25 | 14pp | 1-0 |
-| Jun 25 | Tunisia v Netherlands | neutral | 0.57–2.34 | 7/16/77 | 5/12/83 | 6pp | 0-2 |
+| Jun 25 | Ecuador v Germany | neutral | 1.00–1.32 | 28/29/43 | 26/25/49 | 6pp | 1-1 |
+| Jun 25 | Japan v Sweden | neutral | 1.74–0.76 | 60/24/15 | 50/28/23 | 11pp | 1-0 |
+| Jun 25 | Tunisia v Netherlands | neutral | 0.57–2.34 | 7/16/77 | 5/11/84 | 7pp | 0-2 |
+| Jun 26 | Egypt v Iran | neutral | 1.08–1.23 | 32/29/39 | 40/35/25 | 13pp | 1-1 |
+| Jun 26 | New Zealand v Belgium | neutral | 0.76–1.76 | 15/24/61 | 7/14/79 | 18pp | 0-1 |
+| Jun 26 | Cape Verde v Saudi Arabia | neutral | 1.13–1.17 | 34/30/36 | 40/27/33 | 6pp | 1-1 |
+| Jun 26 | Uruguay v Spain | neutral | 0.69–1.93 | 12/22/66 | 14/22/64 | 3pp | 0-1 |
 
 ## Where we disagree with the market
 
@@ -86,60 +90,30 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 | Match | Our H/D/A | Market H/D/A | Edge | Lean |
 |---|---|---|---|---|
-| Belgium v Iran | 41/29/30 | 67/20/12 | 26pp | model lower on Belgium |
 | Curaçao v Ivory Coast | 16/24/60 | 5/11/84 | 23pp | model higher on Curaçao |
-| Bosnia and Herzegovina v Qatar | 44/29/27 | 67/19/14 | 23pp | model lower on Bosnia and Herzegovina |
-| New Zealand v Egypt | 28/29/43 | 16/24/60 | 17pp | model higher on New Zealand |
+| Bosnia and Herzegovina v Qatar | 44/29/27 | 66/20/14 | 22pp | model lower on Bosnia and Herzegovina |
+| New Zealand v Belgium | 15/24/61 | 7/14/79 | 18pp | model higher on New Zealand |
 | Portugal v Uzbekistan | 63/23/14 | 80/14/6 | 17pp | model lower on Portugal |
-| Japan v Sweden | 60/24/15 | 47/28/25 | 14pp | model higher on Japan |
-| Paraguay v Australia | 34/30/37 | 34/42/24 | 12pp | model higher on Paraguay |
-| Panama v Croatia | 22/28/50 | 14/24/62 | 12pp | model higher on Panama |
+| Egypt v Iran | 32/29/39 | 40/35/25 | 13pp | model lower on Egypt |
+| Paraguay v Australia | 34/30/37 | 33/42/25 | 12pp | model higher on Paraguay |
 | Jordan v Algeria | 23/28/49 | 16/23/61 | 12pp | model higher on Jordan |
+| Panama v Croatia | 22/28/50 | 14/24/62 | 12pp | model higher on Panama |
+| Japan v Sweden | 60/24/15 | 50/28/23 | 11pp | model higher on Japan |
 
 ## Match-by-match
-
-### Sunday, June 21
-
-**Belgium vs Iran** — _neutral venue_  
-Elo Belgium 1936 · Iran 1885  |  expected goals **1.27 – 1.04**  
-- **1X2:** Belgium 41% · Draw 29% · Iran 30%   _(market 67/20/12)_
-- **Goals:** Over 2.5 41% · BTTS 47%
-- **Likeliest scores:** 1-1 14% · 1-0 12% · 0-0 10% · 0-1 10% · 2-1 8%
-- Belgium favoured (41%); **model lower than the market on Belgium** (Δ26pp).
-
-**New Zealand vs Egypt** — _neutral venue_  
-Elo New Zealand 1749 · Egypt 1821  |  expected goals **1.00 – 1.33**  
-- **1X2:** New Zealand 28% · Draw 29% · Egypt 43%   _(market 16/24/60)_
-- **Goals:** Over 2.5 41% · BTTS 47%
-- **Likeliest scores:** 1-1 14% · 0-1 12% · 0-0 10% · 1-0 9% · 1-2 9%
-- Egypt favoured (43%); **model higher than the market on New Zealand** (Δ17pp).
-
-**Spain vs Saudi Arabia** — _neutral venue_  
-Elo Spain 2201 · Saudi Arabia 1717  |  expected goals **2.92 – 0.46**  
-- **1X2:** Spain 87% · Draw 10% · Saudi Arabia 3%   _(market 87/9/4)_
-- **Goals:** Over 2.5 66% · BTTS 35%
-- **Likeliest scores:** 2-0 15% · 3-0 14% · 4-0 10% · 1-0 10% · 2-1 7%
-- Spain favoured (87%); in line with the market.
-
-**Uruguay vs Cape Verde** — _neutral venue_  
-Elo Uruguay 1959 · Cape Verde 1681  |  expected goals **1.96 – 0.68**  
-- **1X2:** Uruguay 67% · Draw 21% · Cape Verde 11%   _(market 66/23/11)_
-- **Goals:** Over 2.5 49% · BTTS 43%
-- **Likeliest scores:** 2-0 14% · 1-0 14% · 1-1 10% · 2-1 9% · 3-0 9%
-- Uruguay favoured (67%); in line with the market.
 
 ### Monday, June 22
 
 **Argentina vs Austria** — _neutral venue_  
 Elo Argentina 2208 · Austria 1919  |  expected goals **2.01 – 0.66**  
-- **1X2:** Argentina 69% · Draw 21% · Austria 11%   _(market 62/23/14)_
+- **1X2:** Argentina 69% · Draw 21% · Austria 11%   _(market 65/22/13)_
 - **Goals:** Over 2.5 50% · BTTS 42%
 - **Likeliest scores:** 2-0 14% · 1-0 13% · 1-1 10% · 3-0 9% · 2-1 9%
 - Argentina favoured (69%); in line with the market.
 
 **France vs Iraq** — _neutral venue_  
 Elo France 2152 · Iraq 1720  |  expected goals **2.65 – 0.50**  
-- **1X2:** France 83% · Draw 13% · Iraq 5%   _(market 88/9/3)_
+- **1X2:** France 83% · Draw 13% · Iraq 5%   _(market 89/8/3)_
 - **Goals:** Over 2.5 61% · BTTS 37%
 - **Likeliest scores:** 2-0 15% · 3-0 13% · 1-0 11% · 4-0 9% · 2-1 8%
 - France favoured (83%); in line with the market.
@@ -153,7 +127,7 @@ Elo Jordan 1746 · Algeria 1869  |  expected goals **0.91 – 1.46**
 
 **Norway vs Senegal** — _neutral venue_  
 Elo Norway 2007 · Senegal 1893  |  expected goals **1.44 – 0.93**  
-- **1X2:** Norway 48% · Draw 28% · Senegal 24%   _(market 42/27/31)_
+- **1X2:** Norway 48% · Draw 28% · Senegal 24%   _(market 44/27/28)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 1-0 13% · 0-0 10% · 2-0 10% · 2-1 9%
 - Norway favoured (48%); in line with the market.
@@ -162,7 +136,7 @@ Elo Norway 2007 · Senegal 1893  |  expected goals **1.44 – 0.93**
 
 **Colombia vs DR Congo** — _neutral venue_  
 Elo Colombia 2085 · DR Congo 1784  |  expected goals **2.06 – 0.65**  
-- **1X2:** Colombia 70% · Draw 20% · DR Congo 10%   _(market 64/23/14)_
+- **1X2:** Colombia 70% · Draw 20% · DR Congo 10%   _(market 63/23/14)_
 - **Goals:** Over 2.5 51% · BTTS 42%
 - **Likeliest scores:** 2-0 14% · 1-0 13% · 3-0 10% · 1-1 9% · 2-1 9%
 - Colombia favoured (70%); in line with the market.
@@ -192,10 +166,10 @@ Elo Portugal 2042 · Uzbekistan 1805  |  expected goals **1.82 – 0.73**
 
 **Bosnia and Herzegovina vs Qatar** — _neutral venue_  
 Elo Bosnia and Herzegovina 1659 · Qatar 1580  |  expected goals **1.34 – 0.99**  
-- **1X2:** Bosnia and Herzegovina 44% · Draw 29% · Qatar 27%   _(market 67/19/14)_
+- **1X2:** Bosnia and Herzegovina 44% · Draw 29% · Qatar 27%   _(market 66/20/14)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 1-0 12% · 0-0 10% · 0-1 9% · 2-0 9%
-- Bosnia and Herzegovina favoured (44%); **model lower than the market on Bosnia and Herzegovina** (Δ23pp).
+- Bosnia and Herzegovina favoured (44%); **model lower than the market on Bosnia and Herzegovina** (Δ22pp).
 
 **Canada vs Switzerland** — _Canada at home_  
 Elo Canada 1896 · Switzerland 1951  |  expected goals **1.34 – 1.28**  
@@ -220,7 +194,7 @@ Elo Morocco 2013 · Haiti 1692  |  expected goals **2.14 – 0.62**
 
 **Scotland vs Brazil** — _neutral venue_  
 Elo Scotland 1854 · Brazil 2076  |  expected goals **0.75 – 1.77**  
-- **1X2:** Scotland 15% · Draw 24% · Brazil 61%   _(market 12/19/69)_
+- **1X2:** Scotland 15% · Draw 24% · Brazil 61%   _(market 13/19/69)_
 - **Goals:** Over 2.5 46% · BTTS 44%
 - **Likeliest scores:** 0-1 14% · 0-2 13% · 1-1 11% · 1-2 9% · 0-0 9%
 - Brazil favoured (61%); in line with the market.
@@ -250,21 +224,21 @@ Elo Ecuador 1961 · Germany 2033  |  expected goals **1.00 – 1.32**
 
 **Japan vs Sweden** — _neutral venue_  
 Elo Japan 2014 · Sweden 1799  |  expected goals **1.74 – 0.76**  
-- **1X2:** Japan 60% · Draw 24% · Sweden 15%   _(market 47/28/25)_
+- **1X2:** Japan 60% · Draw 24% · Sweden 15%   _(market 50/28/23)_
 - **Goals:** Over 2.5 46% · BTTS 45%
 - **Likeliest scores:** 1-0 14% · 2-0 12% · 1-1 11% · 2-1 9% · 0-0 9%
-- Japan favoured (60%); **model higher than the market on Japan** (Δ14pp).
+- Japan favoured (60%); **model higher than the market on Japan** (Δ11pp).
 
 **Paraguay vs Australia** — _neutral venue_  
 Elo Paraguay 1905 · Australia 1917  |  expected goals **1.13 – 1.18**  
-- **1X2:** Paraguay 34% · Draw 30% · Australia 37%   _(market 34/42/24)_
+- **1X2:** Paraguay 34% · Draw 30% · Australia 37%   _(market 33/42/25)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 0-1 11% · 1-0 11% · 0-0 11% · 1-2 8%
 - Australia favoured (37%); **model higher than the market on Paraguay** (Δ12pp).
 
 **Tunisia vs Netherlands** — _neutral venue_  
 Elo Tunisia 1672 · Netherlands 2040  |  expected goals **0.57 – 2.34**  
-- **1X2:** Tunisia 7% · Draw 16% · Netherlands 77%   _(market 5/12/83)_
+- **1X2:** Tunisia 7% · Draw 16% · Netherlands 77%   _(market 5/11/84)_
 - **Goals:** Over 2.5 56% · BTTS 40%
 - **Likeliest scores:** 0-2 15% · 0-1 12% · 0-3 12% · 1-2 8% · 1-1 8%
 - Netherlands favoured (77%); in line with the market.
@@ -276,6 +250,36 @@ Elo United States 1925 · Turkey 1889  |  expected goals **1.59 – 1.08**
 - **Likeliest scores:** 1-1 12% · 1-0 10% · 2-1 9% · 2-0 9% · 0-0 7%
 - United States favoured (49%).
 
+### Friday, June 26
+
+**Cape Verde vs Saudi Arabia** — _neutral venue_  
+Elo Cape Verde 1701 · Saudi Arabia 1710  |  expected goals **1.13 – 1.17**  
+- **1X2:** Cape Verde 34% · Draw 30% · Saudi Arabia 36%   _(market 40/27/33)_
+- **Goals:** Over 2.5 41% · BTTS 47%
+- **Likeliest scores:** 1-1 14% · 0-1 11% · 1-0 11% · 0-0 11% · 1-2 8%
+- Saudi Arabia favoured (36%); in line with the market.
+
+**Egypt vs Iran** — _neutral venue_  
+Elo Egypt 1857 · Iran 1889  |  expected goals **1.08 – 1.23**  
+- **1X2:** Egypt 32% · Draw 29% · Iran 39%   _(market 40/35/25)_
+- **Goals:** Over 2.5 41% · BTTS 47%
+- **Likeliest scores:** 1-1 14% · 0-1 12% · 0-0 11% · 1-0 10% · 1-2 8%
+- Iran favoured (39%); **model lower than the market on Egypt** (Δ13pp).
+
+**New Zealand vs Belgium** — _neutral venue_  
+Elo New Zealand 1713 · Belgium 1932  |  expected goals **0.76 – 1.76**  
+- **1X2:** New Zealand 15% · Draw 24% · Belgium 61%   _(market 7/14/79)_
+- **Goals:** Over 2.5 46% · BTTS 44%
+- **Likeliest scores:** 0-1 14% · 0-2 12% · 1-1 11% · 1-2 9% · 0-0 9%
+- Belgium favoured (61%); **model higher than the market on New Zealand** (Δ18pp).
+
+**Uruguay vs Spain** — _neutral venue_  
+Elo Uruguay 1939 · Spain 2207  |  expected goals **0.69 – 1.93**  
+- **1X2:** Uruguay 12% · Draw 22% · Spain 66%   _(market 14/22/64)_
+- **Goals:** Over 2.5 49% · BTTS 43%
+- **Likeliest scores:** 0-1 14% · 0-2 14% · 1-1 10% · 1-2 9% · 0-3 9%
+- Spain favoured (66%); in line with the market.
+
 ---
 ## How to read this & caveats
 
@@ -285,4 +289,4 @@ Elo United States 1925 · Turkey 1889  |  expected goals **1.59 – 1.08**
 
 - **Market is a benchmark, not an input.** Where we disagree, the market is usually the sharper number; the gaps are flagged so you can judge for yourself.
 
-- _Generated 2026-06-21 · Elo current to 2026-06-20 · model frozen 2022-11-19._
+- _Generated 2026-06-22 · Elo current to 2026-06-21 · model frozen 2022-11-19._
