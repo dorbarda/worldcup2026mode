@@ -87,10 +87,10 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Jun 26 | Senegal v Iraq | neutral | 1.57–0.85 | 54/26/20 | 78/14/8 | 24pp | 1-0 |
 | Jun 27 | Algeria v Austria | neutral | 1.12–1.19 | 34/30/37 | 23/45/32 | 16pp | 1-1 |
 | Jun 27 | Jordan v Argentina | neutral | 0.45–2.99 | 3/10/87 | 5/11/83 | 4pp | 0-2 |
-| Jun 27 | Colombia v Portugal | neutral | 1.22–1.09 | 38/29/32 | 27/25/48 | 16pp | 1-1 |
-| Jun 27 | DR Congo v Uzbekistan | neutral | 1.14–1.17 | 35/30/36 | 59/23/17 | 25pp | 1-1 |
-| Jun 27 | Panama v England | neutral | 0.64–2.07 | 10/20/70 | 6/11/83 | 12pp | 0-2 |
-| Jun 27 | Croatia v Ghana | neutral | 1.92–0.69 | 66/22/12 | 51/30/19 | 16pp | 1-0 |
+| Jun 27 | Colombia v Portugal | neutral | 1.22–1.09 | 38/29/32 | 28/25/48 | 15pp | 1-1 |
+| Jun 27 | DR Congo v Uzbekistan | neutral | 1.14–1.17 | 35/30/36 | 60/23/17 | 25pp | 1-1 |
+| Jun 27 | Panama v England | neutral | 0.64–2.07 | 10/20/70 | 6/11/83 | 13pp | 0-2 |
+| Jun 27 | Croatia v Ghana | neutral | 1.92–0.69 | 66/22/12 | 50/31/19 | 16pp | 1-0 |
 
 ## Where we disagree with the market
 
@@ -98,14 +98,14 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 | Match | Our H/D/A | Market H/D/A | Edge | Lean |
 |---|---|---|---|---|
-| DR Congo v Uzbekistan | 35/30/36 | 59/23/17 | 25pp | model lower on DR Congo |
+| DR Congo v Uzbekistan | 35/30/36 | 60/23/17 | 25pp | model lower on DR Congo |
 | Senegal v Iraq | 54/26/20 | 78/14/8 | 24pp | model lower on Senegal |
 | New Zealand v Belgium | 15/24/61 | 7/12/81 | 20pp | model higher on New Zealand |
-| Croatia v Ghana | 66/22/12 | 51/30/19 | 16pp | model higher on Croatia |
-| Colombia v Portugal | 38/29/32 | 27/25/48 | 16pp | model higher on Colombia |
+| Croatia v Ghana | 66/22/12 | 50/31/19 | 16pp | model higher on Croatia |
 | Algeria v Austria | 34/30/37 | 23/45/32 | 16pp | model higher on Algeria |
+| Colombia v Portugal | 38/29/32 | 28/25/48 | 15pp | model higher on Colombia |
 | Egypt v Iran | 32/29/39 | 39/36/25 | 14pp | model lower on Egypt |
-| Panama v England | 10/20/70 | 6/11/83 | 12pp | model higher on Panama |
+| Panama v England | 10/20/70 | 6/11/83 | 13pp | model higher on Panama |
 
 ## Match-by-match
 
@@ -164,21 +164,21 @@ Elo Algeria 1889 · Austria 1905  |  expected goals **1.12 – 1.19**
 
 **Colombia vs Portugal** — _neutral venue_  
 Elo Colombia 2094 · Portugal 2066  |  expected goals **1.22 – 1.09**  
-- **1X2:** Colombia 38% · Draw 29% · Portugal 32%   _(market 27/25/48)_
+- **1X2:** Colombia 38% · Draw 29% · Portugal 32%   _(market 28/25/48)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 1-0 11% · 0-0 11% · 0-1 10% · 2-1 8%
-- Colombia favoured (38%); **model higher than the market on Colombia** (Δ16pp).
+- Colombia favoured (38%); **model higher than the market on Colombia** (Δ15pp).
 
 **Croatia vs Ghana** — _neutral venue_  
 Elo Croatia 1966 · Ghana 1699  |  expected goals **1.92 – 0.69**  
-- **1X2:** Croatia 66% · Draw 22% · Ghana 12%   _(market 51/30/19)_
+- **1X2:** Croatia 66% · Draw 22% · Ghana 12%   _(market 50/31/19)_
 - **Goals:** Over 2.5 49% · BTTS 43%
 - **Likeliest scores:** 1-0 14% · 2-0 14% · 1-1 10% · 2-1 9% · 3-0 9%
 - Croatia favoured (66%); **model higher than the market on Croatia** (Δ16pp).
 
 **DR Congo vs Uzbekistan** — _neutral venue_  
 Elo DR Congo 1775 · Uzbekistan 1780  |  expected goals **1.14 – 1.17**  
-- **1X2:** DR Congo 35% · Draw 30% · Uzbekistan 36%   _(market 59/23/17)_
+- **1X2:** DR Congo 35% · Draw 30% · Uzbekistan 36%   _(market 60/23/17)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 0-1 11% · 1-0 11% · 0-0 11% · 1-2 8%
 - Uzbekistan favoured (36%); **model lower than the market on DR Congo** (Δ25pp).
@@ -195,7 +195,7 @@ Elo Panama 1797 · England 2102  |  expected goals **0.64 – 2.07**
 - **1X2:** Panama 10% · Draw 20% · England 70%   _(market 6/11/83)_
 - **Goals:** Over 2.5 51% · BTTS 42%
 - **Likeliest scores:** 0-2 14% · 0-1 13% · 0-3 10% · 1-1 9% · 1-2 9%
-- England favoured (70%); **model higher than the market on Panama** (Δ12pp).
+- England favoured (70%); **model higher than the market on Panama** (Δ13pp).
 
 ---
 ## How to read this & caveats
