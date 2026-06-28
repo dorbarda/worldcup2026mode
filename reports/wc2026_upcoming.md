@@ -91,21 +91,21 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jun 28 | South Africa v Canada | neutral | 0.87–1.53 | 21/27/52 | 17/26/58 | 5pp | 0-1 |
-| Jun 29 | Brazil v Japan | neutral | 1.40–0.95 | 47/28/25 | 57/25/18 | 10pp | 1-1 |
+| Jun 28 | South Africa v Canada | neutral | 0.87–1.53 | 21/27/52 | 16/26/58 | 6pp | 0-1 |
+| Jun 29 | Brazil v Japan | neutral | 1.40–0.95 | 47/28/25 | 56/25/18 | 9pp | 1-1 |
 | Jun 29 | Germany v Paraguay | neutral | 1.37–0.97 | 46/29/26 | 70/19/11 | 25pp | 1-1 |
 | Jun 29 | Netherlands v Morocco | neutral | 1.21–1.10 | 38/30/33 | 45/30/26 | 7pp | 1-1 |
 | Jun 30 | Ivory Coast v Norway | neutral | 0.90–1.48 | 22/28/50 | 26/27/47 | 4pp | 0-1 |
 | Jun 30 | France v Sweden | neutral | 2.38–0.56 | 78/16/7 | 75/16/9 | 3pp | 2-0 |
-| Jun 30 | Mexico v Ecuador | Mexico (H) | 1.57–1.09 | 48/26/26 | 44/31/25 | 5pp | 1-1 |
-| Jul 01 | England v DR Congo | neutral | 2.03–0.66 | 69/20/11 | 75/17/8 | 5pp | 2-0 |
+| Jun 30 | Mexico v Ecuador | Mexico (H) | 1.57–1.09 | 48/26/26 | 43/31/25 | 5pp | 1-1 |
+| Jul 01 | England v DR Congo | neutral | 2.03–0.66 | 69/20/11 | 75/17/8 | 6pp | 2-0 |
 | Jul 01 | Belgium v Senegal | neutral | 1.27–1.05 | 41/29/30 | 45/29/26 | 4pp | 1-1 |
 | Jul 01 | United States v Bosnia and Herzegovina | United States (H) | 2.14–0.80 | 68/20/12 | 70/19/11 | 2pp | 2-0 |
 | Jul 02 | Spain v Austria | neutral | 2.11–0.63 | 71/19/9 | 75/18/7 | 3pp | 2-0 |
 | Jul 02 | Portugal v Croatia | neutral | 1.38–0.97 | 46/29/26 | 52/28/20 | 6pp | 1-1 |
-| Jul 02 | Switzerland v Algeria | neutral | 1.38–0.96 | 46/28/26 | 51/26/23 | 5pp | 1-1 |
+| Jul 02 | Switzerland v Algeria | neutral | 1.38–0.96 | 46/28/26 | 50/27/23 | 5pp | 1-1 |
 | Jul 03 | Australia v Egypt | neutral | 1.29–1.04 | 42/29/29 | 29/33/38 | 12pp | 1-1 |
-| Jul 03 | Argentina v Cape Verde | neutral | 3.16–0.42 | 89/8/2 | 84/12/5 | 6pp | 3-0 |
+| Jul 03 | Argentina v Cape Verde | neutral | 3.16–0.42 | 89/8/2 | 83/12/5 | 6pp | 3-0 |
 | Jul 03 | Colombia v Ghana | neutral | 2.50–0.53 | 80/14/6 | 59/26/15 | 21pp | 2-0 |
 
 ## Where we disagree with the market
@@ -124,7 +124,7 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 **South Africa vs Canada** — _neutral venue_  
 Elo South Africa 1714 · Canada 1862  |  expected goals **0.87 – 1.53**  
-- **1X2:** South Africa 21% · Draw 27% · Canada 52%   _(market 17/26/58)_
+- **1X2:** South Africa 21% · Draw 27% · Canada 52%   _(market 16/26/58)_
 - **Goals:** Over 2.5 43% · BTTS 46%
 - **Likeliest scores:** 0-1 13% · 1-1 13% · 0-2 11% · 0-0 10% · 1-2 9%
 - Canada favoured (52%); in line with the market.
@@ -133,7 +133,7 @@ Elo South Africa 1714 · Canada 1862  |  expected goals **0.87 – 1.53**
 
 **Brazil vs Japan** — _neutral venue_  
 Elo Brazil 2099 · Japan 1998  |  expected goals **1.40 – 0.95**  
-- **1X2:** Brazil 47% · Draw 28% · Japan 25%   _(market 57/25/18)_
+- **1X2:** Brazil 47% · Draw 28% · Japan 25%   _(market 56/25/18)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 1-0 13% · 0-0 10% · 2-0 9% · 2-1 9%
 - Brazil favoured (47%); in line with the market.
@@ -170,7 +170,7 @@ Elo Ivory Coast 1864 · Norway 1994  |  expected goals **0.90 – 1.48**
 
 **Mexico vs Ecuador** — _Mexico at home_  
 Elo Mexico 2025 · Ecuador 1998  |  expected goals **1.57 – 1.09**  
-- **1X2:** Mexico 48% · Draw 26% · Ecuador 26%   _(market 44/31/25)_
+- **1X2:** Mexico 48% · Draw 26% · Ecuador 26%   _(market 43/31/25)_
 - **Goals:** Over 2.5 50% · BTTS 53%
 - **Likeliest scores:** 1-1 13% · 1-0 10% · 2-1 9% · 2-0 9% · 0-0 8%
 - Mexico favoured (48%); in line with the market.
@@ -216,7 +216,7 @@ Elo Spain 2218 · Austria 1903  |  expected goals **2.11 – 0.63**
 
 **Switzerland vs Algeria** — _neutral venue_  
 Elo Switzerland 1985 · Algeria 1890  |  expected goals **1.38 – 0.96**  
-- **1X2:** Switzerland 46% · Draw 28% · Algeria 26%   _(market 51/26/23)_
+- **1X2:** Switzerland 46% · Draw 28% · Algeria 26%   _(market 50/27/23)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 1-0 13% · 0-0 10% · 2-0 9% · 2-1 9%
 - Switzerland favoured (46%); in line with the market.
@@ -225,7 +225,7 @@ Elo Switzerland 1985 · Algeria 1890  |  expected goals **1.38 – 0.96**
 
 **Argentina vs Cape Verde** — _neutral venue_  
 Elo Argentina 2228 · Cape Verde 1702  |  expected goals **3.16 – 0.42**  
-- **1X2:** Argentina 89% · Draw 8% · Cape Verde 2%   _(market 84/12/5)_
+- **1X2:** Argentina 89% · Draw 8% · Cape Verde 2%   _(market 83/12/5)_
 - **Goals:** Over 2.5 69% · BTTS 33%
 - **Likeliest scores:** 3-0 15% · 2-0 14% · 4-0 12% · 1-0 9% · 5-0 7%
 - Argentina favoured (89%); in line with the market.
