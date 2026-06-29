@@ -92,18 +92,18 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jun 29 | Brazil v Japan | neutral | 1.40–0.95 | 47/28/25 | 56/26/18 | 9pp | 1-1 |
-| Jun 29 | Germany v Paraguay | neutral | 1.37–0.97 | 46/29/26 | 70/19/11 | 25pp | 1-1 |
-| Jun 29 | Netherlands v Morocco | neutral | 1.21–1.10 | 38/30/33 | 42/31/27 | 5pp | 1-1 |
-| Jun 30 | Ivory Coast v Norway | neutral | 0.90–1.48 | 22/28/50 | 26/27/47 | 4pp | 0-1 |
-| Jun 30 | France v Sweden | neutral | 2.38–0.56 | 78/16/7 | 75/16/9 | 2pp | 2-0 |
+| Jun 29 | Brazil v Japan | neutral | 1.40–0.95 | 47/28/25 | 55/26/19 | 8pp | 1-1 |
+| Jun 29 | Germany v Paraguay | neutral | 1.37–0.97 | 46/29/26 | 71/19/11 | 25pp | 1-1 |
+| Jun 29 | Netherlands v Morocco | neutral | 1.21–1.10 | 38/30/33 | 42/31/27 | 6pp | 1-1 |
+| Jun 30 | Ivory Coast v Norway | neutral | 0.90–1.48 | 22/28/50 | 26/27/48 | 3pp | 0-1 |
+| Jun 30 | France v Sweden | neutral | 2.38–0.56 | 78/16/7 | 76/16/9 | 2pp | 2-0 |
 | Jun 30 | Mexico v Ecuador | Mexico (H) | 1.57–1.09 | 48/26/26 | 43/32/24 | 6pp | 1-1 |
 | Jul 01 | England v DR Congo | neutral | 2.03–0.66 | 69/20/11 | 76/17/7 | 6pp | 2-0 |
 | Jul 01 | Belgium v Senegal | neutral | 1.27–1.05 | 41/29/30 | 43/29/27 | 3pp | 1-1 |
 | Jul 01 | United States v Bosnia and Herzegovina | United States (H) | 2.14–0.80 | 68/20/12 | 70/19/11 | 2pp | 2-0 |
 | Jul 02 | Spain v Austria | neutral | 2.11–0.63 | 71/19/9 | 73/18/9 | 2pp | 2-0 |
 | Jul 02 | Portugal v Croatia | neutral | 1.38–0.97 | 46/29/26 | 54/27/20 | 8pp | 1-1 |
-| Jul 02 | Switzerland v Algeria | neutral | 1.38–0.96 | 46/28/26 | 47/29/24 | 2pp | 1-1 |
+| Jul 02 | Switzerland v Algeria | neutral | 1.38–0.96 | 46/28/26 | 48/29/24 | 2pp | 1-1 |
 | Jul 03 | Australia v Egypt | neutral | 1.29–1.04 | 42/29/29 | 29/33/38 | 13pp | 1-1 |
 | Jul 03 | Argentina v Cape Verde | neutral | 3.16–0.42 | 89/8/2 | 83/12/5 | 6pp | 3-0 |
 | Jul 03 | Colombia v Ghana | neutral | 2.50–0.53 | 80/14/6 | 63/24/13 | 17pp | 2-0 |
@@ -114,7 +114,7 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 | Match | Our H/D/A | Market H/D/A | Edge | Lean |
 |---|---|---|---|---|
-| Germany v Paraguay | 46/29/26 | 70/19/11 | 25pp | model lower on Germany |
+| Germany v Paraguay | 46/29/26 | 71/19/11 | 25pp | model lower on Germany |
 | Colombia v Ghana | 80/14/6 | 63/24/13 | 17pp | model higher on Colombia |
 | Australia v Egypt | 42/29/29 | 29/33/38 | 13pp | model higher on Australia |
 
@@ -124,14 +124,14 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 **Brazil vs Japan** — _neutral venue_  
 Elo Brazil 2099 · Japan 1998  |  expected goals **1.40 – 0.95**  
-- **1X2:** Brazil 47% · Draw 28% · Japan 25%   _(market 56/26/18)_
+- **1X2:** Brazil 47% · Draw 28% · Japan 25%   _(market 55/26/19)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 1-0 13% · 0-0 10% · 2-0 9% · 2-1 9%
 - Brazil favoured (47%); in line with the market.
 
 **Germany vs Paraguay** — _neutral venue_  
 Elo Germany 1997 · Paraguay 1906  |  expected goals **1.37 – 0.97**  
-- **1X2:** Germany 46% · Draw 29% · Paraguay 26%   _(market 70/19/11)_
+- **1X2:** Germany 46% · Draw 29% · Paraguay 26%   _(market 71/19/11)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 1-0 13% · 0-0 10% · 2-0 9% · 2-1 9%
 - Germany favoured (46%); **model lower than the market on Germany** (Δ25pp).
@@ -147,14 +147,14 @@ Elo Netherlands 2050 · Morocco 2025  |  expected goals **1.21 – 1.10**
 
 **France vs Sweden** — _neutral venue_  
 Elo France 2193 · Sweden 1815  |  expected goals **2.38 – 0.56**  
-- **1X2:** France 78% · Draw 16% · Sweden 7%   _(market 75/16/9)_
+- **1X2:** France 78% · Draw 16% · Sweden 7%   _(market 76/16/9)_
 - **Goals:** Over 2.5 56% · BTTS 39%
 - **Likeliest scores:** 2-0 15% · 1-0 12% · 3-0 12% · 2-1 8% · 1-1 7%
 - France favoured (78%); in line with the market.
 
 **Ivory Coast vs Norway** — _neutral venue_  
 Elo Ivory Coast 1864 · Norway 1994  |  expected goals **0.90 – 1.48**  
-- **1X2:** Ivory Coast 22% · Draw 28% · Norway 50%   _(market 26/27/47)_
+- **1X2:** Ivory Coast 22% · Draw 28% · Norway 50%   _(market 26/27/48)_
 - **Goals:** Over 2.5 43% · BTTS 46%
 - **Likeliest scores:** 0-1 13% · 1-1 13% · 0-2 10% · 0-0 10% · 1-2 9%
 - Norway favoured (50%); in line with the market.
@@ -207,7 +207,7 @@ Elo Spain 2218 · Austria 1903  |  expected goals **2.11 – 0.63**
 
 **Switzerland vs Algeria** — _neutral venue_  
 Elo Switzerland 1985 · Algeria 1890  |  expected goals **1.38 – 0.96**  
-- **1X2:** Switzerland 46% · Draw 28% · Algeria 26%   _(market 47/29/24)_
+- **1X2:** Switzerland 46% · Draw 28% · Algeria 26%   _(market 48/29/24)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 1-0 13% · 0-0 10% · 2-0 9% · 2-1 9%
 - Switzerland favoured (46%); in line with the market.
