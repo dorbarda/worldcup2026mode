@@ -108,10 +108,10 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Jul 03 | Argentina v Cape Verde | neutral | 3.16–0.42 | 89/8/2 | 84/11/5 | 5pp | 3-0 |
 | Jul 03 | Colombia v Ghana | neutral | 2.50–0.53 | 80/14/6 | 67/22/11 | 13pp | 2-0 |
 | Jul 04 | Canada v Morocco | neutral | 0.87–1.53 | 21/27/52 | 19/27/54 | 2pp | 0-1 |
-| Jul 04 | Paraguay v France | neutral | 0.66–2.01 | 11/20/69 | 6/14/81 | 12pp | 0-2 |
+| Jul 04 | Paraguay v France | neutral | 0.66–2.01 | 11/20/69 | 6/14/80 | 12pp | 0-2 |
 | Jul 05 | Brazil v Norway | neutral | 1.42–0.94 | 47/28/24 | 52/26/23 | 4pp | 1-1 |
 | Jul 05 | Mexico v England | Mexico (H) | 1.30–1.32 | 36/27/37 | 31/30/40 | 5pp | 1-1 |
-| Jul 06 | Portugal v Spain | neutral | 0.88–1.51 | 21/27/52 | 24/27/50 | 2pp | 0-1 |
+| Jul 06 | Portugal v Spain | neutral | 0.88–1.51 | 21/27/52 | 24/26/50 | 2pp | 0-1 |
 | Jul 06 | United States v Belgium | United States (H) | 1.26–1.36 | 34/27/38 | 37/28/35 | 3pp | 1-1 |
 
 ## Where we disagree with the market
@@ -122,7 +122,7 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 |---|---|---|---|---|
 | Australia v Egypt | 42/29/29 | 27/33/40 | 15pp | model higher on Australia |
 | Colombia v Ghana | 80/14/6 | 67/22/11 | 13pp | model higher on Colombia |
-| Paraguay v France | 11/20/69 | 6/14/81 | 12pp | model higher on Paraguay |
+| Paraguay v France | 11/20/69 | 6/14/80 | 12pp | model higher on Paraguay |
 
 ## Match-by-match
 
@@ -160,7 +160,7 @@ Elo Canada 1880 · Morocco 2027  |  expected goals **0.87 – 1.53**
 
 **Paraguay vs France** — _neutral venue_  
 Elo Paraguay 1914 · France 2204  |  expected goals **0.66 – 2.01**  
-- **1X2:** Paraguay 11% · Draw 20% · France 69%   _(market 6/14/81)_
+- **1X2:** Paraguay 11% · Draw 20% · France 69%   _(market 6/14/80)_
 - **Goals:** Over 2.5 50% · BTTS 42%
 - **Likeliest scores:** 0-2 14% · 0-1 13% · 1-1 10% · 0-3 9% · 1-2 9%
 - France favoured (69%); **model higher than the market on Paraguay** (Δ12pp).
@@ -185,7 +185,7 @@ Elo Mexico 2054 · England 2124  |  expected goals **1.30 – 1.32**
 
 **Portugal vs Spain** — _neutral venue_  
 Elo Portugal 2091 · Spain 2233  |  expected goals **0.88 – 1.51**  
-- **1X2:** Portugal 21% · Draw 27% · Spain 52%   _(market 24/27/50)_
+- **1X2:** Portugal 21% · Draw 27% · Spain 52%   _(market 24/26/50)_
 - **Goals:** Over 2.5 43% · BTTS 46%
 - **Likeliest scores:** 0-1 13% · 1-1 13% · 0-2 10% · 0-0 10% · 1-2 9%
 - Spain favoured (52%); in line with the market.
