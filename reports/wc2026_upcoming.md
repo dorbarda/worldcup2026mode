@@ -107,8 +107,8 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jul 04 | Canada v Morocco | neutral | 0.87–1.53 | 21/27/52 | 19/28/54 | 2pp | 0-1 |
-| Jul 04 | Paraguay v France | neutral | 0.66–2.01 | 11/20/69 | 5/14/81 | 12pp | 0-2 |
+| Jul 04 | Canada v Morocco | neutral | 0.87–1.53 | 21/27/52 | 18/28/54 | 2pp | 0-1 |
+| Jul 04 | Paraguay v France | neutral | 0.66–2.01 | 11/20/69 | 6/14/81 | 12pp | 0-2 |
 | Jul 05 | Brazil v Norway | neutral | 1.42–0.94 | 47/28/24 | 53/25/22 | 5pp | 1-1 |
 | Jul 05 | Mexico v England | Mexico (H) | 1.30–1.32 | 36/27/37 | 31/30/40 | 5pp | 1-1 |
 | Jul 06 | Portugal v Spain | neutral | 0.88–1.51 | 21/27/52 | 24/26/50 | 2pp | 0-1 |
@@ -122,7 +122,7 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 | Match | Our H/D/A | Market H/D/A | Edge | Lean |
 |---|---|---|---|---|
-| Paraguay v France | 11/20/69 | 5/14/81 | 12pp | model higher on Paraguay |
+| Paraguay v France | 11/20/69 | 6/14/81 | 12pp | model higher on Paraguay |
 
 ## Match-by-match
 
@@ -130,14 +130,14 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 **Canada vs Morocco** — _neutral venue_  
 Elo Canada 1880 · Morocco 2027  |  expected goals **0.87 – 1.53**  
-- **1X2:** Canada 21% · Draw 27% · Morocco 52%   _(market 19/28/54)_
+- **1X2:** Canada 21% · Draw 27% · Morocco 52%   _(market 18/28/54)_
 - **Goals:** Over 2.5 43% · BTTS 46%
 - **Likeliest scores:** 0-1 13% · 1-1 13% · 0-2 11% · 0-0 10% · 1-2 9%
 - Morocco favoured (52%); in line with the market.
 
 **Paraguay vs France** — _neutral venue_  
 Elo Paraguay 1914 · France 2204  |  expected goals **0.66 – 2.01**  
-- **1X2:** Paraguay 11% · Draw 20% · France 69%   _(market 5/14/81)_
+- **1X2:** Paraguay 11% · Draw 20% · France 69%   _(market 6/14/81)_
 - **Goals:** Over 2.5 50% · BTTS 42%
 - **Likeliest scores:** 0-2 14% · 0-1 13% · 1-1 10% · 0-3 9% · 1-2 9%
 - France favoured (69%); **model higher than the market on Paraguay** (Δ12pp).
