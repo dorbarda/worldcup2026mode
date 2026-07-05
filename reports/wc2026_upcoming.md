@@ -109,11 +109,11 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jul 05 | Brazil v Norway | neutral | 1.42–0.94 | 47/28/24 | 54/25/21 | 6pp | 1-1 |
+| Jul 05 | Brazil v Norway | neutral | 1.42–0.94 | 47/28/24 | 53/26/21 | 6pp | 1-1 |
 | Jul 05 | Mexico v England | Mexico (H) | 1.30–1.32 | 36/27/37 | 31/30/39 | 5pp | 1-1 |
-| Jul 06 | Portugal v Spain | neutral | 0.88–1.51 | 21/27/52 | 24/26/50 | 2pp | 0-1 |
+| Jul 06 | Portugal v Spain | neutral | 0.88–1.51 | 21/27/52 | 24/26/50 | 3pp | 0-1 |
 | Jul 06 | United States v Belgium | United States (H) | 1.26–1.36 | 34/27/38 | 36/28/36 | 2pp | 1-1 |
-| Jul 06 | Argentina v Egypt | neutral | 2.33–0.57 | 77/16/7 | 70/20/10 | 7pp | 2-0 |
+| Jul 06 | Argentina v Egypt | neutral | 2.33–0.57 | 77/16/7 | 69/20/11 | 7pp | 2-0 |
 | Jul 06 | Switzerland v Colombia | neutral | 0.99–1.34 | 27/29/44 | 27/31/42 | 2pp | 1-1 |
 | Jul 09 | France v Morocco | neutral | 1.55–0.86 | 53/27/20 | 61/24/15 | 8pp | 1-0 |
 
@@ -127,7 +127,7 @@ No fixture disagrees with the market by ≥10pp on any outcome.
 
 **Brazil vs Norway** — _neutral venue_  
 Elo Brazil 2121 · Norway 2014  |  expected goals **1.42 – 0.94**  
-- **1X2:** Brazil 47% · Draw 28% · Norway 24%   _(market 54/25/21)_
+- **1X2:** Brazil 47% · Draw 28% · Norway 24%   _(market 53/26/21)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 1-0 13% · 0-0 10% · 2-0 10% · 2-1 9%
 - Brazil favoured (47%); in line with the market.
@@ -143,7 +143,7 @@ Elo Mexico 2054 · England 2124  |  expected goals **1.30 – 1.32**
 
 **Argentina vs Egypt** — _neutral venue_  
 Elo Argentina 2230 · Egypt 1865  |  expected goals **2.33 – 0.57**  
-- **1X2:** Argentina 77% · Draw 16% · Egypt 7%   _(market 70/20/10)_
+- **1X2:** Argentina 77% · Draw 16% · Egypt 7%   _(market 69/20/11)_
 - **Goals:** Over 2.5 55% · BTTS 40%
 - **Likeliest scores:** 2-0 15% · 1-0 12% · 3-0 12% · 2-1 9% · 1-1 8%
 - Argentina favoured (77%); in line with the market.
