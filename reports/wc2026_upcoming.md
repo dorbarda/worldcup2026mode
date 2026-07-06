@@ -111,11 +111,11 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jul 06 | Portugal v Spain | neutral | 0.88–1.51 | 21/27/52 | 23/26/50 | 2pp | 0-1 |
+| Jul 06 | Portugal v Spain | neutral | 0.88–1.51 | 21/27/52 | 24/26/50 | 2pp | 0-1 |
 | Jul 06 | United States v Belgium | United States (H) | 1.26–1.36 | 34/27/38 | 38/28/34 | 4pp | 1-1 |
-| Jul 06 | Argentina v Egypt | neutral | 2.33–0.57 | 77/16/7 | 69/20/11 | 7pp | 2-0 |
+| Jul 06 | Argentina v Egypt | neutral | 2.33–0.57 | 77/16/7 | 70/20/10 | 7pp | 2-0 |
 | Jul 06 | Switzerland v Colombia | neutral | 0.99–1.34 | 27/29/44 | 28/31/42 | 3pp | 1-1 |
-| Jul 09 | France v Morocco | neutral | 1.55–0.86 | 53/27/20 | 60/24/16 | 7pp | 1-0 |
+| Jul 09 | France v Morocco | neutral | 1.55–0.86 | 53/27/20 | 61/24/15 | 7pp | 1-0 |
 | Jul 11 | Norway v England | neutral | 0.98–1.36 | 26/29/45 | 24/26/50 | 5pp | 1-1 |
 
 ## Where we disagree with the market
@@ -128,14 +128,14 @@ No fixture disagrees with the market by ≥10pp on any outcome.
 
 **Argentina vs Egypt** — _neutral venue_  
 Elo Argentina 2230 · Egypt 1865  |  expected goals **2.33 – 0.57**  
-- **1X2:** Argentina 77% · Draw 16% · Egypt 7%   _(market 69/20/11)_
+- **1X2:** Argentina 77% · Draw 16% · Egypt 7%   _(market 70/20/10)_
 - **Goals:** Over 2.5 55% · BTTS 40%
 - **Likeliest scores:** 2-0 15% · 1-0 12% · 3-0 12% · 2-1 9% · 1-1 8%
 - Argentina favoured (77%); in line with the market.
 
 **Portugal vs Spain** — _neutral venue_  
 Elo Portugal 2091 · Spain 2233  |  expected goals **0.88 – 1.51**  
-- **1X2:** Portugal 21% · Draw 27% · Spain 52%   _(market 23/26/50)_
+- **1X2:** Portugal 21% · Draw 27% · Spain 52%   _(market 24/26/50)_
 - **Goals:** Over 2.5 43% · BTTS 46%
 - **Likeliest scores:** 0-1 13% · 1-1 13% · 0-2 10% · 0-0 10% · 1-2 9%
 - Spain favoured (52%); in line with the market.
@@ -158,7 +158,7 @@ Elo United States 1898 · Belgium 1983  |  expected goals **1.26 – 1.36**
 
 **France vs Morocco** — _neutral venue_  
 Elo France 2214 · Morocco 2059  |  expected goals **1.55 – 0.86**  
-- **1X2:** France 53% · Draw 27% · Morocco 20%   _(market 60/24/16)_
+- **1X2:** France 53% · Draw 27% · Morocco 20%   _(market 61/24/15)_
 - **Goals:** Over 2.5 43% · BTTS 46%
 - **Likeliest scores:** 1-0 13% · 1-1 13% · 2-0 11% · 0-0 10% · 2-1 9%
 - France favoured (53%); in line with the market.
