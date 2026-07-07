@@ -115,7 +115,7 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 |---|---|---|---|---|---|---|---|
 | Jul 06 | Argentina v Egypt | neutral | 2.33–0.57 | 77/16/7 | 72/19/9 | 5pp | 2-0 |
 | Jul 06 | Switzerland v Colombia | neutral | 0.99–1.34 | 27/29/44 | 27/31/42 | 2pp | 1-1 |
-| Jul 09 | France v Morocco | neutral | 1.55–0.86 | 53/27/20 | 60/24/15 | 7pp | 1-0 |
+| Jul 09 | France v Morocco | neutral | 1.55–0.86 | 53/27/20 | 60/24/16 | 7pp | 1-0 |
 | Jul 10 | Spain v Belgium | neutral | 1.74–0.77 | 60/24/16 | 59/24/17 | 2pp | 1-0 |
 | Jul 11 | Norway v England | neutral | 0.94–1.41 | 25/28/47 | 24/26/51 | 3pp | 1-1 |
 
@@ -145,7 +145,7 @@ Elo Switzerland 2018 · Colombia 2097  |  expected goals **0.99 – 1.34**
 
 **France vs Morocco** — _neutral venue_  
 Elo France 2214 · Morocco 2059  |  expected goals **1.55 – 0.86**  
-- **1X2:** France 53% · Draw 27% · Morocco 20%   _(market 60/24/15)_
+- **1X2:** France 53% · Draw 27% · Morocco 20%   _(market 60/24/16)_
 - **Goals:** Over 2.5 43% · BTTS 46%
 - **Likeliest scores:** 1-0 13% · 1-1 13% · 2-0 11% · 0-0 10% · 2-1 9%
 - France favoured (53%); in line with the market.
