@@ -1,6 +1,6 @@
-# World Cup 2026 — Opening Matches (Jul 06–Jul 11)
+# World Cup 2026 — Opening Matches (Jul 09–Jul 11)
 
-Model-based forecasts for the next round of group matches (5 fixtures), generated from **current Elo** (all played matches through 2026-07-06). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
+Model-based forecasts for the next round of group matches (4 fixtures), generated from **current Elo** (all played matches through 2026-07-07). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
 
 De-vigged bookmaker odds are shown for comparison only — they do **not** feed the model. `Edge` = largest gap between our probability and the market on any outcome.
 
@@ -113,11 +113,10 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jul 06 | Argentina v Egypt | neutral | 2.33–0.57 | 77/16/7 | 72/19/9 | 5pp | 2-0 |
-| Jul 06 | Switzerland v Colombia | neutral | 0.99–1.34 | 27/29/44 | 27/31/42 | 2pp | 1-1 |
-| Jul 09 | France v Morocco | neutral | 1.55–0.86 | 53/27/20 | 60/24/16 | 7pp | 1-0 |
+| Jul 09 | France v Morocco | neutral | 1.55–0.86 | 53/27/20 | 60/24/15 | 7pp | 1-0 |
 | Jul 10 | Spain v Belgium | neutral | 1.74–0.77 | 60/24/16 | 59/24/17 | 2pp | 1-0 |
-| Jul 11 | Norway v England | neutral | 0.94–1.41 | 25/28/47 | 24/26/51 | 3pp | 1-1 |
+| Jul 11 | Norway v England | neutral | 0.94–1.41 | 25/28/47 | 23/26/52 | 4pp | 1-1 |
+| Jul 11 | Argentina v Switzerland | neutral | 1.74–0.77 | 60/24/16 | 56/27/18 | 4pp | 1-0 |
 
 ## Where we disagree with the market
 
@@ -125,27 +124,11 @@ No fixture disagrees with the market by ≥10pp on any outcome.
 
 ## Match-by-match
 
-### Monday, July 06
-
-**Argentina vs Egypt** — _neutral venue_  
-Elo Argentina 2230 · Egypt 1865  |  expected goals **2.33 – 0.57**  
-- **1X2:** Argentina 77% · Draw 16% · Egypt 7%   _(market 72/19/9)_
-- **Goals:** Over 2.5 55% · BTTS 40%
-- **Likeliest scores:** 2-0 15% · 1-0 12% · 3-0 12% · 2-1 9% · 1-1 8%
-- Argentina favoured (77%); in line with the market.
-
-**Switzerland vs Colombia** — _neutral venue_  
-Elo Switzerland 2018 · Colombia 2097  |  expected goals **0.99 – 1.34**  
-- **1X2:** Switzerland 27% · Draw 29% · Colombia 44%   _(market 27/31/42)_
-- **Goals:** Over 2.5 41% · BTTS 47%
-- **Likeliest scores:** 1-1 14% · 0-1 12% · 0-0 10% · 1-0 9% · 0-2 9%
-- Colombia favoured (44%); in line with the market.
-
 ### Thursday, July 09
 
 **France vs Morocco** — _neutral venue_  
 Elo France 2214 · Morocco 2059  |  expected goals **1.55 – 0.86**  
-- **1X2:** France 53% · Draw 27% · Morocco 20%   _(market 60/24/16)_
+- **1X2:** France 53% · Draw 27% · Morocco 20%   _(market 60/24/15)_
 - **Goals:** Over 2.5 43% · BTTS 46%
 - **Likeliest scores:** 1-0 13% · 1-1 13% · 2-0 11% · 0-0 10% · 2-1 9%
 - France favoured (53%); in line with the market.
@@ -161,9 +144,16 @@ Elo Spain 2251 · Belgium 2037  |  expected goals **1.74 – 0.77**
 
 ### Saturday, July 11
 
+**Argentina vs Switzerland** — _neutral venue_  
+Elo Argentina 2237 · Switzerland 2024  |  expected goals **1.74 – 0.77**  
+- **1X2:** Argentina 60% · Draw 24% · Switzerland 16%   _(market 56/27/18)_
+- **Goals:** Over 2.5 46% · BTTS 45%
+- **Likeliest scores:** 1-0 14% · 2-0 12% · 1-1 11% · 2-1 9% · 0-0 9%
+- Argentina favoured (60%); in line with the market.
+
 **Norway vs England** — _neutral venue_  
 Elo Norway 2052 · England 2157  |  expected goals **0.94 – 1.41**  
-- **1X2:** Norway 25% · Draw 28% · England 47%   _(market 24/26/51)_
+- **1X2:** Norway 25% · Draw 28% · England 47%   _(market 23/26/52)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 0-1 13% · 0-0 10% · 0-2 9% · 1-2 9%
 - England favoured (47%); in line with the market.
@@ -177,4 +167,4 @@ Elo Norway 2052 · England 2157  |  expected goals **0.94 – 1.41**
 
 - **Market is a benchmark, not an input.** Where we disagree, the market is usually the sharper number; the gaps are flagged so you can judge for yourself.
 
-- _Generated 2026-07-07 · Elo current to 2026-07-06 · model frozen 2022-11-19._
+- _Generated 2026-07-08 · Elo current to 2026-07-07 · model frozen 2022-11-19._
