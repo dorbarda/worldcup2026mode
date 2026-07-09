@@ -115,7 +115,7 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 |---|---|---|---|---|---|---|---|
 | Jul 09 | France v Morocco | neutral | 1.55–0.86 | 53/27/20 | 61/24/15 | 8pp | 1-0 |
 | Jul 10 | Spain v Belgium | neutral | 1.74–0.77 | 60/24/16 | 59/24/17 | 2pp | 1-0 |
-| Jul 11 | Norway v England | neutral | 0.94–1.41 | 25/28/47 | 23/25/52 | 4pp | 1-1 |
+| Jul 11 | Norway v England | neutral | 0.94–1.41 | 25/28/47 | 23/26/52 | 4pp | 1-1 |
 | Jul 11 | Argentina v Switzerland | neutral | 1.74–0.77 | 60/24/16 | 56/27/17 | 4pp | 1-0 |
 
 ## Where we disagree with the market
@@ -153,7 +153,7 @@ Elo Argentina 2237 · Switzerland 2024  |  expected goals **1.74 – 0.77**
 
 **Norway vs England** — _neutral venue_  
 Elo Norway 2052 · England 2157  |  expected goals **0.94 – 1.41**  
-- **1X2:** Norway 25% · Draw 28% · England 47%   _(market 23/25/52)_
+- **1X2:** Norway 25% · Draw 28% · England 47%   _(market 23/26/52)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 0-1 13% · 0-0 10% · 0-2 9% · 1-2 9%
 - England favoured (47%); in line with the market.
@@ -167,4 +167,4 @@ Elo Norway 2052 · England 2157  |  expected goals **0.94 – 1.41**
 
 - **Market is a benchmark, not an input.** Where we disagree, the market is usually the sharper number; the gaps are flagged so you can judge for yourself.
 
-- _Generated 2026-07-08 · Elo current to 2026-07-07 · model frozen 2022-11-19._
+- _Generated 2026-07-09 · Elo current to 2026-07-07 · model frozen 2022-11-19._
