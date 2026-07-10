@@ -114,7 +114,7 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jul 10 | Spain v Belgium | neutral | 1.74–0.77 | 60/24/16 | 59/24/17 | 2pp | 1-0 |
+| Jul 10 | Spain v Belgium | neutral | 1.74–0.77 | 60/24/16 | 59/24/17 | 1pp | 1-0 |
 | Jul 11 | Norway v England | neutral | 0.94–1.41 | 25/28/47 | 23/26/51 | 4pp | 1-1 |
 | Jul 11 | Argentina v Switzerland | neutral | 1.74–0.77 | 60/24/16 | 56/27/17 | 4pp | 1-0 |
 
