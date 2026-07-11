@@ -115,8 +115,8 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
 | Jul 10 | Spain v Belgium | neutral | 1.74–0.77 | 60/24/16 | 59/24/17 | 1pp | 1-0 |
-| Jul 11 | Norway v England | neutral | 0.94–1.41 | 25/28/47 | 23/26/51 | 4pp | 1-1 |
-| Jul 11 | Argentina v Switzerland | neutral | 1.74–0.77 | 60/24/16 | 56/27/17 | 4pp | 1-0 |
+| Jul 11 | Norway v England | neutral | 0.94–1.41 | 25/28/47 | 25/26/50 | 2pp | 1-1 |
+| Jul 11 | Argentina v Switzerland | neutral | 1.74–0.77 | 60/24/16 | 57/27/17 | 3pp | 1-0 |
 
 ## Where we disagree with the market
 
@@ -137,14 +137,14 @@ Elo Spain 2251 · Belgium 2037  |  expected goals **1.74 – 0.77**
 
 **Argentina vs Switzerland** — _neutral venue_  
 Elo Argentina 2237 · Switzerland 2024  |  expected goals **1.74 – 0.77**  
-- **1X2:** Argentina 60% · Draw 24% · Switzerland 16%   _(market 56/27/17)_
+- **1X2:** Argentina 60% · Draw 24% · Switzerland 16%   _(market 57/27/17)_
 - **Goals:** Over 2.5 46% · BTTS 45%
 - **Likeliest scores:** 1-0 14% · 2-0 12% · 1-1 11% · 2-1 9% · 0-0 9%
 - Argentina favoured (60%); in line with the market.
 
 **Norway vs England** — _neutral venue_  
 Elo Norway 2052 · England 2157  |  expected goals **0.94 – 1.41**  
-- **1X2:** Norway 25% · Draw 28% · England 47%   _(market 23/26/51)_
+- **1X2:** Norway 25% · Draw 28% · England 47%   _(market 25/26/50)_
 - **Goals:** Over 2.5 42% · BTTS 47%
 - **Likeliest scores:** 1-1 13% · 0-1 13% · 0-0 10% · 0-2 9% · 1-2 9%
 - England favoured (47%); in line with the market.
@@ -158,4 +158,4 @@ Elo Norway 2052 · England 2157  |  expected goals **0.94 – 1.41**
 
 - **Market is a benchmark, not an input.** Where we disagree, the market is usually the sharper number; the gaps are flagged so you can judge for yourself.
 
-- _Generated 2026-07-10 · Elo current to 2026-07-09 · model frozen 2022-11-19._
+- _Generated 2026-07-11 · Elo current to 2026-07-09 · model frozen 2022-11-19._
