@@ -149,4 +149,4 @@ Elo Norway 2052 · England 2157  |  expected goals **0.94 – 1.41**
 
 - **Market is a benchmark, not an input.** Where we disagree, the market is usually the sharper number; the gaps are flagged so you can judge for yourself.
 
-- _Generated 2026-07-12 · Elo current to 2026-07-10 · model frozen 2022-11-19._
+- _Generated 2026-07-13 · Elo current to 2026-07-10 · model frozen 2022-11-19._
