@@ -118,7 +118,7 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
 | Jul 14 | France v Spain | neutral | 1.10–1.21 | 33/30/38 | 40/30/30 | 8pp | 1-1 |
-| Jul 15 | England v Argentina | neutral | 0.99–1.34 | 27/29/44 | 36/32/32 | 13pp | 1-1 |
+| Jul 15 | England v Argentina | neutral | 0.99–1.34 | 27/29/44 | 36/33/32 | 13pp | 1-1 |
 
 ## Where we disagree with the market
 
@@ -126,7 +126,7 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 | Match | Our H/D/A | Market H/D/A | Edge | Lean |
 |---|---|---|---|---|
-| England v Argentina | 27/29/44 | 36/32/32 | 13pp | model lower on England |
+| England v Argentina | 27/29/44 | 36/33/32 | 13pp | model lower on England |
 
 ## Match-by-match
 
@@ -143,7 +143,7 @@ Elo France 2240 · Spain 2265  |  expected goals **1.10 – 1.21**
 
 **England vs Argentina** — _neutral venue_  
 Elo England 2178 · Argentina 2257  |  expected goals **0.99 – 1.34**  
-- **1X2:** England 27% · Draw 29% · Argentina 44%   _(market 36/32/32)_
+- **1X2:** England 27% · Draw 29% · Argentina 44%   _(market 36/33/32)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 0-1 12% · 0-0 10% · 1-0 9% · 0-2 9%
 - Argentina favoured (44%); **model lower than the market on England** (Δ13pp).
