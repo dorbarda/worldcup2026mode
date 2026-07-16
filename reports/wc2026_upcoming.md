@@ -124,7 +124,11 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 ## Where we disagree with the market
 
-No fixture disagrees with the market by ≥10pp on any outcome.
+The model is independent of the odds, so these gaps are where our Elo-Poisson view parts from the bookmaker — and they cluster on the model's known soft spots (host-advantage calibration; less boldness on big favourites).
+
+| Match | Our H/D/A | Market H/D/A | Edge | Lean |
+|---|---|---|---|---|
+| France v England | 40/29/31 | 50/25/25 | 10pp | model lower on France |
 
 ## Match-by-match
 
@@ -135,7 +139,7 @@ Elo France 2198 · England 2155  |  expected goals **1.25 – 1.06**
 - **1X2:** France 40% · Draw 29% · England 31%   _(market 50/25/25)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 1-0 12% · 0-0 11% · 0-1 10% · 2-1 8%
-- France favoured (40%); in line with the market.
+- France favoured (40%); **model lower than the market on France** (Δ10pp).
 
 ### Sunday, July 19
 
