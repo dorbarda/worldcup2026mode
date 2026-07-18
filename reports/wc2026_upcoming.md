@@ -119,8 +119,8 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jul 18 | France v England | neutral | 1.25–1.06 | 40/29/31 | 50/25/25 | 10pp | 1-1 |
-| Jul 19 | Spain v Argentina | neutral | 1.21–1.10 | 38/29/32 | 42/32/27 | 6pp | 1-1 |
+| Jul 18 | France v England | neutral | 1.25–1.06 | 40/29/31 | 51/24/25 | 11pp | 1-1 |
+| Jul 19 | Spain v Argentina | neutral | 1.21–1.10 | 38/29/32 | 42/31/26 | 6pp | 1-1 |
 
 ## Where we disagree with the market
 
@@ -128,7 +128,7 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 | Match | Our H/D/A | Market H/D/A | Edge | Lean |
 |---|---|---|---|---|
-| France v England | 40/29/31 | 50/25/25 | 10pp | model lower on France |
+| France v England | 40/29/31 | 51/24/25 | 11pp | model lower on France |
 
 ## Match-by-match
 
@@ -136,16 +136,16 @@ The model is independent of the odds, so these gaps are where our Elo-Poisson vi
 
 **France vs England** — _neutral venue_  
 Elo France 2198 · England 2155  |  expected goals **1.25 – 1.06**  
-- **1X2:** France 40% · Draw 29% · England 31%   _(market 50/25/25)_
+- **1X2:** France 40% · Draw 29% · England 31%   _(market 51/24/25)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 1-0 12% · 0-0 11% · 0-1 10% · 2-1 8%
-- France favoured (40%); **model lower than the market on France** (Δ10pp).
+- France favoured (40%); **model lower than the market on France** (Δ11pp).
 
 ### Sunday, July 19
 
 **Spain vs Argentina** — _neutral venue_  
 Elo Spain 2307 · Argentina 2281  |  expected goals **1.21 – 1.10**  
-- **1X2:** Spain 38% · Draw 29% · Argentina 32%   _(market 42/32/27)_
+- **1X2:** Spain 38% · Draw 29% · Argentina 32%   _(market 42/31/26)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 1-0 11% · 0-0 11% · 0-1 10% · 2-1 8%
 - Spain favoured (38%); in line with the market.
@@ -159,4 +159,4 @@ Elo Spain 2307 · Argentina 2281  |  expected goals **1.21 – 1.10**
 
 - **Market is a benchmark, not an input.** Where we disagree, the market is usually the sharper number; the gaps are flagged so you can judge for yourself.
 
-- _Generated 2026-07-17 · Elo current to 2026-07-15 · model frozen 2022-11-19._
+- _Generated 2026-07-18 · Elo current to 2026-07-15 · model frozen 2022-11-19._
