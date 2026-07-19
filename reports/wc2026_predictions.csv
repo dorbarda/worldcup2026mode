@@ -1,2 +1,2 @@
 date,home_team,away_team,venue,lambda_home,lambda_away,p_home,p_draw,p_away,p_over_2_5,btts_yes,mkt_home,mkt_draw,mkt_away,edge,top_score,top3,model_version
-2026-07-19,Spain,Argentina,neutral,1.21,1.1,0.381,0.295,0.324,0.407,0.474,0.418,0.318,0.265,0.06,1-1,1-1 (14%); 1-0 (11%); 0-0 (11%),v2
+2026-07-19,Spain,Argentina,neutral,1.21,1.1,0.381,0.295,0.324,0.407,0.474,0.416,0.319,0.266,0.059,1-1,1-1 (14%); 1-0 (11%); 0-0 (11%),v2
