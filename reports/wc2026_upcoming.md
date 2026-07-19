@@ -1,6 +1,6 @@
-# World Cup 2026 — Opening Matches (Jul 18–Jul 19)
+# World Cup 2026 — Opening Matches (Jul 19–Jul 19)
 
-Model-based forecasts for the next round of group matches (2 fixtures), generated from **current Elo** (all played matches through 2026-07-15). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
+Model-based forecasts for the next round of group matches (1 fixtures), generated from **current Elo** (all played matches through 2026-07-18). The Dixon-Coles Poisson model is the one validated on the 2018 & 2022 backtests; its coefficients are frozen at the 2022-11-19 fit, only the ratings are current.
 
 De-vigged bookmaker odds are shown for comparison only — they do **not** feed the model. `Edge` = largest gap between our probability and the market on any outcome.
 
@@ -110,8 +110,9 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 | Argentina v Switzerland | 3-1 (home) | 60/24/16 | 57/27/17 | model |
 | France v Spain | 0-2 (away) | 32/30/38 | 40/30/30 | model |
 | England v Argentina | 1-2 (away) | 27/29/44 | 35/33/32 | model |
+| France v England | 4-6 (away) | 40/29/31 | 51/24/25 | model |
 
-**Running RPS over 100 match(es): model 0.1605 vs market nan — level.** (Tiny sample — a smoke signal, not a verdict.)
+**Running RPS over 101 match(es): model 0.1621 vs market nan — level.** (Tiny sample — a smoke signal, not a verdict.)
 
 ![overview](figures/wc2026/overview.png)
 
@@ -119,33 +120,19 @@ How the pre-match forecasts have fared, model vs de-vigged market (this is the B
 
 | Date | Match | Venue | xG (H–A) | Our H/D/A | Market H/D/A | Edge | Top score |
 |---|---|---|---|---|---|---|---|
-| Jul 18 | France v England | neutral | 1.25–1.06 | 40/29/31 | 51/24/25 | 11pp | 1-1 |
-| Jul 19 | Spain v Argentina | neutral | 1.21–1.10 | 38/29/32 | 42/31/26 | 6pp | 1-1 |
+| Jul 19 | Spain v Argentina | neutral | 1.21–1.10 | 38/29/32 | 42/32/26 | 6pp | 1-1 |
 
 ## Where we disagree with the market
 
-The model is independent of the odds, so these gaps are where our Elo-Poisson view parts from the bookmaker — and they cluster on the model's known soft spots (host-advantage calibration; less boldness on big favourites).
-
-| Match | Our H/D/A | Market H/D/A | Edge | Lean |
-|---|---|---|---|---|
-| France v England | 40/29/31 | 51/24/25 | 11pp | model lower on France |
+No fixture disagrees with the market by ≥10pp on any outcome.
 
 ## Match-by-match
-
-### Saturday, July 18
-
-**France vs England** — _neutral venue_  
-Elo France 2198 · England 2155  |  expected goals **1.25 – 1.06**  
-- **1X2:** France 40% · Draw 29% · England 31%   _(market 51/24/25)_
-- **Goals:** Over 2.5 41% · BTTS 47%
-- **Likeliest scores:** 1-1 14% · 1-0 12% · 0-0 11% · 0-1 10% · 2-1 8%
-- France favoured (40%); **model lower than the market on France** (Δ11pp).
 
 ### Sunday, July 19
 
 **Spain vs Argentina** — _neutral venue_  
 Elo Spain 2307 · Argentina 2281  |  expected goals **1.21 – 1.10**  
-- **1X2:** Spain 38% · Draw 29% · Argentina 32%   _(market 42/31/26)_
+- **1X2:** Spain 38% · Draw 29% · Argentina 32%   _(market 42/32/26)_
 - **Goals:** Over 2.5 41% · BTTS 47%
 - **Likeliest scores:** 1-1 14% · 1-0 11% · 0-0 11% · 0-1 10% · 2-1 8%
 - Spain favoured (38%); in line with the market.
@@ -159,4 +146,4 @@ Elo Spain 2307 · Argentina 2281  |  expected goals **1.21 – 1.10**
 
 - **Market is a benchmark, not an input.** Where we disagree, the market is usually the sharper number; the gaps are flagged so you can judge for yourself.
 
-- _Generated 2026-07-18 · Elo current to 2026-07-15 · model frozen 2022-11-19._
+- _Generated 2026-07-19 · Elo current to 2026-07-18 · model frozen 2022-11-19._
